@@ -15,10 +15,6 @@
         <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-        <!-- Spring -->
-        <spring.version>5.1.7.RELEASE</spring.version>
-        <spring-data-jpa.version>2.1.8.RELEASE</spring-data-jpa.version>
     </properties>
 
     <build>
@@ -38,17 +34,9 @@
     </build>
 
     <dependencies>
-        <!-- Spring -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context-support</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jpa</artifactId>
-            <version>${spring-data-jpa.version}</version>
-        </dependency>
     </dependencies>
+
+    <dependencyManagement>
+    </dependencyManagement>
 
 </project>
