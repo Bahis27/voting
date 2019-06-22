@@ -8,7 +8,7 @@
 
     <servlet>
         <servlet-name>votingServlet</servlet-name>
-        <servlet-class>ru.restaurant.voting.web.VotingServlet</servlet-class>
+        <servlet-class>ru.restaurant.voting.web.UserServlet</servlet-class>
         <load-on-startup>0</load-on-startup>
     </servlet>
     <servlet-mapping>

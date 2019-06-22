@@ -7,16 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
 import static org.slf4j.LoggerFactory.getLogger;
 
-public class VotingServlet extends HttpServlet {
-    private static final Logger log = getLogger(VotingServlet.class);
+public class UserServlet extends HttpServlet {
+    private static final Logger log = getLogger(UserServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        log.debug("redirect to voting");
-
-        //request.getRequestDispatcher("/voting.jsp").forward(request, response);
-        response.sendRedirect("voting.jsp");
+        log.debug("forward to users");
+        String action = request.getParameter("action");
+        if (action != null && action.equals("register")) {
+            SecurityUtil.setAuthUserId(Integer.parseInt(request.getParameter("userid")));
+        }
+        response.sendRedirect("meals");
     }
 }
