@@ -1,15 +1,20 @@
 package ru.restaurant.voting.web;
 
+import ru.restaurant.voting.model.AbstractBaseEntity;
+
 public class SecurityUtil {
 
-    private static int authUserId = 0;
+    private static int id = AbstractBaseEntity.START_SEQ;
 
-    public static void setAuthUserId(int authUserId) {
-        SecurityUtil.authUserId = authUserId;
+    private SecurityUtil() {
     }
 
-    public static int getAuthUserId() {
-        return SecurityUtil.authUserId;
+    public static int authUserId() {
+        return id;
+    }
+
+    public static void setAuthUserId(int id) {
+        SecurityUtil.id = id;
     }
 
 }
