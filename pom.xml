@@ -16,6 +16,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
+        <!-- Spring -->
         <spring.version>5.1.4.RELEASE</spring.version>
         <spring-data-jpa.version>2.1.5.RELEASE</spring-data-jpa.version>
         <tomcat.version>9.0.16</tomcat.version>
@@ -168,12 +169,12 @@
 
         <!-- Web -->
         <!-- Может оно будет не нужно!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! (сервелеты)-->
-        <!--        <dependency>-->
-        <!--            <groupId>javax.servlet</groupId>-->
-        <!--            <artifactId>javax.servlet-api</artifactId>-->
-        <!--            <version>4.0.1</version>-->
-        <!--            <scope>provided</scope>-->
-        <!--        </dependency>-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+            <scope>provided</scope>
+        </dependency>
 
         <!-- Test -->
         <dependency>
