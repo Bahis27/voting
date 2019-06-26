@@ -1,4 +1,4 @@
-package ru.restaurant.voting.repository;
+package ru.restaurant.voting.repository.user;
 
 import ru.restaurant.voting.model.User;
 

@@ -1,4 +1,4 @@
-package ru.restaurant.voting.repository;
+package ru.restaurant.voting.repository.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;

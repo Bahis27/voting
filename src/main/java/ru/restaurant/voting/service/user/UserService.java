@@ -1,4 +1,4 @@
-package ru.restaurant.voting.service;
+package ru.restaurant.voting.service.user;
 
 import ru.restaurant.voting.model.User;
 import ru.restaurant.voting.util.exception.NotFoundException;

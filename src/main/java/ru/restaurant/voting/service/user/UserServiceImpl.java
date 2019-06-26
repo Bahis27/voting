@@ -1,4 +1,4 @@
-package ru.restaurant.voting.service;
+package ru.restaurant.voting.service.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -6,7 +6,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.restaurant.voting.model.User;
-import ru.restaurant.voting.repository.UserRepository;
+import ru.restaurant.voting.repository.user.UserRepository;
 import ru.restaurant.voting.util.exception.NotFoundException;
 
 import java.util.List;
