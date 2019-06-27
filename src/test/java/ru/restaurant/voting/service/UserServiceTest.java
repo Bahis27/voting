@@ -9,13 +9,14 @@ import ru.restaurant.voting.model.Role;
 import ru.restaurant.voting.model.User;
 import ru.restaurant.voting.util.exception.NotFoundException;
 
+import javax.validation.ConstraintViolationException;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import static ru.restaurant.voting.UserTestData.*;
 
-public class UserServiceTest extends ServiceTest {
+public class UserServiceTest extends AbstractServiceTest {
 
     @Autowired
     private CacheManager cacheManager;
@@ -79,5 +80,12 @@ public class UserServiceTest extends ServiceTest {
     public void getAll() throws Exception {
         List<User> all = userService.getAll();
         assertMatch(userService.getAll(), ADMIN, USER5, USER1, USER4, USER3, USER7, USER8, USER6, USER2);
+    }
+
+    @Test
+    public void testValidation() throws Exception {
+        validateRootCause(() -> userService.create(new User(null, "  ", "mail@yandex.ru", "password", Role.ROLE_USER)), ConstraintViolationException.class);
+        validateRootCause(() -> userService.create(new User(null, "User", "  ", "password", Role.ROLE_USER)), ConstraintViolationException.class);
+        validateRootCause(() -> userService.create(new User(null, "User", "mail@yandex.ru", "  ", Role.ROLE_USER)), ConstraintViolationException.class);
     }
 }
