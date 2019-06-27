@@ -8,13 +8,11 @@ import org.junit.rules.ExternalResource;
 import org.junit.rules.Stopwatch;
 import org.junit.runner.RunWith;
 import org.slf4j.bridge.SLF4JBridgeHandler;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.restaurant.voting.TimingRules;
-import ru.restaurant.voting.service.user.UserService;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static ru.restaurant.voting.util.ValidationUtil.getRootCause;
@@ -25,9 +23,6 @@ import static ru.restaurant.voting.util.ValidationUtil.getRootCause;
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 
 public abstract class AbstractServiceTest {
-
-    @Autowired
-    protected UserService userService;
 
     @ClassRule
     public static ExternalResource summary = TimingRules.SUMMARY;

@@ -6,14 +6,26 @@
 
     <display-name>Voting</display-name>
 
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath:spring/spring-app.xml
+        </param-value>
+    </context-param>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+
     <servlet>
-        <servlet-name>votingServlet</servlet-name>
+        <servlet-name>userServlet</servlet-name>
         <servlet-class>ru.restaurant.voting.web.UserServlet</servlet-class>
         <load-on-startup>0</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>votingServlet</servlet-name>
-        <url-pattern>/voting</url-pattern>
+        <servlet-name>userServlet</servlet-name>
+        <url-pattern>/users</url-pattern>
     </servlet-mapping>
 
 </web-app>

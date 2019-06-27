@@ -7,6 +7,8 @@ import org.springframework.cache.CacheManager;
 import org.springframework.dao.DataAccessException;
 import ru.restaurant.voting.model.Role;
 import ru.restaurant.voting.model.User;
+import ru.restaurant.voting.service.user.UserService;
+import ru.restaurant.voting.util.JpaUtil;
 import ru.restaurant.voting.util.exception.NotFoundException;
 
 import javax.validation.ConstraintViolationException;
@@ -19,11 +21,18 @@ import static ru.restaurant.voting.UserTestData.*;
 public class UserServiceTest extends AbstractServiceTest {
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private CacheManager cacheManager;
+
+    @Autowired
+    private JpaUtil jpaUtil;
 
     @Before
     public void setUp() throws Exception {
         cacheManager.getCache("users").clear();
+        jpaUtil.clear2ndLevelHibernateCache();
     }
 
     @Test
