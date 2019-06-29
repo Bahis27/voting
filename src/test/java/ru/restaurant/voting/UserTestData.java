@@ -19,7 +19,7 @@ public class UserTestData {
     public static final int USER7_ID = START_SEQ + 7;
     public static final int USER8_ID = START_SEQ + 8;
 
-    public static final User ADMIN = new User(ADMIN_ID, "admin", "admin@gmail.com", "password", Role.ROLE_ADMIN);
+    public static final User ADMIN = new User(ADMIN_ID, "admin", "admin@gmail.com", "password", Role.ROLE_ADMIN, Role.ROLE_USER);
     public static final User USER1 = new User(USER1_ID, "hotab", "hotab58@yandex.ru", "oVolka", Role.ROLE_USER);
     public static final User USER2 = new User(USER2_ID, "volk", "volk27@mail.ru", "NuZayatsPogodi", Role.ROLE_USER);
     public static final User USER3 = new User(USER3_ID, "ninja", "shadowninja@gmail.com", "youwillnotseeme", Role.ROLE_USER);
@@ -30,7 +30,7 @@ public class UserTestData {
     public static final User USER8 = new User(USER8_ID, "simple", "simple@mail.ru", "simple", Role.ROLE_USER);
 
     public static void assertMatch(User actual, User expected) {
-        assertThat(actual).isEqualToIgnoringGivenFields(expected, "registered", "roles");
+        assertThat(actual).isEqualToIgnoringGivenFields(expected, "registered");
     }
 
     public static void assertMatch(Iterable<User> actual, User... expected) {
@@ -38,6 +38,6 @@ public class UserTestData {
     }
 
     public static void assertMatch(Iterable<User> actual, Iterable<User> expected) {
-        assertThat(actual).usingElementComparatorIgnoringFields("registered", "roles").isEqualTo(expected);
+        assertThat(actual).usingElementComparatorIgnoringFields("registered").isEqualTo(expected);
     }
 }
