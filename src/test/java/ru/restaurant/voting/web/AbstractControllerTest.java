@@ -20,7 +20,7 @@ import javax.annotation.PostConstruct;
 })
 
 @Transactional
-abstract class AbstractControllerTest {
+abstract public class AbstractControllerTest {
 
     private static final CharacterEncodingFilter CHARACTER_ENCODING_FILTER = new CharacterEncodingFilter();
 

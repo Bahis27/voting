@@ -16,7 +16,7 @@ public class RootController {
         return "index";
     }
 
-    @GetMapping("/users")
+    @GetMapping("/web/users")
     public String users(Model model) {
         model.addAttribute("users", userService.getAll());
         return "users";
