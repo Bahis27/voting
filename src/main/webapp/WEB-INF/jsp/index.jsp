@@ -7,7 +7,7 @@
 <jsp:include page="fragments/bodyHeader.jsp"/>
 <section>
     <ul>
-        <li><a href="web/users">Users</a></li>
+        <li><a href="users">Users</a></li>
     </ul>
 </section>
 <jsp:include page="fragments/footer.jsp"/>
