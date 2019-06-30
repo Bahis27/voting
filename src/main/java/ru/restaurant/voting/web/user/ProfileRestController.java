@@ -11,7 +11,7 @@ import static ru.restaurant.voting.web.SecurityUtil.getAuthUserId;
 @RestController
 @RequestMapping(ProfileRestController.REST_URL)
 public class ProfileRestController extends AbstractUserController {
-    static final String REST_URL = "/rest/profile";
+    static final String REST_URL = "/profile";
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public User get() {
