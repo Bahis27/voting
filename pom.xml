@@ -59,8 +59,8 @@
                 </configuration>
             </plugin>
 
-            <!--https://stackoverflow.com/questions/17656475/maven-source-encoding-in-utf-8-not-working/17671104#17671104 -->
-            <!--https://junit.org/junit5/docs/current/user-guide/#running-tests-build-maven -->
+            <!-- https://stackoverflow.com/questions/17656475/maven-source-encoding-in-utf-8-not-working/17671104#17671104 -->
+            <!-- https://junit.org/junit5/docs/current/user-guide/#running-tests-build-maven -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -163,7 +163,7 @@
             <artifactId>hibernate-jcache</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
-        <!--http://hibernate.org/validator/documentation/getting-started/#unified-expression-language-el-->
+        <!-- http://hibernate.org/validator/documentation/getting-started/#unified-expression-language-el -->
         <dependency>
             <groupId>org.glassfish</groupId>
             <artifactId>javax.el</artifactId>
@@ -183,7 +183,7 @@
             <scope>runtime</scope>
             <version>${ehcache.version}</version>
         </dependency>
-        <!--https://medium.com/criciumadev/its-time-migrating-to-java-11-5eb3868354f9-->
+        <!-- https://medium.com/criciumadev/its-time-migrating-to-java-11-5eb3868354f9 -->
         <dependency>
             <groupId>org.glassfish.jaxb</groupId>
             <artifactId>jaxb-runtime</artifactId>
@@ -191,7 +191,6 @@
         </dependency>
 
         <!-- Web -->
-        <!-- Уюрать когда уберу jsp!!!!!!!!!!!!!!!!!!!!-->
         <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-servlet-api</artifactId>

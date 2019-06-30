@@ -3,9 +3,12 @@ package ru.restaurant.voting.service.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import ru.restaurant.voting.AuthorizedUser;
 import ru.restaurant.voting.model.User;
 import ru.restaurant.voting.repository.user.UserRepository;
 import ru.restaurant.voting.to.UserTo;
@@ -17,8 +20,8 @@ import java.util.List;
 import static ru.restaurant.voting.util.ValidationUtil.checkNotFound;
 import static ru.restaurant.voting.util.ValidationUtil.checkNotFoundWithId;
 
-@Service
-public class UserServiceImpl implements UserService {
+@Service("userService")
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository repository;
 
@@ -70,5 +73,14 @@ public class UserServiceImpl implements UserService {
     public void update(UserTo userTo) {
         User user = get(userTo.getId());
         repository.save(UserUtil.updateFromTo(user, userTo));
+    }
+
+    @Override
+    public AuthorizedUser loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = repository.getByEmail(email.toLowerCase());
+        if (user == null) {
+            throw new UsernameNotFoundException("User " + email + " is not found");
+        }
+        return new AuthorizedUser(user);
     }
 }

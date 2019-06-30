@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.restaurant.voting.model.User;
 import ru.restaurant.voting.to.UserTo;
 
-import static ru.restaurant.voting.web.SecurityUtil.getAuthUserId;
+import static ru.restaurant.voting.web.SecurityUtil.authUserId;
 
 @RestController
 @RequestMapping(ProfileRestController.REST_URL)
@@ -15,18 +15,18 @@ public class ProfileRestController extends AbstractUserController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public User get() {
-        return super.get(getAuthUserId());
+        return super.get(authUserId());
     }
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete() {
-        super.delete(getAuthUserId());
+        super.delete(authUserId());
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@RequestBody UserTo userTo) {
-        super.update(userTo, getAuthUserId());
+        super.update(userTo, authUserId());
     }
 }
