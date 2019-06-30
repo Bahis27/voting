@@ -15,7 +15,7 @@ class RootControllerTest extends AbstractControllerTest {
 
     @Test
     void testUsers() throws Exception {
-        mockMvc.perform(get("/web/users"))
+        mockMvc.perform(get("/users"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("users"))
