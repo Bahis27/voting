@@ -19,8 +19,8 @@
         <authentication-provider>
             <password-encoder ref="noopEncoder"/>
             <user-service>
-                <user name="user@yandex.ru" password="password" authorities="ROLE_USER"/>
-                <user name="admin@gmail.com" password="admin" authorities="ROLE_ADMIN"/>
+                <user name="simple@mail.ru" password="simple" authorities="ROLE_USER"/>
+                <user name="admin@gmail.com" password="password" authorities="ROLE_ADMIN"/>
             </user-service>
         </authentication-provider>
     </authentication-manager>

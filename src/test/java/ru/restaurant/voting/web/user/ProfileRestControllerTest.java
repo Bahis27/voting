@@ -2,8 +2,9 @@ package ru.restaurant.voting.web.user;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
-import ru.restaurant.voting.model.Role;
 import ru.restaurant.voting.model.User;
+import ru.restaurant.voting.to.UserTo;
+import ru.restaurant.voting.util.UserUtil;
 import ru.restaurant.voting.web.AbstractControllerTest;
 import ru.restaurant.voting.web.json.JsonUtil;
 
@@ -33,12 +34,12 @@ class ProfileRestControllerTest extends AbstractControllerTest {
 
     @Test
     void testUpdate() throws Exception {
-        User updated = new User(USER1_ID, "newName", "newemail@ya.ru", "newPassword", Role.ROLE_USER);
+        UserTo updatedTo = new UserTo(USER1_ID, "newName", "newemail@ya.ru", "newPassword");
         mockMvc.perform(put(REST_URL).contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(updated)))
+                .content(JsonUtil.writeValue(updatedTo)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
 
-        assertMatch(userService.getByEmail("newemail@ya.ru"), updated);
+        assertMatch(userService.getByEmail("newemail@ya.ru"), UserUtil.updateFromTo(new User(USER1), updatedTo));
     }
 }
