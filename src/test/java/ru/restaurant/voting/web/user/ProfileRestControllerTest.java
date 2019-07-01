@@ -2,6 +2,7 @@ package ru.restaurant.voting.web.user;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.ResultActions;
 import ru.restaurant.voting.model.User;
 import ru.restaurant.voting.to.UserTo;
 import ru.restaurant.voting.util.UserUtil;
@@ -15,6 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static ru.restaurant.voting.UserTestData.*;
 import static ru.restaurant.voting.web.user.ProfileRestController.REST_URL;
 import static ru.restaurant.voting.TestUtil.userHttpBasic;
+import static ru.restaurant.voting.TestUtil.readFromJson;
 
 class ProfileRestControllerTest extends AbstractControllerTest {
 
@@ -39,6 +41,23 @@ class ProfileRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(USER1)))
                 .andExpect(status().isNoContent());
         assertMatch(userService.getAll(), ADMIN, USER5, USER4, USER3, USER7, USER8, USER6, USER2);
+    }
+
+    @Test
+    void testRegister() throws Exception {
+        UserTo createdTo = new UserTo(null, "newName", "newemail@ya.ru", "newPassword");
+
+        ResultActions action = mockMvc.perform(post(REST_URL + "/register").contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(createdTo)))
+                .andDo(print())
+                .andExpect(status().isCreated());
+        User returned = readFromJson(action, User.class);
+
+        User created = UserUtil.createNewFromTo(createdTo);
+        created.setId(returned.getId());
+
+        assertMatch(returned, created);
+        assertMatch(userService.getByEmail("newemail@ya.ru"), created);
     }
 
     @Test
