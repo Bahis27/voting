@@ -17,8 +17,8 @@
         curl -s http://localhost:8080/voting/admin/users/100006 --user admin@gmail.com:password
     </li> <br>
     <li>
-        validate with Error <br>
-        curl -s -X POST -d '{}' -H 'Content-Type: application/json' http://localhost:8080/topjava/admin/users --user admin@gmail.com:password
+        get with Not Found Error <br>
+        curl -s http://localhost:8080/voting/admin/users/1000 --user admin@gmail.com:password
     </li>
 </ul>
 </body>
