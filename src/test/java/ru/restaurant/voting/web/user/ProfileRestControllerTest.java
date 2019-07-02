@@ -3,6 +3,8 @@ package ru.restaurant.voting.web.user;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.restaurant.voting.model.User;
 import ru.restaurant.voting.to.UserTo;
 import ru.restaurant.voting.util.UserUtil;
@@ -13,10 +15,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.restaurant.voting.UserTestData.*;
-import static ru.restaurant.voting.web.user.ProfileRestController.REST_URL;
-import static ru.restaurant.voting.TestUtil.userHttpBasic;
 import static ru.restaurant.voting.TestUtil.readFromJson;
+import static ru.restaurant.voting.TestUtil.userHttpBasic;
+import static ru.restaurant.voting.UserTestData.*;
+import static ru.restaurant.voting.util.exception.ErrorType.*;
+import static ru.restaurant.voting.web.user.ProfileRestController.REST_URL;
+import static ru.restaurant.voting.web.ExceptionInfoHandler.EXCEPTION_DUPLICATE_EMAIL;
 
 class ProfileRestControllerTest extends AbstractControllerTest {
 
@@ -70,5 +74,32 @@ class ProfileRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isNoContent());
 
         assertMatch(userService.getByEmail("newemail@ya.ru"), UserUtil.updateFromTo(new User(USER1), updatedTo));
+    }
+
+    @Test
+    void testUpdateInvalid() throws Exception {
+        UserTo updatedTo = new UserTo(null, null, "password", null);
+
+        mockMvc.perform(put(REST_URL).contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(USER5))
+                .content(JsonUtil.writeValue(updatedTo)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(errorType(VALIDATION_ERROR))
+                .andDo(print());
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.NEVER)
+    void testDuplicate() throws Exception {
+        UserTo updatedTo = new UserTo(null, "newName", "admin@gmail.com", "newPassword");
+
+        mockMvc.perform(put(REST_URL).contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(USER3))
+                .content(JsonUtil.writeValue(updatedTo)))
+                .andExpect(status().isConflict())
+                .andExpect(errorType(VALIDATION_ERROR))
+                .andExpect(detailMessage(EXCEPTION_DUPLICATE_EMAIL))
+                .andDo(print());
     }
 }
