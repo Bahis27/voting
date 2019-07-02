@@ -177,4 +177,17 @@ class AdminRestControllerTest extends AbstractControllerTest {
                 .andExpect(detailMessage(EXCEPTION_DUPLICATE_EMAIL));
 
     }
+
+    @Test
+    void testCreateUnsafe() throws Exception {
+        User invalid = new User(null, "<script>alert(123)</script>", "new@gmail.com", "newPass", Role.ROLE_USER);
+        mockMvc.perform(post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(ADMIN))
+                .content(jsonWithPassword(invalid, "newPass")))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(errorType(VALIDATION_ERROR))
+                .andDo(print());
+    }
 }

@@ -102,4 +102,16 @@ class ProfileRestControllerTest extends AbstractControllerTest {
                 .andExpect(detailMessage(EXCEPTION_DUPLICATE_EMAIL))
                 .andDo(print());
     }
+
+    @Test
+    void testUpdateUnsafe() throws Exception {
+        UserTo updatedTo = new UserTo(USER1_ID, "newName", "<script>alert(123)</script>", "newPassword");
+        mockMvc.perform(put(REST_URL).contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(USER1))
+                .content(JsonUtil.writeValue(updatedTo)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(errorType(VALIDATION_ERROR))
+                .andDo(print());
+    }
 }
