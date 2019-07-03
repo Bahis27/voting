@@ -114,4 +114,16 @@ class ProfileRestControllerTest extends AbstractControllerTest {
                 .andExpect(errorType(VALIDATION_ERROR))
                 .andDo(print());
     }
+
+    @Test
+    void testValidateMail() throws Exception {
+        UserTo createdTo = new UserTo(null, "newName", "newemail@", "newPassword");
+
+        ResultActions action = mockMvc.perform(post(REST_URL + "/register").contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(createdTo)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(errorType(VALIDATION_ERROR))
+                .andDo(print());
+    }
 }
