@@ -10,18 +10,19 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static ru.restaurant.voting.TestUtil.readFromJsonMvcResult;
 import static ru.restaurant.voting.TestUtil.readListFromJsonMvcResult;
-import static ru.restaurant.voting.model.AbstractBaseEntity.START_SEQ;
 
 public class UserTestData {
-    public static final int ADMIN_ID = START_SEQ;
-    public static final int USER1_ID = START_SEQ + 1;
-    public static final int USER2_ID = START_SEQ + 2;
-    public static final int USER3_ID = START_SEQ + 3;
-    public static final int USER4_ID = START_SEQ + 4;
-    public static final int USER5_ID = START_SEQ + 5;
-    public static final int USER6_ID = START_SEQ + 6;
-    public static final int USER7_ID = START_SEQ + 7;
-    public static final int USER8_ID = START_SEQ + 8;
+    public static final int START_USERS_SEQ = 10;
+
+    public static final int ADMIN_ID = START_USERS_SEQ;
+    public static final int USER1_ID = START_USERS_SEQ + 1;
+    public static final int USER2_ID = START_USERS_SEQ + 2;
+    public static final int USER3_ID = START_USERS_SEQ + 3;
+    public static final int USER4_ID = START_USERS_SEQ + 4;
+    public static final int USER5_ID = START_USERS_SEQ + 5;
+    public static final int USER6_ID = START_USERS_SEQ + 6;
+    public static final int USER7_ID = START_USERS_SEQ + 7;
+    public static final int USER8_ID = START_USERS_SEQ + 8;
 
     public static final User ADMIN = new User(ADMIN_ID, "admin", "admin@gmail.com", "password", Role.ROLE_ADMIN, Role.ROLE_USER);
     public static final User USER1 = new User(USER1_ID, "hotab", "hotab58@yandex.ru", "oVolka", Role.ROLE_USER);
