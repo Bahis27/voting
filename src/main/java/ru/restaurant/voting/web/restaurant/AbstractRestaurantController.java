@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.service.restaurant.RestaurantService;
+import ru.restaurant.voting.to.RestaurantTo;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,28 +18,28 @@ public abstract class AbstractRestaurantController {
     @Autowired
     private RestaurantService service;
 
-    public Restaurant create(Restaurant restaurant) {
-        log.info("create with name={}", restaurant.getName());
-        checkNew(restaurant);
-        return service.create(restaurant);
-    }
-
-    public void update(Restaurant restaurant) {
-        log.info("update with id={}", restaurant.getId());
-        service.update(restaurant);
-    }
+//    public Restaurant create(Restaurant restaurant) {
+//        log.info("create with name={}", restaurant.getName());
+//        checkNew(restaurant);
+//        return service.create(restaurant);
+//    }
+//
+//    public void update(RestaurantTo restaurantTo) {
+//        log.info("update with id={}", restaurantTo.getId());
+//        service.update(restaurantTo);
+//    }
 
     public void delete(int id) {
         log.info("delete with id={}", id);
         service.delete(id);
     }
 
-    public Restaurant get(int id) {
+    public RestaurantTo get(int id) {
         log.info("get with id={}", id);
         return service.get(id);
     }
 
-    public List<Restaurant> getAll() {
+    public List<RestaurantTo> getAll() {
         log.info("getAl");
         return service.getAll();
     }

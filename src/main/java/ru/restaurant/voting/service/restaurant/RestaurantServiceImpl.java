@@ -5,12 +5,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.repository.RestaurantRepository;
+import ru.restaurant.voting.to.RestaurantTo;
+import ru.restaurant.voting.util.RestaurantUtil;
 import ru.restaurant.voting.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
+import static ru.restaurant.voting.util.RestaurantUtil.*;
 import static ru.restaurant.voting.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
@@ -30,10 +34,10 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public void update(Restaurant restaurant) {
-        Assert.notNull(restaurant, "restaurant must not be null");
-        checkNotFoundWithId(restaurant, restaurant.getId());
-        restaurantRepository.save(restaurant);
+    public void update(RestaurantTo restaurantTo) {
+        Assert.notNull(restaurantTo, "restaurant must not be null");
+        checkNotFoundWithId(restaurantTo, restaurantTo.getId());
+        restaurantRepository.save(asEntity(restaurantTo));
     }
 
     @Override
@@ -42,13 +46,16 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public Restaurant get(int id) throws NotFoundException {
-        return checkNotFoundWithId(restaurantRepository.findById(id).orElse(null), id);
+    public RestaurantTo get(int id) throws NotFoundException {
+        Restaurant restaurant = checkNotFoundWithId(restaurantRepository.findById(id).orElse(null), id);
+        return asTo(Objects.requireNonNull(restaurant));
     }
 
     @Override
-    public List<Restaurant> getAll() {
-        return restaurantRepository.getAll();
+    public List<RestaurantTo> getAll() {
+        return restaurantRepository.getAll().stream()
+                .map(RestaurantUtil::asTo)
+                .collect(Collectors.toList());
     }
 
     @Override
