@@ -17,4 +17,7 @@ public interface VoteRepository extends JpaRepository<Vote, Integer> {
     Vote save(Vote vote);
 
     Optional<Vote> findByUserIdAndVotingDate(int userId, LocalDate votingDay);
+
+    @Transactional
+    void deleteByUserIdAndVotingDate(int userId, LocalDate votingDay);
 }

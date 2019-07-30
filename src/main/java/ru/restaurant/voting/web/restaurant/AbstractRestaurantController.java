@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.restaurant.voting.model.Restaurant;
+import ru.restaurant.voting.model.Vote;
 import ru.restaurant.voting.service.restaurant.RestaurantService;
 import ru.restaurant.voting.to.RestaurantTo;
 
@@ -52,5 +53,10 @@ public abstract class AbstractRestaurantController {
     public List<Restaurant> getAllForDay(LocalDate localDate) {
         log.info("getAllForDay {}", localDate);
         return service.getAllForDay(localDate);
+    }
+
+    public Vote vote(LocalDate date, int userId, int restaurantId) {
+        log.info("user with id={} voted for restaurant with id={}", userId, restaurantId);
+        return service.vote(date, userId, restaurantId);
     }
 }

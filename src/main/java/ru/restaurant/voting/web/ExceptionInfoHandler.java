@@ -16,10 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import ru.restaurant.voting.util.ValidationUtil;
-import ru.restaurant.voting.util.exception.ErrorInfo;
-import ru.restaurant.voting.util.exception.ErrorType;
-import ru.restaurant.voting.util.exception.IllegalRequestDataException;
-import ru.restaurant.voting.util.exception.NotFoundException;
+import ru.restaurant.voting.util.exception.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -34,15 +31,24 @@ public class ExceptionInfoHandler {
     private static Logger log = LoggerFactory.getLogger(ExceptionInfoHandler.class);
 
     public static final String EXCEPTION_DUPLICATE_EMAIL = "User with this email already exists";
+    public static final String EXCEPTION_DUPLICATE_RESTAURANT_NAME = "Restaurant with this name already exists";
 
     private static final Map<String, String> CONSTRAINS_I18N_MAP = Map.of(
-            "users_unique_email_idx", EXCEPTION_DUPLICATE_EMAIL);
+            "users_unique_email_idx", EXCEPTION_DUPLICATE_EMAIL,
+            "restaurants_unique_name_idx", EXCEPTION_DUPLICATE_RESTAURANT_NAME
+    );
 
     //  http://stackoverflow.com/a/22358422/548473
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler(NotFoundException.class)
     public ErrorInfo handleError(HttpServletRequest req, NotFoundException e) {
         return logAndGetErrorInfo(req, e, false, DATA_NOT_FOUND);
+    }
+
+    @ResponseStatus(value = HttpStatus.CONFLICT)
+    @ExceptionHandler(UserAlreadyHasVotedException.class)
+    public ErrorInfo handleError(HttpServletRequest req, UserAlreadyHasVotedException e) {
+        return logAndGetErrorInfo(req, e, false, WRONG_REQUEST);
     }
 
     @ResponseStatus(value = HttpStatus.CONFLICT)  // 409
