@@ -1,14 +1,10 @@
 package ru.restaurant.voting.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-
-import static java.time.LocalDate.now;
 
 @Entity
 @Table(name = "day_menus"
@@ -25,21 +21,14 @@ public class DayMenu extends AbstractBaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Restaurant restaurant;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dish_id")
     private Dish dish;
 
     public DayMenu() {
-    }
-
-    public DayMenu(@NotNull LocalDate menuDate, Restaurant restaurant, Dish dish) {
-        this.menuDate = menuDate;
-        this.restaurant = restaurant;
-        this.dish = dish;
     }
 
     public DayMenu(Integer id, @NotNull LocalDate menuDate, Restaurant restaurant, Dish dish) {
@@ -47,26 +36,6 @@ public class DayMenu extends AbstractBaseEntity {
         this.menuDate = menuDate;
         this.restaurant = restaurant;
         this.dish = dish;
-    }
-
-    public DayMenu(Restaurant restaurant, Dish dish) {
-        this.menuDate = now();
-        this.restaurant = restaurant;
-        this.dish = dish;
-    }
-
-    public DayMenu(Integer id, Restaurant restaurant, Dish dish) {
-        super(id);
-        this.menuDate = now();
-        this.restaurant = restaurant;
-        this.dish = dish;
-    }
-
-    public DayMenu(@NotNull DayMenu dayMenu) {
-        this.setId(dayMenu.getId());
-        this.setMenuDate(dayMenu.getMenuDate());
-        this.setRestaurant(dayMenu.getRestaurant());
-        this.setDish(dayMenu.getDish());
     }
 
     public LocalDate getMenuDate() {

@@ -16,12 +16,18 @@ public class AdminRestaurantController extends AbstractRestaurantController {
 
     public static final String REST_URL = "/admin/restaurants";
 
-//    @Override
-//    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public void update(@Valid @RequestBody RestaurantTo restaurantTo) {
-//        super.update(restaurantTo);
-//    }
+    @Override
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Restaurant create(@Valid @RequestBody Restaurant restaurant) {
+        return super.create(restaurant);
+    }
+
+    @Override
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update(@Valid @RequestBody Restaurant restaurant) {
+        super.update(restaurant);
+    }
 
     @Override
     @DeleteMapping("/{id}")
@@ -32,7 +38,7 @@ public class AdminRestaurantController extends AbstractRestaurantController {
 
     @Override
     @GetMapping("/{id}")
-    public RestaurantTo get(@PathVariable int id) {
+    public Restaurant get(@PathVariable int id) {
         return super.get(id);
     }
 

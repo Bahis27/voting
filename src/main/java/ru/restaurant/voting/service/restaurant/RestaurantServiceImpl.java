@@ -2,11 +2,11 @@ package ru.restaurant.voting.service.restaurant;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.repository.RestaurantRepository;
 import ru.restaurant.voting.to.RestaurantTo;
-import ru.restaurant.voting.util.RestaurantUtil;
 import ru.restaurant.voting.util.exception.NotFoundException;
 
 import java.time.LocalDate;
@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static ru.restaurant.voting.util.RestaurantUtil.*;
 import static ru.restaurant.voting.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
@@ -34,10 +33,11 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public void update(RestaurantTo restaurantTo) {
-        Assert.notNull(restaurantTo, "restaurant must not be null");
-        checkNotFoundWithId(restaurantTo, restaurantTo.getId());
-        restaurantRepository.save(asEntity(restaurantTo));
+    @Transactional
+    public void update(Restaurant restaurant) {
+        Assert.notNull(restaurant, "restaurant must not be null");
+        checkNotFoundWithId(restaurant, restaurant.getId());
+        restaurantRepository.save(restaurant);
     }
 
     @Override
@@ -46,15 +46,18 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public RestaurantTo get(int id) throws NotFoundException {
-        Restaurant restaurant = checkNotFoundWithId(restaurantRepository.findById(id).orElse(null), id);
-        return asTo(Objects.requireNonNull(restaurant));
+    public Restaurant get(int id) throws NotFoundException {
+        Restaurant restaurant = restaurantRepository.getFullById(id);
+        if (restaurant == null) {
+            return checkNotFoundWithId(restaurantRepository.findById(id).orElse(null), id);
+        }
+        return checkNotFoundWithId(restaurant, id);
     }
 
     @Override
     public List<RestaurantTo> getAll() {
         return restaurantRepository.getAll().stream()
-                .map(RestaurantUtil::asTo)
+                .map(this::asTo)
                 .collect(Collectors.toList());
     }
 
@@ -66,5 +69,9 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public List<Restaurant> getAllForDay(LocalDate localDate) {
         return restaurantRepository.getAllForDay(Objects.requireNonNullElseGet(localDate, LocalDate::now));
+    }
+
+    private RestaurantTo asTo(Restaurant restaurant) {
+        return new RestaurantTo(restaurant.getId(), restaurant.getName());
     }
 }

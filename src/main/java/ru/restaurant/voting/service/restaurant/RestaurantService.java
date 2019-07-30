@@ -11,11 +11,11 @@ public interface RestaurantService {
 
     Restaurant create(Restaurant restaurant);
 
-    void update(RestaurantTo restaurantTo);
+    void update(Restaurant restaurant);
 
     void delete(int id) throws NotFoundException;
 
-    RestaurantTo get(int id) throws NotFoundException;
+    Restaurant get(int id) throws NotFoundException;
 
     List<RestaurantTo> getAll();
 

@@ -1,8 +1,6 @@
 package ru.restaurant.voting.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
@@ -11,10 +9,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "dishes"
-//        , uniqueConstraints = {@UniqueConstraint(
-//                columnNames = {"restaurant_id", "name"},
-//                name = "dishes_unique_restaurantid_dishname_idx")
-//        }
+        , uniqueConstraints = {@UniqueConstraint(
+                columnNames = {"restaurant_id", "name"},
+                name = "dishes_unique_restaurantid_dishname_idx")
+        }
 )
 public class Dish extends AbstractNamedEntity {
 
@@ -25,11 +23,10 @@ public class Dish extends AbstractNamedEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Restaurant restaurant;
 
-    @OneToMany(mappedBy = "dish")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "dish")
     @JsonIgnore
     private List<DayMenu> dayMenus;
 
@@ -40,10 +37,6 @@ public class Dish extends AbstractNamedEntity {
         super(id, name);
         this.price = price;
         this.restaurant = restaurant;
-    }
-
-    public Dish(Dish dish) {
-        this(dish.getId(), dish.getName(), dish.getPrice(), dish.getRestaurant());
     }
 
     public Integer getPrice() {

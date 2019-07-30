@@ -18,23 +18,23 @@ public abstract class AbstractRestaurantController {
     @Autowired
     private RestaurantService service;
 
-//    public Restaurant create(Restaurant restaurant) {
-//        log.info("create with name={}", restaurant.getName());
-//        checkNew(restaurant);
-//        return service.create(restaurant);
-//    }
-//
-//    public void update(RestaurantTo restaurantTo) {
-//        log.info("update with id={}", restaurantTo.getId());
-//        service.update(restaurantTo);
-//    }
+    public Restaurant create(Restaurant restaurant) {
+        log.info("create with name={}", restaurant.getName());
+        checkNew(restaurant);
+        return service.create(restaurant);
+    }
+
+    public void update(Restaurant restaurant) {
+        log.info("update with id={}", restaurant.getId());
+        service.update(restaurant);
+    }
 
     public void delete(int id) {
         log.info("delete with id={}", id);
         service.delete(id);
     }
 
-    public RestaurantTo get(int id) {
+    public Restaurant get(int id) {
         log.info("get with id={}", id);
         return service.get(id);
     }

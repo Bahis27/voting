@@ -22,7 +22,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
     int delete(@Param("id") int id);
 
     @Transactional
-    default boolean deleteWithId(int id){
+    default boolean deleteWithId(int id) {
         return delete(id) != 0;
     }
 
@@ -33,12 +33,15 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
     @Query("SELECT r FROM Restaurant r")
     List<Restaurant> getAll();
 
+    @Query("SELECT r FROM Restaurant r JOIN FETCH r.dayMenus m JOIN FETCH m.dish WHERE r.id=:restaurantId")
+    Restaurant getFullById(@Param("restaurantId") Integer restaurantId);
+
     @Override
     Optional<Restaurant> findById(Integer id);
 
-    @Query("SELECT DISTINCT r FROM Restaurant r JOIN FETCH r.dayMenus m JOIN FETCH m.dish WHERE m.menuDate = :day ORDER BY r.name")
+    @Query("SELECT DISTINCT r FROM Restaurant r JOIN FETCH r.dayMenus m JOIN FETCH m.dish WHERE m.menuDate=:day ORDER BY r.name")
     List<Restaurant> getAllForDay(@Param("day") LocalDate day);
 
-    @Query("SELECT DISTINCT r FROM Restaurant r JOIN FETCH r.dayMenus m JOIN FETCH m.dish WHERE r.id = :restaurantId AND m.menuDate = :day ORDER BY r.name")
+    @Query("SELECT DISTINCT r FROM Restaurant r JOIN FETCH r.dayMenus m JOIN FETCH m.dish WHERE r.id=:restaurantId AND m.menuDate=:day ORDER BY r.name")
     Restaurant getByIdForDay(@Param("restaurantId") Integer restaurantId, @Param("day") LocalDate day);
 }
