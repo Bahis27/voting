@@ -1,5 +1,7 @@
 package ru.restaurant.voting.model;
 
+import ru.restaurant.voting.to.RestaurantTo;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -19,6 +21,10 @@ public class Restaurant extends AbstractNamedEntity {
 
     public Restaurant(Integer id, String name) {
         super(id, name);
+    }
+
+    public Restaurant(RestaurantTo restaurantTo) {
+        this(restaurantTo.getId(), restaurantTo.getName());
     }
 
     public Restaurant(Restaurant restaurant) {

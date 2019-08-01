@@ -93,7 +93,7 @@ public class UserServiceTest extends AbstractServiceTest {
     @Test
     void getAll() throws Exception {
         List<User> all = userService.getAll();
-        assertMatch(userService.getAll(), ADMIN, USER5, USER1, USER4, USER3, USER7, USER8, USER6, USER2);
+        assertMatch(all, ADMIN, USER5, USER1, USER4, USER3, USER7, USER8, USER6, USER2);
     }
 
     @Test

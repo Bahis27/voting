@@ -3,12 +3,14 @@ package ru.restaurant.voting.web.restaurant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import ru.restaurant.voting.model.Dish;
 import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.model.Vote;
 import ru.restaurant.voting.service.restaurant.RestaurantService;
 import ru.restaurant.voting.to.RestaurantTo;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import static ru.restaurant.voting.util.ValidationUtil.checkNew;
@@ -55,8 +57,13 @@ public abstract class AbstractRestaurantController {
         return service.getAllForDay(localDate);
     }
 
-    public Vote vote(LocalDate date, int userId, int restaurantId) {
+    public Vote vote(LocalDate date, int userId, int restaurantId, LocalTime time) {
         log.info("user with id={} voted for restaurant with id={}", userId, restaurantId);
-        return service.vote(date, userId, restaurantId);
+        return service.vote(date, userId, restaurantId, time);
+    }
+
+    public List<Dish> getAllDishes(int restaurantId) {
+        log.info("get all dishes for restaurant with id={}", restaurantId);
+        return service.getAllDishes(restaurantId);
     }
 }
