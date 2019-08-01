@@ -78,7 +78,7 @@ class RestaurantServiceTest extends AbstractServiceTest {
     @Test
     void getAll() throws Exception {
         List<RestaurantTo> all = restaurantService.getAll();
-        assertMatch(all, RES1, RES2, RES3, RES4, RES5, RES6, RES7, RES8, RES9);
+        assertMatch(all, RESTAURANTS);
     }
 
     @Test
@@ -97,6 +97,12 @@ class RestaurantServiceTest extends AbstractServiceTest {
     void getAllForDay() throws Exception {
         List<Restaurant> restaurants = restaurantService.getAllForDay(LocalDate.parse("2019-07-01"));
         assertMatch(restaurants, RES9, RES1, RES3, RES4, RES5, RES7, RES2);
+    }
+
+    @Test
+    void getAllForEmptyDay() throws Exception {
+        List<Restaurant> restaurants = restaurantService.getAllForDay(LocalDate.parse("2019-07-05"));
+        assertMatch(restaurants, List.of());
     }
 
     @Test

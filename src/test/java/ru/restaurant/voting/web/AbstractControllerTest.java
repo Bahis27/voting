@@ -16,8 +16,6 @@ import ru.restaurant.voting.util.exception.ErrorType;
 
 import javax.annotation.PostConstruct;
 
-import java.util.Locale;
-
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 

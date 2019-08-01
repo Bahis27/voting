@@ -1,5 +1,6 @@
 package ru.restaurant.voting;
 
+import org.springframework.test.web.servlet.ResultMatcher;
 import ru.restaurant.voting.model.Dish;
 import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.to.RestaurantTo;
@@ -37,6 +38,8 @@ public class RestaurantTestData {
             new Dish(1009,"Just Pie",300, RES3)
     );
 
+    public static final List<Restaurant> RESTAURANTS = List.of(RES1, RES2, RES3, RES4, RES5, RES6, RES7, RES8, RES9);
+
     public static void assertMatch(Restaurant actual, Restaurant expected) {
         assertThat(actual).isEqualToIgnoringGivenFields(expected, "dayMenus");
     }
@@ -46,13 +49,35 @@ public class RestaurantTestData {
     }
 
     public static void assertMatch(List<RestaurantTo> actual, List<Restaurant> expected) {
-        List<Restaurant> restaurants = actual.stream()
-                .map(Restaurant::new)
-                .collect(Collectors.toList());
+        List<Restaurant> restaurants = toEntityList(actual);
         assertThat(restaurants).usingElementComparatorIgnoringFields("dayMenus").isEqualTo(expected);
     }
 
     public static void assertMatch(Iterable<Restaurant> actual, Restaurant... expected) {
-        assertThat(actual).usingElementComparatorIgnoringFields("dayMenus").isEqualTo(List.of(expected));
+        assertMatch(actual, List.of(expected));
+    }
+
+    public static void assertMatch(Iterable<Restaurant> actual, List<Restaurant> expected) {
+        assertThat(actual).usingElementComparatorIgnoringFields("dayMenus").isEqualTo(expected);
+    }
+
+    public static ResultMatcher contentJson(Iterable<RestaurantTo> expected) {
+        return result -> assertThat(TestUtil.readListFromJsonMvcResult(result, RestaurantTo.class)).isEqualTo(expected);
+    }
+
+    public static ResultMatcher contentJson(List<Restaurant> expected) {
+        return result -> assertThat(TestUtil.readListFromJsonMvcResult(result, Restaurant.class)).isEqualTo(expected);
+    }
+
+    public static List<Restaurant> toEntityList(List<RestaurantTo> restaurantTos) {
+        return restaurantTos.stream()
+                .map(Restaurant::new)
+                .collect(Collectors.toList());
+    }
+
+    public static List<RestaurantTo> toToList(List<Restaurant> restaurants) {
+        return restaurants.stream()
+                .map(RestaurantTo::new)
+                .collect(Collectors.toList());
     }
 }

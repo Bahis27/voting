@@ -2,11 +2,15 @@ package ru.restaurant.voting.web.restaurant;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import ru.restaurant.voting.View;
 import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.to.RestaurantTo;
 
-import javax.validation.Valid;
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -16,16 +20,21 @@ public class AdminRestaurantController extends AbstractRestaurantController {
 
     public static final String REST_URL = "/admin/restaurants";
 
-    @Override
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Restaurant create(@Valid @RequestBody Restaurant restaurant) {
-        return super.create(restaurant);
+    public ResponseEntity<Restaurant> createWithLocation(@Validated(View.Web.class) @RequestBody Restaurant restaurant) {
+        Restaurant created = super.create(restaurant);
+
+        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(REST_URL + "/{id}")
+                .buildAndExpand(created.getId()).toUri();
+
+        return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
     @Override
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@Valid @RequestBody Restaurant restaurant) {
+    public void update(@Validated(View.Web.class) @RequestBody Restaurant restaurant) {
         super.update(restaurant);
     }
 
