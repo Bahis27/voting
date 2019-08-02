@@ -28,8 +28,8 @@
         <slf4j.version>1.7.25</slf4j.version>
 
         <!-- DB -->
-        <!-- Убрать после перехода на HSQLDB-->
-        <postgresql.version>42.2.5</postgresql.version>
+        <!-- For Postgres SQL-->
+        <!-- <postgresql.version>42.2.5</postgresql.version>-->
 
         <!-- Hibernate -->
         <hibernate.version>5.4.1.Final</hibernate.version>
@@ -127,25 +127,27 @@
         </dependency>
 
         <!-- DataBase -->
-        <!-- Убрать после перехода на HSQLDB-->
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${postgresql.version}</version>
-        </dependency>
+        <!-- For Postgres SQL-->
+<!--        <dependency>-->
+<!--            <groupId>org.postgresql</groupId>-->
+<!--            <artifactId>postgresql</artifactId>-->
+<!--            <version>${postgresql.version}</version>-->
+<!--        </dependency>-->
+        <!-- Connection pool -->
+        <!-- provided - don't use it in container... already have -->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.tomcat</groupId>-->
+<!--            <artifactId>tomcat-jdbc</artifactId>-->
+<!--            <version>${tomcat.version}</version>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
+
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
             <version>2.4.1</version>
         </dependency>
-        <!-- Connection pool -->
-        <!-- provided - don't use it in container... already have -->
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-jdbc</artifactId>
-            <version>${tomcat.version}</version>
-            <scope>provided</scope>
-        </dependency>
+
 
         <!--- ORM -->
         <dependency>
