@@ -3,23 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <title>Voting</title>
+    <link rel="stylesheet" href="resources/css/style.css">
 </head>
 <body>
-<h2>curl samples</h2>
+<h1>curl samples</h1>
+
+<h2>/admin/users</h2>
 <ul>
     <li>
-        get All Users <br>
+        get all Users <br>
         curl -s http://localhost:8080/voting/admin/users --user admin@gmail.com:password
-
     </li> <br>
     <li>
-        get User with ID 100006 <br>
+        get User by id <br>
         curl -s http://localhost:8080/voting/admin/users/100006 --user admin@gmail.com:password
     </li> <br>
     <li>
-        get with Not Found Error <br>
-        curl -s http://localhost:8080/voting/admin/users/1000 --user admin@gmail.com:password
-    </li>
+        delete User by id <br>
+        curl -s -X DELETE http://localhost:8080/voting/admin/users/13 --user admin@gmail.com:password
+    </li> <br>
+    <li>
+        create User <br>
+        curl -s -X POST -d '{"name":"New", "email":"new@gmail.com", "password":"newPass"}' -H 'Content-Type:application/json;charset=UTF-8' curl -s http://localhost:8080/voting/admin/users --user admin@gmail.com:password
+    </li> <br>
+    <li>
+        update User <br>
+        curl -s -X PUT -d '{"name":"UpdatedName", "email":"updatedmail@gmail.com", "password":"updatedPass"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/users/100005 --user admin@gmail.com:password
+    </li> <br>
+    <li>
+        get User by email <br>
+        curl -s http://localhost:8080/voting/admin/users/by?email=simple@mail.ru --user admin@gmail.com:password
+    </li> <br>
 </ul>
+
+<h3>error examples</h3>
+<ul>
+    <li>
+        not found User error <br>
+        curl -s http://localhost:8080/voting/admin/users/1 --user admin@gmail.com:password
+    </li> <br>
+    <li>
+        create User with duplicate email error <br>
+        curl -s -X POST -d '{"name":"New", "email":"simple@mail.ru", "password":"newPass"}' -H 'Content-Type:application/json;charset=UTF-8' curl -s http://localhost:8080/voting/admin/users --user admin@gmail.com:password
+    </li> <br>
+    <li>
+        update User with validation error <br>
+        curl -s -X PUT -d '{"name":"UpdatedName", "password":"updatedPass"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/users/100005 --user admin@gmail.com:password
+    </li> <br>
+    <li>
+        get all Users with authentication error <br>
+        curl -s http://localhost:8080/voting/admin/users/
+    </li> <br>
+    <li>
+        get all Users with forbidden error <br>
+        curl -s http://localhost:8080/voting/admin/users/ --user simple@mail.ru:simple
+    </li> <br>
+    <li>
+        update User with unsafe http error <br>
+        curl -s -X PUT -d '{"name":"&lt;script&gt;alert(123)&lt;/script&gt;", "email":"new@gmail.com", "password":"updatedPass"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/users/100005 --user admin@gmail.com:password
+    </li> <br>
+</ul>
+
+<hr>
+
+<h2>/profile</h2>
+<ul>
+    <li>
+        get AuthorizedUser <br>
+        curl -s http://localhost:8080/voting/profile --user simple@mail.ru:simple
+    </li> <br>
+    <li>
+        register new User <br>
+        curl -s -X POST -d '{"name":"New", "email":"new@gmail.com", "password":"newPass"}' -H 'Content-Type:application/json;charset=UTF-8' curl -s http://localhost:8080/voting/profile/register
+    </li> <br>
+    <li>
+        update AuthorizedUser <br>
+        curl -s -X PUT -d '{"name":"UpdatedName", "email":"updatedmail@gmail.com", "password":"updatedPass"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/profile --user simple@mail.ru:simple
+    </li> <br>
+    <li>
+        delete AuthorizedUser <br>
+        curl -s -X DELETE http://localhost:8080/voting/profile --user volk27@mail.ru:NuZayatsPogodi
+    </li> <br>
+</ul>
+
+<hr>
+
+<h2>/admin/restaurants</h2>
+<ul>
+    <li>
+        get all Restaurants (Only name list) <br>
+        curl -s http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
+    </li> <br>
+    <li>
+        get Restaurant by id with all DayMenus <br>
+        curl -s http://localhost:8080/voting/admin/restaurants/103 --user admin@gmail.com:password
+    </li> <br>
+    <li>
+        delete Restaurant by id <br>
+        curl -s -X DELETE http://localhost:8080/voting/admin/restaurants/106 --user admin@gmail.com:password
+    </li> <br>
+    <li>
+        create Restaurant <br>
+        curl -s -X POST -d '{"name": "One More Bar"}' -H 'Content-Type:application/json;charset=UTF-8' curl -s http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
+    </li> <br>
+    <li>
+        update Restaurant <br>
+        curl -s -X PUT -d '{"id": "109", "name": "He is Always Here Bar"}' -H 'Content-Type:application/json;charset=UTF-8' curl -s http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
+    </li> <br>
+    <li>
+        get all Restaurants by day with DayMenus <br>
+        curl -s http://localhost:8080/voting/admin/restaurants/for?day=2019-07-01 --user admin@gmail.com:password
+    </li> <br>
+    <li>
+        get Restaurant by id and day with DayMenu <br>
+        curl -s http://localhost:8080/voting/admin/restaurants/102/for?day=2019-07-01 --user admin@gmail.com:password
+    </li> <br>
+</ul>
+
+<h3>error examples</h3>
+<ul>
+    <li>
+        not found Restaurant error <br>
+        curl -s http://localhost:8080/voting/admin/restaurants/99 --user admin@gmail.com:password
+    </li> <br>
+    <li>
+        create Restaurant with duplicate name error <br>
+        curl -s -X POST -d '{"name": "Why Not Bar"}' -H 'Content-Type:application/json;charset=UTF-8' curl -s http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
+    </li> <br>
+    <li>
+        update Restaurant with duplicate name error <br>
+        curl -s -X PUT -d '{"id": "109", "name": "Why Not Bar"}' -H 'Content-Type:application/json;charset=UTF-8' curl -s http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
+    </li> <br>
+    <li>
+        create Restaurant with validation error <br>
+        curl -s -X POST -d '{"name": "1"}' -H 'Content-Type:application/json;charset=UTF-8' curl -s http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
+    </li> <br>
+    <li>
+        get all Restaurants with authentication error <br>
+        curl -s http://localhost:8080/voting/admin/restaurants
+    </li> <br>
+    <li>
+        get all Restaurant with forbidden error <br>
+        curl -s http://localhost:8080/voting/admin/restaurants --user simple@mail.ru:simple
+    </li> <br>
+    <li>
+        create Restaurant with unsafe http error <br>
+        curl -s -X POST -d '{"name":"&lt;script&gt;alert(123)&lt;/script&gt;"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
+    </li> <br>
+</ul>
+
+<hr>
+
+<h2>/restaurants</h2>
+<ul>
+    <li>
+        vote for Restaurant <br>
+        curl -s -X POST http://localhost:8080/voting/restaurants/vote/108 --user simple@mail.ru:simple
+    </li> <br>
+    <li>
+        vote for Restaurant second time (Till 11 a.m. o'clock - changed the decision, after 11 a.m. it will not work) <br>
+        curl -s -X POST http://localhost:8080/voting/restaurants/vote/105 --user simple@mail.ru:simple <br>
+        curl -s -X POST http://localhost:8080/voting/restaurants/vote/106 --user simple@mail.ru:simple
+    </li> <br>
+    <li>
+        get all Dishes by Restaurant id; <br>
+        curl -s http://localhost:8080/voting/restaurants/108/all --user simple@mail.ru:simple
+    </li> <br>
+    <li>
+        get all Restaurants for current day with DayMenus <br>
+        curl -s http://localhost:8080/voting/restaurants/ --user simple@mail.ru:simple
+    </li> <br>
+    <li>
+        get Restaurant by id for current day with DayMenu <br>
+        curl -s http://localhost:8080/voting/restaurants/105 --user simple@mail.ru:simple
+    </li> <br>
+</ul>
+
 </body>
 </html>

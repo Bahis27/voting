@@ -1,0 +1,25 @@
+h1 {
+    background: none repeat scroll 0 0 #A6C9E2;
+    color: #0e159e;
+    font-size: 36px;
+    padding: 5px 20px;
+    margin: 6px 0;
+}
+
+h2 {
+    color: #0e159e;
+    font-size: 25px;
+    padding: 5px 20px;
+    margin: 6px 0;
+}
+
+h3 {
+    color: #707a9e;
+    font-size: 20px;
+    padding: 5px 20px;
+    margin: 6px 0;
+}
+
+hr {
+    color: #A6C9E2;
+}
