@@ -8,8 +8,8 @@ import java.util.Objects;
 @Entity
 @Table(name = "votes"
         , uniqueConstraints = {@UniqueConstraint(
-        columnNames = {"vote_day", "user_id"},
-        name = "votes_unique_voteday_userid_idx")
+        columnNames = {"vote_day", "user_id", "restaurant_id"},
+        name = "votes_unique_voteday_userid_restaurantid_idx")
 }
 )
 @IdClass(VoteKey.class)

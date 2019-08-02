@@ -33,9 +33,6 @@ import static ru.restaurant.voting.util.exception.ErrorType.WRONG_REQUEST;
 class UserRestaurantControllerTest extends AbstractControllerTest {
 
     @Autowired
-    private RestaurantService restaurantService;
-
-    @Autowired
     private VoteRepository voteRepository;
 
     private static final String REST_URL = UserRestaurantController.REST_URL + '/';

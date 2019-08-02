@@ -119,7 +119,7 @@ class RestaurantServiceTest extends AbstractServiceTest {
         LocalTime time1 = LocalTime.of(9, 0, 0);;
         Vote vote1 = restaurantService.vote(date, ADMIN_ID, RES1_ID, time1);
 
-        LocalTime time2 = LocalTime.of(10, 59, 0);
+        LocalTime time2 = LocalTime.of(10, 0, 0);
         Vote vote2 = restaurantService.vote(date, ADMIN_ID, RES2_ID, time2);
 
         Vote expected = voteRepository.findByUserIdAndVotingDate(ADMIN_ID, date).orElse(null);
