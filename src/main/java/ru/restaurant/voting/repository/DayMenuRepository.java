@@ -10,7 +10,6 @@ import ru.restaurant.voting.model.DayMenu;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @Transactional(readOnly = true)
@@ -40,10 +39,10 @@ public interface DayMenuRepository extends JpaRepository<DayMenu, Integer> {
     @Override
     DayMenu save(DayMenu dayMenu);
 
-    @Override
-    Optional<DayMenu> findById(Integer id);
-
     @Transactional
     @Query("SELECT DISTINCT m FROM DayMenu m JOIN FETCH m.dish WHERE m.restaurant.id=:id AND m.menuDate=:date")
-    List<DayMenu> findAllForDateAndRestaurantId(@Param("id") int restaurantId, @Param("date") LocalDate date);
+    List<DayMenu> getAllForDateAndRestaurantId(@Param("id") int restaurantId, @Param("date") LocalDate date);
+
+    @Query("SELECT DISTINCT m FROM DayMenu m JOIN FETCH m.dish JOIN FETCH m.restaurant WHERE m.id=:id")
+    DayMenu get(@Param("id") int id);
 }

@@ -14,7 +14,7 @@ public interface DayMenuService {
 
     void delete(int id) throws NotFoundException;
 
-    void deleteAll(int restaurantId, LocalDate date) throws NotFoundException;
+    void deleteAllForDay(int restaurantId, LocalDate date) throws NotFoundException;
 
     DayMenu get(int id) throws NotFoundException;
 

@@ -34,6 +34,10 @@ public class DayMenu extends AbstractBaseEntity {
     public DayMenu() {
     }
 
+    public DayMenu(DayMenu menu) {
+        this(menu.getId(), menu.getMenuDate(), menu.getRestaurant(), menu.getDish());
+    }
+
     public DayMenu(Integer id, @NotNull LocalDate menuDate, Restaurant restaurant, Dish dish) {
         super(id);
         this.menuDate = menuDate;

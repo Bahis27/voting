@@ -15,7 +15,6 @@ import static ru.restaurant.voting.util.ValidationUtil.checkNotFoundWithId;
 @Service
 public class DayMenuServiceImpl implements DayMenuService {
 
-
     private final DayMenuRepository dayMenuRepository;
 
     @Autowired
@@ -42,17 +41,17 @@ public class DayMenuServiceImpl implements DayMenuService {
     }
 
     @Override
-    public void deleteAll(int restaurantId, LocalDate date) throws NotFoundException {
+    public void deleteAllForDay(int restaurantId, LocalDate date) throws NotFoundException {
         checkNotFoundWithId(dayMenuRepository.deleteAll(restaurantId, date), restaurantId);
     }
 
     @Override
     public DayMenu get(int id) throws NotFoundException {
-        return checkNotFoundWithId(dayMenuRepository.findById(id).orElse(null), id);
+        return checkNotFoundWithId(dayMenuRepository.get(id), id);
     }
 
     @Override
     public List<DayMenu> getAllForDay(int restaurantId, LocalDate date) throws NotFoundException {
-        return dayMenuRepository.findAllForDateAndRestaurantId(restaurantId, date);
+        return dayMenuRepository.getAllForDateAndRestaurantId(restaurantId, date);
     }
 }
