@@ -9,8 +9,10 @@ import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.model.Vote;
 import ru.restaurant.voting.repository.VoteRepository;
 import ru.restaurant.voting.service.restaurant.RestaurantService;
-import ru.restaurant.voting.to.RestaurantTo;
+import ru.restaurant.voting.to.RestaurantNamesTo;
+import ru.restaurant.voting.to.RestaurantToWithStats;
 import ru.restaurant.voting.util.exception.NotFoundException;
+import ru.restaurant.voting.util.exception.RestaurantHasNotMenuForThisDay;
 import ru.restaurant.voting.util.exception.UserAlreadyHasVotedException;
 
 import java.time.LocalDate;
@@ -77,7 +79,7 @@ class RestaurantServiceTest extends AbstractServiceTest {
 
     @Test
     void getAll() throws Exception {
-        List<RestaurantTo> all = restaurantService.getAll();
+        List<RestaurantNamesTo> all = restaurantService.getAll();
         assertMatch(all, TestUtil.toToList(RESTAURANTS));
     }
 
@@ -103,6 +105,12 @@ class RestaurantServiceTest extends AbstractServiceTest {
     void getAllForEmptyDay() throws Exception {
         List<Restaurant> restaurants = restaurantService.getAllForDay(LocalDate.parse("2019-07-05"));
         assertMatch(restaurants, List.of());
+    }
+
+    @Test
+    void voteForRestaurantWithOutDayMenu() throws Exception {
+        assertThrows(RestaurantHasNotMenuForThisDay.class, () ->
+                restaurantService.vote(LocalDate.of(2019, 7, 7), USER4_ID, RES9_ID, LocalTime.now()));
     }
 
     @Test
@@ -152,5 +160,27 @@ class RestaurantServiceTest extends AbstractServiceTest {
     void getAllDishes() throws Exception {
         List<Dish> dishes = restaurantService.getAllDishes(RES3_ID);
         assertThat(dishes).usingDefaultElementComparator().isEqualTo(RES3_DISHES);
+    }
+
+    @Test
+    void getStat() throws Exception {
+        assertEquals(restaurantService.getStat(RES8_ID), RES4_STAT);
+    }
+
+    @Test
+    void getStatForDay() throws Exception {
+        assertEquals(restaurantService.getStatForDay(LocalDate.of(2019, 7, 3), RES8_ID), RES4_STAT_20190703);
+    }
+
+    @Test
+    void getAllWithStats() throws Exception {
+        List<RestaurantToWithStats> allWithStats = restaurantService.getAllWithStats();
+        assertMatch(allWithStats, RESTAURANTS_WITH_STAT);
+    }
+
+    @Test
+    void getAllWithStatsForDay() throws Exception {
+        List<RestaurantToWithStats> allWithStatsForDay = restaurantService.getAllWithStatsForDay(LocalDate.of(2019, 7, 3));
+        assertMatch(allWithStatsForDay, RESTAURANTS_WITH_STAT_FORDAY);
     }
 }

@@ -9,7 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.restaurant.voting.TestUtil;
 import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.service.restaurant.RestaurantService;
-import ru.restaurant.voting.to.RestaurantTo;
+import ru.restaurant.voting.to.RestaurantNamesTo;
+import ru.restaurant.voting.to.RestaurantToWithStats;
 import ru.restaurant.voting.util.exception.NotFoundException;
 import ru.restaurant.voting.web.AbstractControllerTest;
 import ru.restaurant.voting.web.ExceptionInfoHandler;
@@ -17,6 +18,7 @@ import ru.restaurant.voting.web.json.JsonUtil;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -53,7 +55,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void createHtmlUnsafe() throws Exception {
+    void testCreateHtmlUnsafe() throws Exception {
         Restaurant invalid = new Restaurant(null, "<script>alert(123)</script>");
 
         mockMvc.perform(post(REST_URL)
@@ -153,7 +155,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(RestaurantTo.class, TestUtil.toToList(RESTAURANTS)));
+                .andExpect(contentJson(RestaurantNamesTo.class, TestUtil.toToList(RESTAURANTS)));
     }
 
     @Test
@@ -186,7 +188,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void createInvalid() throws Exception {
+    void testCreateInvalid() throws Exception {
         Restaurant invalid = new Restaurant(123, "not null id");
         mockMvc.perform(post(REST_URL)
                 .with(userHttpBasic(ADMIN))
@@ -198,7 +200,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void updateInvalidNullName() throws Exception {
+    void testUpdateInvalidNullName() throws Exception {
         Restaurant invalid = new Restaurant(RES3);
         invalid.setName(null);
         mockMvc.perform(put(REST_URL)
@@ -212,7 +214,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void updateInvalidShortName() throws Exception {
+    void testUpdateInvalidShortName() throws Exception {
         Restaurant invalid = new Restaurant(RES3);
         invalid.setName("z");
         mockMvc.perform(put(REST_URL)
@@ -227,7 +229,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
 
     @Test
     @Transactional(propagation = Propagation.NEVER)
-    void createDuplicateName() throws Exception {
+    void testCreateDuplicateName() throws Exception {
         Restaurant duplicate = new Restaurant(null, RES5.getName());
         mockMvc.perform(post(REST_URL)
                 .with(userHttpBasic(ADMIN))
@@ -241,7 +243,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
 
     @Test
     @Transactional(propagation = Propagation.NEVER)
-    void updateDuplicateName() throws Exception {
+    void testUpdateDuplicateName() throws Exception {
         Restaurant duplicate = new Restaurant(RES5_ID, RES6.getName());
         mockMvc.perform(put(REST_URL)
                 .with(userHttpBasic(ADMIN))
@@ -251,5 +253,45 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .andExpect(errorType(VALIDATION_ERROR))
                 .andDo(print())
                 .andExpect(detailMessage(ExceptionInfoHandler.EXCEPTION_DUPLICATE_RESTAURANT_NAME));
+    }
+
+    @Test
+    void testGetStatForDay() throws Exception {
+        mockMvc.perform(get(REST_URL + RES8_ID + "/stat/for?day=2019-07-03")
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(result -> assertThat(TestUtil.readFromJsonMvcResult(result, Integer.class)).isEqualTo(3))
+                .andDo(print());
+    }
+
+    @Test
+    void testGetStat() throws Exception {
+        mockMvc.perform(get(REST_URL + RES8_ID + "/stat")
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(result -> assertThat(TestUtil.readFromJsonMvcResult(result, Integer.class)).isEqualTo(4))
+                .andDo(print());
+    }
+
+    @Test
+    void testGetAllWithStat() throws Exception {
+        mockMvc.perform(get(REST_URL + "/stat")
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(contentJson(RestaurantToWithStats.class, RESTAURANTS_WITH_STAT))
+                .andDo(print());
+    }
+
+    @Test
+    void testGetAllWithStatForDay() throws Exception {
+        mockMvc.perform(get(REST_URL + "stat/for?day=2019-07-03")
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(contentJson(RestaurantToWithStats.class, RESTAURANTS_WITH_STAT_FORDAY))
+                .andDo(print());
     }
 }

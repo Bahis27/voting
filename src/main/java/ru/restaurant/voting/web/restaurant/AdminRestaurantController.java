@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.restaurant.voting.View;
 import ru.restaurant.voting.model.Restaurant;
-import ru.restaurant.voting.to.RestaurantTo;
+import ru.restaurant.voting.to.RestaurantNamesTo;
+import ru.restaurant.voting.to.RestaurantToWithStats;
 
 import java.net.URI;
 import java.time.LocalDate;
@@ -53,7 +54,7 @@ public class AdminRestaurantController extends AbstractRestaurantController {
 
     @Override
     @GetMapping
-    public List<RestaurantTo> getAll() {
+    public List<RestaurantNamesTo> getAll() {
         return super.getAll();
     }
 
@@ -67,5 +68,29 @@ public class AdminRestaurantController extends AbstractRestaurantController {
     @GetMapping("/for")
     public List<Restaurant> getAllForDay(@RequestParam LocalDate day) {
         return super.getAllForDay(day);
+    }
+
+    @Override
+    @GetMapping("/{id}/stat/for")
+    public int getStatForDay(@RequestParam LocalDate day, @PathVariable int id) {
+        return super.getStatForDay(day, id);
+    }
+
+    @Override
+    @GetMapping("/{id}/stat")
+    public int getStat(@PathVariable int id) {
+        return super.getStat(id);
+    }
+
+    @Override
+    @GetMapping("/stat")
+    public List<RestaurantToWithStats> getAllWithStat() {
+        return super.getAllWithStat();
+    }
+
+    @Override
+    @GetMapping("/stat/for")
+    public List<RestaurantToWithStats> getAllWithStatForDay(@RequestParam LocalDate day) {
+        return super.getAllWithStatForDay(day);
     }
 }

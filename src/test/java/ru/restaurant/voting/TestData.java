@@ -2,6 +2,7 @@ package ru.restaurant.voting;
 
 import org.springframework.test.web.servlet.ResultMatcher;
 import ru.restaurant.voting.model.*;
+import ru.restaurant.voting.to.RestaurantToWithStats;
 import ru.restaurant.voting.web.json.JsonUtil;
 
 import java.time.LocalDate;
@@ -54,6 +55,34 @@ public class TestData {
     public static final Restaurant RES9 = new Restaurant(RES9_ID, "He is Not Here Bar");
 
     public static final List<Restaurant> RESTAURANTS = List.of(RES1, RES2, RES3, RES4, RES5, RES6, RES7, RES8, RES9);
+
+    public static final RestaurantToWithStats RES1_TO_WS = new RestaurantToWithStats(RES1_ID, "Kale Me Crazy", 4);
+    public static final RestaurantToWithStats RES2_TO_WS = new RestaurantToWithStats(RES2_ID, "Wok And Roll", 1);
+    public static final RestaurantToWithStats RES3_TO_WS = new RestaurantToWithStats(RES3_ID, "Life of Pie", 8);
+    public static final RestaurantToWithStats RES4_TO_WS = new RestaurantToWithStats(RES4_ID, "Lord of the Fries", 1);
+    public static final RestaurantToWithStats RES5_TO_WS = new RestaurantToWithStats(RES5_ID, "Pita Pan", 2);
+    public static final RestaurantToWithStats RES6_TO_WS = new RestaurantToWithStats(RES6_ID, "Why Not Bar", 1);
+    public static final RestaurantToWithStats RES7_TO_WS = new RestaurantToWithStats(RES7_ID, "Planet of the Crepes", 1);
+    public static final RestaurantToWithStats RES8_TO_WS = new RestaurantToWithStats(RES8_ID, "Thai Tanic", 4);
+    public static final RestaurantToWithStats RES9_TO_WS = new RestaurantToWithStats(RES9_ID, "He is Not Here Bar", 2);
+
+    public static final int RES4_STAT = 4;
+    public static final int RES4_STAT_20190703 = 3;
+
+    public static final List<RestaurantToWithStats> RESTAURANTS_WITH_STAT = List.of(RES3_TO_WS, RES1_TO_WS, RES8_TO_WS,
+            RES9_TO_WS, RES5_TO_WS, RES4_TO_WS, RES7_TO_WS, RES6_TO_WS, RES2_TO_WS);
+
+    public static final RestaurantToWithStats RES1_TO_WS_FORDATE = new RestaurantToWithStats(RES1_ID, "Kale Me Crazy", 1);
+    public static final RestaurantToWithStats RES2_TO_WS_FORDATE = new RestaurantToWithStats(RES2_ID, "Wok And Roll", 0);
+    public static final RestaurantToWithStats RES3_TO_WS_FORDATE = new RestaurantToWithStats(RES3_ID, "Life of Pie", 3);
+    public static final RestaurantToWithStats RES4_TO_WS_FORDATE = new RestaurantToWithStats(RES4_ID, "Lord of the Fries", 1);
+    public static final RestaurantToWithStats RES5_TO_WS_FORDATE = new RestaurantToWithStats(RES5_ID, "Pita Pan", 0);
+    public static final RestaurantToWithStats RES7_TO_WS_FORDATE = new RestaurantToWithStats(RES7_ID, "Planet of the Crepes", 0);
+    public static final RestaurantToWithStats RES8_TO_WS_FORDATE = new RestaurantToWithStats(RES8_ID, "Thai Tanic", 3);
+    public static final RestaurantToWithStats RES9_TO_WS_FORDATE = new RestaurantToWithStats(RES9_ID, "He is Not Here Bar", 0);
+
+    public static final List<RestaurantToWithStats> RESTAURANTS_WITH_STAT_FORDAY = List.of(RES3_TO_WS_FORDATE, RES8_TO_WS_FORDATE, RES1_TO_WS_FORDATE,
+            RES4_TO_WS_FORDATE, RES9_TO_WS_FORDATE, RES5_TO_WS_FORDATE, RES7_TO_WS_FORDATE, RES2_TO_WS_FORDATE);
 
     public static final int START_DISHES_SEQ = 1000;
     public static final int DISH1_ID = START_DISHES_SEQ + 1;

@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class RestaurantTo extends BaseTo implements Serializable {
+public class RestaurantNamesTo extends BaseTo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotBlank
@@ -16,15 +16,15 @@ public class RestaurantTo extends BaseTo implements Serializable {
     @SafeHtml
     private String name;
 
-    public RestaurantTo() {
+    public RestaurantNamesTo() {
     }
 
-    public RestaurantTo(Integer id, @NotBlank @Size(min = 2, max = 100) @SafeHtml String name) {
+    public RestaurantNamesTo(Integer id, @NotBlank @Size(min = 2, max = 100) @SafeHtml String name) {
         super(id);
         this.name = name;
     }
 
-    public RestaurantTo(Restaurant restaurant) {
+    public RestaurantNamesTo(Restaurant restaurant) {
         super(restaurant.getId());
         this.name = restaurant.getName();
     }
@@ -40,8 +40,8 @@ public class RestaurantTo extends BaseTo implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof RestaurantTo)) return false;
-        RestaurantTo that = (RestaurantTo) o;
+        if (!(o instanceof RestaurantNamesTo)) return false;
+        RestaurantNamesTo that = (RestaurantNamesTo) o;
         return getId().equals(that.getId()) &&
                 getName().equals(that.getName());
     }
