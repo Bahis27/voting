@@ -6,8 +6,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import ru.restaurant.voting.TestUtil;
 import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.service.restaurant.RestaurantService;
+import ru.restaurant.voting.to.RestaurantTo;
 import ru.restaurant.voting.util.exception.NotFoundException;
 import ru.restaurant.voting.web.AbstractControllerTest;
 import ru.restaurant.voting.web.ExceptionInfoHandler;
@@ -20,10 +22,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.restaurant.voting.RestaurantTestData.*;
+import static ru.restaurant.voting.TestData.*;
 import static ru.restaurant.voting.TestUtil.*;
-import static ru.restaurant.voting.UserTestData.ADMIN;
-import static ru.restaurant.voting.UserTestData.USER5;
 import static ru.restaurant.voting.util.exception.ErrorType.DATA_NOT_FOUND;
 import static ru.restaurant.voting.util.exception.ErrorType.VALIDATION_ERROR;
 
@@ -99,7 +99,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .andExpect(status().isNoContent())
                 .andDo(print());
 
-        assertMatch(restaurantService.getAll(), RES2, RES3, RES4, RES5, RES6, RES7, RES8, RES9);
+        assertMatch(TestUtil.toEntityList(restaurantService.getAll()), RES2, RES3, RES4, RES5, RES6, RES7, RES8, RES9);
         assertThrows(NotFoundException.class, () -> restaurantService.get(RES1_ID));
     }
 
@@ -119,7 +119,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(result -> assertMatch(readFromJsonMvcResult(result, Restaurant.class), RES7));
+                .andExpect(result -> assertMatch(readFromJsonMvcResult(result, Restaurant.class), RES7, "dayMenus"));
     }
 
     @Test
@@ -153,7 +153,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(toToList(RESTAURANTS)));
+                .andExpect(contentJson(RestaurantTo.class, TestUtil.toToList(RESTAURANTS)));
     }
 
     @Test
@@ -163,7 +163,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(List.of(RES2)));
+                .andExpect(contentJson(Restaurant.class, List.of(RES2)));
     }
 
     @Test
@@ -182,7 +182,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(List.of(RES9, RES1, RES3, RES4, RES5, RES7, RES2)));
+                .andExpect(contentJson(Restaurant.class, List.of(RES9, RES1, RES3, RES4, RES5, RES7, RES2)));
     }
 
     @Test

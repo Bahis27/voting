@@ -3,6 +3,7 @@ package ru.restaurant.voting.service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import ru.restaurant.voting.TestUtil;
 import ru.restaurant.voting.model.Dish;
 import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.model.Vote;
@@ -18,8 +19,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-import static ru.restaurant.voting.RestaurantTestData.*;
-import static ru.restaurant.voting.UserTestData.ADMIN_ID;
+import static ru.restaurant.voting.TestData.*;
 
 class RestaurantServiceTest extends AbstractServiceTest {
 
@@ -48,13 +48,13 @@ class RestaurantServiceTest extends AbstractServiceTest {
         Restaurant updated = new Restaurant(RES4);
         updated.setName("updated");
         restaurantService.update(new Restaurant(updated));
-        assertMatch(updated, restaurantService.get(RES4_ID));
+        assertMatch(updated, restaurantService.get(RES4_ID), "dayMenus");
     }
 
     @Test
     void delete() throws Exception {
         restaurantService.delete(RES5_ID);
-        assertMatch(restaurantService.getAll(), RES1, RES2, RES3, RES4, RES6, RES7, RES8, RES9);
+        assertMatch(TestUtil.toEntityList(restaurantService.getAll()), RES1, RES2, RES3, RES4, RES6, RES7, RES8, RES9);
     }
 
     @Test
@@ -66,7 +66,7 @@ class RestaurantServiceTest extends AbstractServiceTest {
     @Test
     void get() throws Exception {
         Restaurant restaurant = restaurantService.get(RES5_ID);
-        assertMatch(restaurant, RES5);
+        assertMatch(restaurant, RES5, "dayMenus");
     }
 
     @Test
@@ -78,13 +78,13 @@ class RestaurantServiceTest extends AbstractServiceTest {
     @Test
     void getAll() throws Exception {
         List<RestaurantTo> all = restaurantService.getAll();
-        assertMatch(all, RESTAURANTS);
+        assertMatch(all, TestUtil.toToList(RESTAURANTS));
     }
 
     @Test
     void getForDay() throws Exception {
         Restaurant restaurant = restaurantService.getForDay(RES8_ID, LocalDate.parse("2019-07-03"));
-        assertMatch(restaurant, RES8);
+        assertMatch(restaurant, RES8, "dayMenus");
     }
 
     @Test

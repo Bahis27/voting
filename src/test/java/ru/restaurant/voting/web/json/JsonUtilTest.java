@@ -1,7 +1,7 @@
 package ru.restaurant.voting.web.json;
 
 import org.junit.jupiter.api.Test;
-import ru.restaurant.voting.UserTestData;
+import ru.restaurant.voting.TestData;
 import ru.restaurant.voting.model.User;
 
 import static org.hamcrest.CoreMatchers.containsString;
@@ -14,10 +14,10 @@ class JsonUtilTest {
 
     @Test
     void testWriteOnlyAccess() throws Exception {
-        String json = JsonUtil.writeValue(UserTestData.USER4);
+        String json = JsonUtil.writeValue(TestData.USER4);
         System.out.println(json);
         assertThat(json, not(containsString("password")));
-        String jsonWithPass = UserTestData.jsonWithPassword(UserTestData.USER4, "newPass");
+        String jsonWithPass = TestData.jsonWithPassword(TestData.USER4, "newPass");
         System.out.println(jsonWithPass);
         User user = JsonUtil.readValue(jsonWithPass, User.class);
         assertEquals(user.getPassword(), "newPass");

@@ -16,9 +16,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.restaurant.voting.TestUtil.readFromJson;
-import static ru.restaurant.voting.TestUtil.userHttpBasic;
-import static ru.restaurant.voting.UserTestData.*;
+import static ru.restaurant.voting.TestData.*;
+import static ru.restaurant.voting.TestUtil.*;
 import static ru.restaurant.voting.util.exception.ErrorType.VALIDATION_ERROR;
 import static ru.restaurant.voting.web.ExceptionInfoHandler.EXCEPTION_DUPLICATE_EMAIL;
 
@@ -34,7 +33,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 // https://jira.spring.io/browse/SPR-14472
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(ADMIN));
+                .andExpect(result -> assertMatch(readFromJsonMvcResult(result, User.class), ADMIN, "password", "registered"));
     }
 
     @Test
@@ -64,7 +63,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(USER6));
+                .andExpect(result -> assertMatch(readFromJsonMvcResult(result, User.class), USER6, "password", "registered"));
     }
 
     @Test
@@ -95,7 +94,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
                 .content(jsonWithPassword(updated, USER4.getPassword())))
                 .andExpect(status().isNoContent());
 
-        assertMatch(userService.get(USER4_ID), updated);
+        assertMatch(userService.get(USER4_ID), updated, "password", "registered");
     }
 
     @Test
@@ -110,7 +109,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
         User returned = readFromJson(action, User.class);
         expected.setId(returned.getId());
 
-        assertMatch(returned, expected);
+        assertMatch(returned, expected, "password", "registered");
         assertMatch(userService.getAll(), expected, ADMIN, USER5, USER1, USER4, USER3, USER7, USER8, USER6, USER2);
     }
 
@@ -120,7 +119,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(ADMIN, USER5, USER1, USER4, USER3, USER7, USER8, USER6, USER2));
+                .andExpect(contentJson(User.class, ADMIN, USER5, USER1, USER4, USER3, USER7, USER8, USER6, USER2));
     }
 
     @Test

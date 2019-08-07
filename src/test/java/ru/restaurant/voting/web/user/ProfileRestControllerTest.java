@@ -15,9 +15,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.restaurant.voting.TestUtil.readFromJson;
-import static ru.restaurant.voting.TestUtil.userHttpBasic;
-import static ru.restaurant.voting.UserTestData.*;
+import static ru.restaurant.voting.TestData.*;
+import static ru.restaurant.voting.TestUtil.*;
 import static ru.restaurant.voting.util.exception.ErrorType.*;
 import static ru.restaurant.voting.web.user.ProfileRestController.REST_URL;
 import static ru.restaurant.voting.web.ExceptionInfoHandler.EXCEPTION_DUPLICATE_EMAIL;
@@ -30,7 +29,7 @@ class ProfileRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(USER1)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(USER1));
+                .andExpect(result -> assertMatch(readFromJsonMvcResult(result, User.class), USER1, "password", "registered"));
     }
 
     @Test
@@ -60,8 +59,8 @@ class ProfileRestControllerTest extends AbstractControllerTest {
         User created = UserUtil.createNewFromTo(createdTo);
         created.setId(returned.getId());
 
-        assertMatch(returned, created);
-        assertMatch(userService.getByEmail("newemail@ya.ru"), created);
+        assertMatch(returned, created, "password", "registered");
+        assertMatch(userService.getByEmail("newemail@ya.ru"), created, "password", "registered");
     }
 
     @Test
@@ -73,7 +72,7 @@ class ProfileRestControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isNoContent());
 
-        assertMatch(userService.getByEmail("newemail@ya.ru"), UserUtil.updateFromTo(new User(USER1), updatedTo));
+        assertMatch(userService.getByEmail("newemail@ya.ru"), UserUtil.updateFromTo(new User(USER1), updatedTo), "password", "registered");
     }
 
     @Test

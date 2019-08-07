@@ -33,7 +33,7 @@ public abstract class AbstractRestaurantController {
     }
 
     public void delete(int id) {
-        log.info("delete with id={}", id);
+        log.info("deleteWithId with id={}", id);
         service.delete(id);
     }
 

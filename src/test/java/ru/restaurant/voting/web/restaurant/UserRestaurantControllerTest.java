@@ -9,7 +9,6 @@ import ru.restaurant.voting.model.Dish;
 import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.model.Vote;
 import ru.restaurant.voting.repository.VoteRepository;
-import ru.restaurant.voting.service.restaurant.RestaurantService;
 import ru.restaurant.voting.web.AbstractControllerTest;
 
 import java.time.LocalDate;
@@ -22,11 +21,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.restaurant.voting.RestaurantTestData.contentJson;
-import static ru.restaurant.voting.RestaurantTestData.*;
+import static ru.restaurant.voting.TestData.*;
 import static ru.restaurant.voting.TestUtil.readFromJson;
 import static ru.restaurant.voting.TestUtil.userHttpBasic;
-import static ru.restaurant.voting.UserTestData.*;
 import static ru.restaurant.voting.util.exception.ErrorType.DATA_NOT_FOUND;
 import static ru.restaurant.voting.util.exception.ErrorType.WRONG_REQUEST;
 
@@ -59,7 +56,7 @@ class UserRestaurantControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(USER5)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(new ArrayList<Restaurant>()))
+                .andExpect(contentJson(Restaurant.class, new ArrayList<Restaurant>()))
                 .andDo(print());
     }
 

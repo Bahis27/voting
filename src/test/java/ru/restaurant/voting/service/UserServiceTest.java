@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static ru.restaurant.voting.UserTestData.*;
+import static ru.restaurant.voting.TestData.*;
 
 public class UserServiceTest extends AbstractServiceTest {
 
@@ -41,7 +41,7 @@ public class UserServiceTest extends AbstractServiceTest {
         User newUser = new User(null, "New", "new@gmail.com", "newPass", false, new Date(), Collections.singleton(Role.ROLE_USER));
         User created = userService.create(new User(newUser));
         newUser.setId(created.getId());
-        assertMatch(newUser, created);
+        assertMatch(newUser, created, "password", "registered");
         assertMatch(userService.getAll(), newUser, ADMIN, USER5, USER1, USER4, USER3, USER7, USER8, USER6, USER2);
     }
 
@@ -66,7 +66,7 @@ public class UserServiceTest extends AbstractServiceTest {
     @Test
     void get() throws Exception {
         User user = userService.get(ADMIN_ID);
-        assertMatch(user, ADMIN);
+        assertMatch(user, ADMIN, "password", "registered");
     }
 
     @Test
@@ -78,7 +78,7 @@ public class UserServiceTest extends AbstractServiceTest {
     @Test
     void getByEmail() throws Exception {
         User user = userService.getByEmail("friendlyspidey@gmail.com");
-        assertMatch(user, USER6);
+        assertMatch(user, USER6, "password", "registered");
     }
 
     @Test
@@ -87,7 +87,7 @@ public class UserServiceTest extends AbstractServiceTest {
         updated.setName("Venom");
         updated.setRoles(Collections.singletonList(Role.ROLE_ADMIN));
         userService.update(new User(updated));
-        assertMatch(userService.get(USER6_ID), updated);
+        assertMatch(userService.get(USER6_ID), updated, "password", "registered");
     }
 
     @Test
