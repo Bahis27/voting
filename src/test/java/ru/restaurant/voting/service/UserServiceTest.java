@@ -42,7 +42,7 @@ public class UserServiceTest extends AbstractServiceTest {
         User created = userService.create(new User(newUser));
         newUser.setId(created.getId());
         assertMatch(newUser, created, "password", "registered");
-        assertMatch(userService.getAll(), newUser, ADMIN, USER5, USER1, USER4, USER3, USER7, USER8, USER6, USER2);
+        assertMatch(userService.getAll(), ADMIN, USER5, USER1, USER4, newUser, USER3, USER7, USER8, USER6, USER2);
     }
 
     @Test
