@@ -82,6 +82,8 @@ curl -s http://localhost:8080/voting/admin/restaurants/for?day=2019-07-01 --user
 ###### get Restaurant by id and day with DayMenu
 curl -s http://localhost:8080/voting/admin/restaurants/102/for?day=2019-07-01 --user admin@gmail.com:password
 
+### statistics
+
 ###### get all Restaurants with statistics
 curl -s http://localhost:8080/voting/admin/restaurants/stat --user admin@gmail.com:password
 
@@ -93,6 +95,23 @@ curl -s http://localhost:8080/voting/admin/restaurants/103/stat --user admin@gma
 
 ###### get quantity of votes for Restaurant for current day
 curl -s http://localhost:8080/voting/admin/restaurants/103/stat/for?day=2019-07-03 --user admin@gmail.com:password
+
+### dishes
+
+###### get all Dishes for Restaurant
+curl -s http://localhost:8080/voting/admin/restaurants/102/dishes --user admin@gmail.com:password
+
+###### get Dish for Restaurant by id
+curl -s http://localhost:8080/voting/admin/restaurants/102/dishes/1006 --user admin@gmail.com:password
+
+###### delete Dish for Restaurant by id
+curl -s -X DELETE http://localhost:8080/voting/admin/restaurants/109/dishes/1025 --user admin@gmail.com:password
+
+###### create Dish for Restaurant
+curl -s -X POST -d '{"name": "Yummy", "price": "100500"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/dishes --user admin@gmail.com:password
+
+###### update Dish for Restaurant
+curl -s -X PUT -d '{"id": "1027", "name": "Neapolitan Pizza", "price": "500"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/dishes --user admin@gmail.com:password
 
 ### error examples
 
@@ -116,6 +135,9 @@ curl -s http://localhost:8080/voting/admin/restaurants --user simple@mail.ru:sim
 
 ###### create Restaurant with unsafe http error
 curl -s -X POST -d '{"name":"<script>alert(123)</script>"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
+
+###### get Dish for not this Restaurant by id
+curl -s http://localhost:8080/voting/admin/restaurants/107/dishes/1006 --user admin@gmail.com:password
 
 <hr>
 

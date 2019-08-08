@@ -29,10 +29,7 @@ public class DishServiceImpl implements DishService {
     @Override
     public Dish create(Dish dish, int restaurantId) {
         Assert.notNull(dish, "dish must not be null");
-        if (!dish.isNew() && get(dish.getId(), restaurantId) == null) {
-            return null;
-        }
-        dish.setRestaurant(restaurantRepository.getFullById(restaurantId));
+        dish.setRestaurant(restaurantRepository.findById(restaurantId).orElse(null));
         return dishRepository.save(dish);
     }
 
@@ -41,7 +38,7 @@ public class DishServiceImpl implements DishService {
     public void update(Dish dish, int restaurantId) {
         Assert.notNull(dish, "dish must not be null");
         checkNotFoundWithId(dishRepository.get(dish.getId(), restaurantId), dish.getId());
-        dish.setRestaurant(restaurantRepository.getFullById(restaurantId));
+        dish.setRestaurant(restaurantRepository.findById(restaurantId).orElse(null));
         dishRepository.save(dish);
     }
 

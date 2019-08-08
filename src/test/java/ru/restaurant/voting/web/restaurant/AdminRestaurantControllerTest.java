@@ -7,7 +7,9 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.restaurant.voting.TestUtil;
+import ru.restaurant.voting.model.Dish;
 import ru.restaurant.voting.model.Restaurant;
+import ru.restaurant.voting.service.Dish.DishService;
 import ru.restaurant.voting.service.restaurant.RestaurantService;
 import ru.restaurant.voting.to.RestaurantTo;
 import ru.restaurant.voting.to.RestaurantToWithStats;
@@ -33,6 +35,9 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
 
     @Autowired
     private RestaurantService restaurantService;
+
+    @Autowired
+    private DishService dishService;
 
     private static final String REST_URL = AdminRestaurantController.REST_URL + '/';
 
@@ -293,5 +298,76 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(contentJson(RestaurantToWithStats.class, RESTAURANTS_WITH_STAT_FORDAY))
                 .andDo(print());
+    }
+
+    @Test
+    void testGetAllDishes() throws Exception {
+        mockMvc.perform(get(REST_URL + RES3_ID + "/dishes")
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(contentJson(Dish.class, RES3_DISHES))
+                .andDo(print());
+    }
+
+    @Test
+    void testGetDish() throws Exception {
+        mockMvc.perform(get(REST_URL + RES3_ID + "/dishes/" + DISH7_ID)
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(result -> assertMatch(readFromJsonMvcResult(result, Dish.class), DISH7, "restaurant"))
+                .andDo(print());
+    }
+
+    @Test
+    void testGetNotRestaurantsDish() throws Exception {
+        mockMvc.perform(get(REST_URL + RES3_ID + "/dishes/" + DISH15_ID)
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(errorType(DATA_NOT_FOUND))
+                .andDo(print());
+    }
+
+    @Test
+    void testDeleteDish() throws Exception {
+        mockMvc.perform(delete(REST_URL + RES3_ID + "/dishes/" + DISH7_ID)
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isNoContent())
+                .andDo(print());
+
+        assertMatch(dishService.getAll(RES3_ID), DISH8, DISH9);
+        assertThrows(NotFoundException.class, () -> dishService.get(DISH7_ID, RES3_ID));
+    }
+
+    @Test
+    void testCreateDish() throws Exception {
+        Dish created = new Dish(null, "Yummy", 100500);
+        ResultActions action = mockMvc.perform(post(REST_URL + RES9_ID + "/dishes")
+                .with(userHttpBasic(ADMIN))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(created)))
+                .andExpect(status().isOk())
+                .andDo(print());
+
+        Dish returned = readFromJson(action, Dish.class);
+        created.setId(returned.getId());
+        assertMatch(created, returned, "restaurant");
+
+        Dish saved = dishService.get(returned.getId(), RES9_ID);
+        assertMatch(returned, saved, "restaurant");
+    }
+
+    @Test
+    void testUpdateDish() throws Exception {
+        Dish updated = new Dish(DISH11_ID, "Updated Dish", 700);
+        mockMvc.perform(put(REST_URL + RES4_ID + "/dishes")
+                .with(userHttpBasic(ADMIN))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(updated)))
+                .andExpect(status().isNoContent())
+                .andDo(print());
+
+        assertMatch(dishService.get(DISH11_ID, RES4_ID), updated, "restaurant");
     }
 }
