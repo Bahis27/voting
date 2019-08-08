@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.restaurant.voting.TestUtil;
 import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.service.restaurant.RestaurantService;
-import ru.restaurant.voting.to.RestaurantNamesTo;
+import ru.restaurant.voting.to.RestaurantTo;
 import ru.restaurant.voting.to.RestaurantToWithStats;
 import ru.restaurant.voting.util.exception.NotFoundException;
 import ru.restaurant.voting.web.AbstractControllerTest;
@@ -155,7 +155,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(RestaurantNamesTo.class, TestUtil.toToList(RESTAURANTS)));
+                .andExpect(contentJson(RestaurantTo.class, TestUtil.toToList(RESTAURANTS)));
     }
 
     @Test

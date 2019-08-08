@@ -11,7 +11,6 @@ import ru.restaurant.voting.to.RestaurantToWithStats;
 import ru.restaurant.voting.web.AbstractControllerTest;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -75,16 +74,6 @@ class UserRestaurantControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void testGetAllDishes() throws Exception {
-        mockMvc.perform(get(REST_URL + RES3_ID + "/all")
-                .with(userHttpBasic(USER6)))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(result -> assertThat(TestUtil.readListFromJsonMvcResult(result, Dish.class)).isEqualTo(RES3_DISHES))
-                .andDo(print());
-    }
-
-    @Test
     void testGetStatForDay() throws Exception {
         mockMvc.perform(get(REST_URL + RES5_ID + "/stat")
                 .with(userHttpBasic(USER3)))
@@ -101,6 +90,16 @@ class UserRestaurantControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(result -> assertThat(TestUtil.readListFromJsonMvcResult(result, RestaurantToWithStats.class).isEmpty()))
+                .andDo(print());
+    }
+
+    @Test
+    void testGetAllDishes() throws Exception {
+        mockMvc.perform(get(REST_URL + RES3_ID + "/dishes")
+                .with(userHttpBasic(USER6)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(result -> assertThat(TestUtil.readListFromJsonMvcResult(result, Dish.class)).isEqualTo(RES3_DISHES))
                 .andDo(print());
     }
 }

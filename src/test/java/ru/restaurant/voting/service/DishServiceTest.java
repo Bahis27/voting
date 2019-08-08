@@ -40,32 +40,32 @@ public class DishServiceTest extends AbstractServiceTest {
         Dish updated = new Dish(DISH7);
         updated.setPrice(500);
         dishService.update(new Dish(updated));
-        assertMatch(updated, dishService.get(DISH7_ID), "dayMenus");
+        assertMatch(updated, dishService.get(DISH7_ID, RES3_ID), "dayMenus");
     }
 
     @Test
     void delete() throws Exception {
-        dishService.delete(DISH15_ID);
+        dishService.delete(DISH15_ID, RES5_ID);
         List<Dish> dishes = dishService.getAll(RES5_ID);
         assertFalse(dishes.contains(DISH15));
     }
 
     @Test
-    void deleteNotFound() throws Exception {
+    void deleteNotRestaurantDish() throws Exception {
         assertThrows(NotFoundException.class, () ->
-                dishService.delete(11));
+                dishService.delete(DISH1_ID,RES9_ID));
     }
 
     @Test
     void get() throws Exception {
-        Dish dish = dishService.get(DISH17_ID);
-        assertMatch(dish, DISH17, "dayMenus");
+        Dish dish = dishService.get(DISH20_ID, RES7_ID);
+        assertMatch(dish, DISH20, "dayMenus");
     }
 
     @Test
-    void getNotFound() throws Exception {
+    void getNotRestaurantsDish() throws Exception {
         assertThrows(NotFoundException.class, () ->
-                dishService.get(25));
+                dishService.get(DISH20_ID, RES9_ID));
     }
 
     @Test

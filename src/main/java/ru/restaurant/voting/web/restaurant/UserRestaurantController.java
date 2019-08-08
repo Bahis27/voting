@@ -40,12 +40,6 @@ public class UserRestaurantController extends AbstractRestaurantController {
         return ResponseEntity.created(uriOfNewResource).body(vote);
     }
 
-    @Override
-    @GetMapping("/{id}/all")
-    public List<Dish> getAllDishes(@PathVariable int id) {
-        return super.getAllDishes(id);
-    }
-
     @GetMapping("/{id}/stat")
     public int getStatForDay(@PathVariable int id) {
         return super.getStatForDay(null, id);
@@ -54,5 +48,11 @@ public class UserRestaurantController extends AbstractRestaurantController {
     @GetMapping("/stat")
     public List<RestaurantToWithStats> getAllWithStatForDay() {
         return super.getAllWithStatForDay(null);
+    }
+
+    @Override
+    @GetMapping("/{id}/dishes")
+    public List<Dish> getAllDishes(@PathVariable int id) {
+        return super.getAllDishes(id);
     }
 }

@@ -4,12 +4,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import ru.restaurant.voting.TestUtil;
-import ru.restaurant.voting.model.Dish;
 import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.model.Vote;
 import ru.restaurant.voting.repository.VoteRepository;
 import ru.restaurant.voting.service.restaurant.RestaurantService;
-import ru.restaurant.voting.to.RestaurantNamesTo;
+import ru.restaurant.voting.to.RestaurantTo;
 import ru.restaurant.voting.to.RestaurantToWithStats;
 import ru.restaurant.voting.util.exception.NotFoundException;
 import ru.restaurant.voting.util.exception.RestaurantHasNotMenuForThisDay;
@@ -19,7 +18,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static ru.restaurant.voting.TestData.*;
 
@@ -79,7 +77,7 @@ class RestaurantServiceTest extends AbstractServiceTest {
 
     @Test
     void getAll() throws Exception {
-        List<RestaurantNamesTo> all = restaurantService.getAll();
+        List<RestaurantTo> all = restaurantService.getAll();
         assertMatch(all, TestUtil.toToList(RESTAURANTS));
     }
 
@@ -154,12 +152,6 @@ class RestaurantServiceTest extends AbstractServiceTest {
                 restaurantService.vote(date, ADMIN_ID, RES4_ID, time2));
 
         assertEquals(expected, voteRepository.findByUserIdAndVotingDate(ADMIN_ID, date).orElse(null));
-    }
-
-    @Test
-    void getAllDishes() throws Exception {
-        List<Dish> dishes = restaurantService.getAllDishes(RES3_ID);
-        assertThat(dishes).usingDefaultElementComparator().isEqualTo(RES3_DISHES);
     }
 
     @Test

@@ -4,14 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
-import ru.restaurant.voting.model.Dish;
 import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.model.Vote;
 import ru.restaurant.voting.repository.DayMenuRepository;
 import ru.restaurant.voting.repository.DishRepository;
 import ru.restaurant.voting.repository.RestaurantRepository;
 import ru.restaurant.voting.repository.VoteRepository;
-import ru.restaurant.voting.to.RestaurantNamesTo;
+import ru.restaurant.voting.to.RestaurantTo;
 import ru.restaurant.voting.to.RestaurantToWithStats;
 import ru.restaurant.voting.util.exception.NotFoundException;
 import ru.restaurant.voting.util.exception.RestaurantHasNotMenuForThisDay;
@@ -75,7 +74,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public List<RestaurantNamesTo> getAll() {
+    public List<RestaurantTo> getAll() {
         return restaurantRepository.getAll().stream()
                 .map(this::asTo)
                 .collect(Collectors.toList());
@@ -130,11 +129,6 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public List<Dish> getAllDishes(int restaurantId) {
-        return dishRepository.getAllDishesByRestaurantId(restaurantId);
-    }
-
-    @Override
     public int getStatForDay(LocalDate date, int restaurantId) {
         if (date == null) {
             date = LocalDate.now();
@@ -168,7 +162,7 @@ public class RestaurantServiceImpl implements RestaurantService {
                 .thenComparing(RestaurantToWithStats::getName));
     }
 
-    private RestaurantNamesTo asTo(Restaurant restaurant) {
-        return new RestaurantNamesTo(restaurant.getId(), restaurant.getName());
+    private RestaurantTo asTo(Restaurant restaurant) {
+        return new RestaurantTo(restaurant.getId(), restaurant.getName());
     }
 }

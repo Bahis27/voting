@@ -8,7 +8,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.model.User;
-import ru.restaurant.voting.to.RestaurantNamesTo;
+import ru.restaurant.voting.to.RestaurantTo;
 import ru.restaurant.voting.web.json.JsonUtil;
 
 import java.io.UnsupportedEncodingException;
@@ -45,15 +45,15 @@ public class TestUtil {
         return SecurityMockMvcRequestPostProcessors.authentication(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
     }
 
-    public static List<Restaurant> toEntityList(List<RestaurantNamesTo> restaurantNamesTos) {
-        return restaurantNamesTos.stream()
+    public static List<Restaurant> toEntityList(List<RestaurantTo> restaurantTos) {
+        return restaurantTos.stream()
                 .map(Restaurant::new)
                 .collect(Collectors.toList());
     }
 
-    public static List<RestaurantNamesTo> toToList(List<Restaurant> restaurants) {
+    public static List<RestaurantTo> toToList(List<Restaurant> restaurants) {
         return restaurants.stream()
-                .map(RestaurantNamesTo::new)
+                .map(RestaurantTo::new)
                 .collect(Collectors.toList());
     }
 }

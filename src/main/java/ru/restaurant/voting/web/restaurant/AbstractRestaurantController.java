@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ru.restaurant.voting.model.Dish;
 import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.model.Vote;
+import ru.restaurant.voting.service.Dish.DishService;
 import ru.restaurant.voting.service.restaurant.RestaurantService;
-import ru.restaurant.voting.to.RestaurantNamesTo;
+import ru.restaurant.voting.to.RestaurantTo;
 import ru.restaurant.voting.to.RestaurantToWithStats;
 
 import java.time.LocalDate;
@@ -20,71 +21,86 @@ public abstract class AbstractRestaurantController {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private RestaurantService service;
+    private RestaurantService restaurantService;
+
+    @Autowired
+    private DishService dishService;
 
     public Restaurant create(Restaurant restaurant) {
         log.info("create with name={}", restaurant.getName());
         checkNew(restaurant);
-        return service.create(restaurant);
+        return restaurantService.create(restaurant);
     }
 
     public void update(Restaurant restaurant) {
         log.info("update with id={}", restaurant.getId());
-        service.update(restaurant);
+        restaurantService.update(restaurant);
     }
 
     public void delete(int id) {
         log.info("deleteWithId with id={}", id);
-        service.delete(id);
+        restaurantService.delete(id);
     }
 
     public Restaurant get(int id) {
         log.info("get with id={}", id);
-        return service.get(id);
+        return restaurantService.get(id);
     }
 
-    public List<RestaurantNamesTo> getAll() {
+    public List<RestaurantTo> getAll() {
         log.info("getAl");
-        return service.getAll();
+        return restaurantService.getAll();
     }
 
     public Restaurant getForDay(int id, LocalDate localDate) {
         log.info("getForDay {} with id={}", localDate, id);
-        return service.getForDay(id, localDate);
+        return restaurantService.getForDay(id, localDate);
     }
 
     public List<Restaurant> getAllForDay(LocalDate localDate) {
         log.info("getAllForDay {}", localDate);
-        return service.getAllForDay(localDate);
+        return restaurantService.getAllForDay(localDate);
     }
 
     public Vote vote(LocalDate date, int userId, int restaurantId, LocalTime time) {
         log.info("user with id={} voted for restaurant with id={}", userId, restaurantId);
-        return service.vote(date, userId, restaurantId, time);
-    }
-
-    public List<Dish> getAllDishes(int restaurantId) {
-        log.info("get all dishes for restaurant with id={}", restaurantId);
-        return service.getAllDishes(restaurantId);
+        return restaurantService.vote(date, userId, restaurantId, time);
     }
 
     public int getStatForDay(LocalDate date, int restaurantId) {
         log.info("get stat for restaurant with id={}", restaurantId);
-        return service.getStatForDay(date, restaurantId);
+        return restaurantService.getStatForDay(date, restaurantId);
     }
 
     public int getStat(int restaurantId) {
         log.info("get stat for restaurant with id={}", restaurantId);
-        return service.getStat(restaurantId);
+        return restaurantService.getStat(restaurantId);
     }
 
     public List<RestaurantToWithStats> getAllWithStat() {
         log.info("get all with stat");
-        return service.getAllWithStats();
+        return restaurantService.getAllWithStats();
     }
 
     public List<RestaurantToWithStats> getAllWithStatForDay(LocalDate date) {
         log.info("get all with stat for day");
-        return service.getAllWithStatsForDay(date);
+        return restaurantService.getAllWithStatsForDay(date);
     }
+
+    public List<Dish> getAllDishes(int restaurantId) {
+        log.info("get all dishes for restaurant with id={}", restaurantId);
+        return dishService.getAll(restaurantId);
+    }
+
+    public Dish getDish(int id, int restaurantId) {
+        log.info("get dish with id={} for restaurant with id={}", id, restaurantId);
+        return dishService.get(id, restaurantId);
+    }
+
+    public void deleteDish(int id, int restaurantId) {
+        log.info("delete dish with id={} for restaurant with id={}", id, restaurantId);
+        dishService.delete(id, restaurantId);
+    }
+
+
 }

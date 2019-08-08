@@ -182,10 +182,6 @@
         curl -s -X POST http://localhost:8080/voting/restaurants/vote/106 --user simple@mail.ru:simple
     </li> <br>
     <li>
-        get all Dishes by Restaurant id; <br>
-        curl -s http://localhost:8080/voting/restaurants/108/all --user simple@mail.ru:simple
-    </li> <br>
-    <li>
         get all Restaurants for current day with DayMenus <br>
         curl -s http://localhost:8080/voting/restaurants/ --user simple@mail.ru:simple
     </li> <br>
@@ -200,6 +196,10 @@
     <li>
         get quantity of votes for Restaurant for current day <br>
         curl -s http://localhost:8080/voting/restaurants/105/stat --user simple@mail.ru:simple
+    </li> <br>
+    <li>
+        get all Dishes by Restaurant id; <br>
+        curl -s http://localhost:8080/voting/restaurants/108/dishes --user simple@mail.ru:simple
     </li> <br>
 </ul>
 

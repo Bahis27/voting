@@ -35,13 +35,13 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
-    public void delete(int id) throws NotFoundException {
-        checkNotFoundWithId(dishRepository.delete(id), id);
+    public void delete(int id, int restaurantId) throws NotFoundException {
+        checkNotFoundWithId(dishRepository.delete(id, restaurantId), id);
     }
 
     @Override
-    public Dish get(int id) throws NotFoundException {
-        return checkNotFoundWithId(dishRepository.get(id), id);
+    public Dish get(int id, int restaurantId) throws NotFoundException {
+        return checkNotFoundWithId(dishRepository.get(id, restaurantId), id);
     }
 
     @Override

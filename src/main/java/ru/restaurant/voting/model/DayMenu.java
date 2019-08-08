@@ -29,6 +29,7 @@ public class DayMenu extends AbstractBaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dish_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Dish dish;
 
     public DayMenu() {

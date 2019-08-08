@@ -7,8 +7,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.restaurant.voting.View;
+import ru.restaurant.voting.model.Dish;
 import ru.restaurant.voting.model.Restaurant;
-import ru.restaurant.voting.to.RestaurantNamesTo;
+import ru.restaurant.voting.to.RestaurantTo;
 import ru.restaurant.voting.to.RestaurantToWithStats;
 
 import java.net.URI;
@@ -54,7 +55,7 @@ public class AdminRestaurantController extends AbstractRestaurantController {
 
     @Override
     @GetMapping
-    public List<RestaurantNamesTo> getAll() {
+    public List<RestaurantTo> getAll() {
         return super.getAll();
     }
 
@@ -92,5 +93,23 @@ public class AdminRestaurantController extends AbstractRestaurantController {
     @GetMapping("/stat/for")
     public List<RestaurantToWithStats> getAllWithStatForDay(@RequestParam LocalDate day) {
         return super.getAllWithStatForDay(day);
+    }
+
+    @Override
+    @GetMapping("/{id}/dishes")
+    public List<Dish> getAllDishes(@PathVariable int id) {
+        return super.getAllDishes(id);
+    }
+
+    @Override
+    @GetMapping("/{restaurantId}/dishes/{id}")
+    public Dish getDish(@PathVariable int id, @PathVariable int restaurantId) {
+        return super.getDish(id, restaurantId);
+    }
+
+    @Override
+    @DeleteMapping("/{restaurantId}/dishes/{id}")
+    public void deleteDish(@PathVariable int id, @PathVariable int restaurantId) {
+        super.deleteDish(id, restaurantId);
     }
 }

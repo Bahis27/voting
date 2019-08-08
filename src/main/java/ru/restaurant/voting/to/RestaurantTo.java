@@ -8,33 +8,18 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class RestaurantToWithStats extends RestaurantTo implements Serializable {
+public class RestaurantTo extends NamedTo implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private int stat;
-
-    public RestaurantToWithStats() {
+    public RestaurantTo() {
     }
 
-    public RestaurantToWithStats(RestaurantTo restaurantTo) {
-        this(restaurantTo.getId(), restaurantTo.getName(), 0);
-    }
-
-    public RestaurantToWithStats(Integer id, @NotBlank @Size(min = 2, max = 100) @SafeHtml String name, int stat) {
+    public RestaurantTo(Integer id, @NotBlank @Size(min = 2, max = 100) @SafeHtml String name) {
         super(id, name);
-        this.stat = stat;
     }
 
-    public RestaurantToWithStats(Restaurant restaurant) {
-        this(restaurant.getId(), restaurant.getName(), 0);
-    }
-
-    public int getStat() {
-        return stat;
-    }
-
-    public void setStat(int stat) {
-        this.stat = stat;
+    public RestaurantTo(Restaurant restaurant) {
+        super(restaurant.getId(), restaurant.getName());
     }
 
     @Override

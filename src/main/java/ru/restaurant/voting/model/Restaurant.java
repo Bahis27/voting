@@ -1,6 +1,6 @@
 package ru.restaurant.voting.model;
 
-import ru.restaurant.voting.to.RestaurantNamesTo;
+import ru.restaurant.voting.to.RestaurantTo;
 
 import javax.persistence.*;
 import java.util.List;
@@ -28,8 +28,8 @@ public class Restaurant extends AbstractNamedEntity {
         this.dayMenus = dayMenus;
     }
 
-    public Restaurant(RestaurantNamesTo restaurantNamesTo) {
-        this(restaurantNamesTo.getId(), restaurantNamesTo.getName());
+    public Restaurant(RestaurantTo restaurantTo) {
+        this(restaurantTo.getId(), restaurantTo.getName());
     }
 
     public Restaurant(Restaurant restaurant) {
