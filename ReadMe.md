@@ -82,6 +82,18 @@ curl -s http://localhost:8080/voting/admin/restaurants/for?day=2019-07-01 --user
 ###### get Restaurant by id and day with DayMenu
 curl -s http://localhost:8080/voting/admin/restaurants/102/for?day=2019-07-01 --user admin@gmail.com:password
 
+###### get all Restaurants with statistics
+curl -s http://localhost:8080/voting/admin/restaurants/stat --user admin@gmail.com:password
+
+###### get all Restaurants for current day with statistics
+curl -s http://localhost:8080/voting/admin/restaurants/stat/for?day=2019-07-03 --user admin@gmail.com:password
+
+###### get quantity of votes for Restaurant
+curl -s http://localhost:8080/voting/admin/restaurants/103/stat --user admin@gmail.com:password
+
+###### get quantity of votes for Restaurant for current day
+curl -s http://localhost:8080/voting/admin/restaurants/103/stat/for?day=2019-07-03 --user admin@gmail.com:password
+
 ### error examples
 
 ###### not found Restaurant error
@@ -124,3 +136,9 @@ curl -s http://localhost:8080/voting/restaurants/ --user simple@mail.ru:simple
 
 ###### get Restaurant by id for current day with DayMenu
 curl -s http://localhost:8080/voting/restaurants/105 --user simple@mail.ru:simple
+
+###### get all Restaurant for current day with statistics
+curl -s http://localhost:8080/voting/restaurants/stat --user simple@mail.ru:simple
+
+###### get quantity of votes for Restaurant for current day
+curl -s http://localhost:8080/voting/restaurants/105/stat --user simple@mail.ru:simple
