@@ -102,5 +102,14 @@ public abstract class AbstractRestaurantController {
         dishService.delete(id, restaurantId);
     }
 
+    public Dish createDish(Dish dish, int restaurantId) {
+        log.info("create dish for restaurant with id={}", restaurantId);
+        checkNew(dish);
+        return dishService.create(dish, restaurantId);
+    }
 
+    public void updateDish(Dish dish, int restaurantId) {
+        log.info("update dish with id={} for restaurant with id={}",dish.getId(), restaurantId);
+        dishService.update(dish, restaurantId);
+    }
 }

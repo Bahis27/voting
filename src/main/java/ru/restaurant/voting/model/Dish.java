@@ -40,6 +40,11 @@ public class Dish extends AbstractNamedEntity {
         this(dish.getId(), dish.getName(), dish.getPrice(), dish.getRestaurant());
     }
 
+    public Dish(Integer id, String name, @Range(min = 1) @NotNull Integer price) {
+        super(id, name);
+        this.price = price;
+    }
+
     public Dish(Integer id, String name, @Range(min = 1) @NotNull Integer price, Restaurant restaurant) {
         super(id, name);
         this.price = price;

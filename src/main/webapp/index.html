@@ -24,7 +24,7 @@
     </li> <br>
     <li>
         create User <br>
-        curl -s -X POST -d '{"name":"New", "email":"new@gmail.com", "password":"newPass"}' -H 'Content-Type:application/json;charset=UTF-8' curl -s http://localhost:8080/voting/admin/users --user admin@gmail.com:password
+        curl -s -X POST -d '{"name":"New", "email":"new@gmail.com", "password":"newPass"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/users --user admin@gmail.com:password
     </li> <br>
     <li>
         update User <br>
@@ -44,7 +44,7 @@
     </li> <br>
     <li>
         create User with duplicate email error <br>
-        curl -s -X POST -d '{"name":"New", "email":"simple@mail.ru", "password":"newPass"}' -H 'Content-Type:application/json;charset=UTF-8' curl -s http://localhost:8080/voting/admin/users --user admin@gmail.com:password
+        curl -s -X POST -d '{"name":"New", "email":"simple@mail.ru", "password":"newPass"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/users --user admin@gmail.com:password
     </li> <br>
     <li>
         update User with validation error <br>
@@ -74,7 +74,7 @@
     </li> <br>
     <li>
         register new User <br>
-        curl -s -X POST -d '{"name":"New", "email":"new@gmail.com", "password":"newPass"}' -H 'Content-Type:application/json;charset=UTF-8' curl -s http://localhost:8080/voting/profile/register
+        curl -s -X POST -d '{"name":"New", "email":"new@gmail.com", "password":"newPass"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/profile/register
     </li> <br>
     <li>
         update AuthorizedUser <br>
@@ -104,11 +104,11 @@
     </li> <br>
     <li>
         create Restaurant <br>
-        curl -s -X POST -d '{"name": "One More Bar"}' -H 'Content-Type:application/json;charset=UTF-8' curl -s http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
+        curl -s -X POST -d '{"name": "One More Bar"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
     </li> <br>
     <li>
         update Restaurant <br>
-        curl -s -X PUT -d '{"id": "109", "name": "He is Always Here Bar"}' -H 'Content-Type:application/json;charset=UTF-8' curl -s http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
+        curl -s -X PUT -d '{"id": "109", "name": "He is Always Here Bar"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
     </li> <br>
     <li>
         get all Restaurants by day with DayMenus <br>
@@ -144,15 +144,15 @@
     </li> <br>
     <li>
         create Restaurant with duplicate name error <br>
-        curl -s -X POST -d '{"name": "Why Not Bar"}' -H 'Content-Type:application/json;charset=UTF-8' curl -s http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
+        curl -s -X POST -d '{"name": "Why Not Bar"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
     </li> <br>
     <li>
         update Restaurant with duplicate name error <br>
-        curl -s -X PUT -d '{"id": "109", "name": "Why Not Bar"}' -H 'Content-Type:application/json;charset=UTF-8' curl -s http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
+        curl -s -X PUT -d '{"id": "109", "name": "Why Not Bar"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
     </li> <br>
     <li>
         create Restaurant with validation error <br>
-        curl -s -X POST -d '{"name": "1"}' -H 'Content-Type:application/json;charset=UTF-8' curl -s http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
+        curl -s -X POST -d '{"name": "1"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
     </li> <br>
     <li>
         get all Restaurants with authentication error <br>

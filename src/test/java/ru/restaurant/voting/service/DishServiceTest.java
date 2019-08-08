@@ -21,7 +21,7 @@ public class DishServiceTest extends AbstractServiceTest {
     @Test
     void create() throws Exception {
         Dish newDish = new Dish(null, "yummy", 500, RES4);
-        Dish created = dishService.create(newDish);
+        Dish created = dishService.create(newDish, RES9_ID);
         newDish.setId(created.getId());
         assertMatch(newDish, created);
     }
@@ -32,14 +32,14 @@ public class DishServiceTest extends AbstractServiceTest {
         newDish.setId(null);
         newDish.setPrice(12);
         assertThrows(DataAccessException.class, () ->
-                dishService.create(newDish));
+                dishService.create(newDish, RES3_ID));
     }
 
     @Test
     void update() throws Exception {
         Dish updated = new Dish(DISH7);
         updated.setPrice(500);
-        dishService.update(new Dish(updated));
+        dishService.update(new Dish(updated), RES3_ID);
         assertMatch(updated, dishService.get(DISH7_ID, RES3_ID), "dayMenus");
     }
 

@@ -13,7 +13,7 @@ curl -s http://localhost:8080/voting/admin/users/16 --user admin@gmail.com:passw
 curl -s -X DELETE http://localhost:8080/voting/admin/users/13 --user admin@gmail.com:password
 
 ###### create User
-curl -s -X POST -d '{"name":"New", "email":"new@gmail.com", "password":"newPass"}' -H 'Content-Type:application/json;charset=UTF-8' curl -s http://localhost:8080/voting/admin/users --user admin@gmail.com:password
+curl -s -X POST -d '{"name":"New", "email":"new@gmail.com", "password":"newPass"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/users --user admin@gmail.com:password
 
 ###### update User
 curl -s -X PUT -d '{"name":"UpdatedName", "email":"updatedmail@gmail.com", "password":"updatedPass"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/users/100005 --user admin@gmail.com:password
@@ -27,7 +27,7 @@ curl -s http://localhost:8080/voting/admin/users/by?email=simple@mail.ru --user 
 curl -s http://localhost:8080/voting/admin/users/1 --user admin@gmail.com:password
 
 ###### create User with duplicate email error
-curl -s -X POST -d '{"name":"New", "email":"simple@mail.ru", "password":"newPass"}' -H 'Content-Type:application/json;charset=UTF-8' curl -s http://localhost:8080/voting/admin/users --user admin@gmail.com:password
+curl -s -X POST -d '{"name":"New", "email":"simple@mail.ru", "password":"newPass"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/users --user admin@gmail.com:password
 
 ###### update User with validation error
 curl -s -X PUT -d '{"name":"UpdatedName", "password":"updatedPass"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/users/100005 --user admin@gmail.com:password
@@ -49,7 +49,7 @@ curl -s -X PUT -d '{"name":"<script>alert(123)</script>", "email":"new@gmail.com
 curl -s http://localhost:8080/voting/profile --user simple@mail.ru:simple
 
 ###### register new User
-curl -s -X POST -d '{"name":"New", "email":"new@gmail.com", "password":"newPass"}' -H 'Content-Type:application/json;charset=UTF-8' curl -s http://localhost:8080/voting/profile/register
+curl -s -X POST -d '{"name":"New", "email":"new@gmail.com", "password":"newPass"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/profile/register
 
 ###### update AuthorizedUser
 curl -s -X PUT -d '{"name":"UpdatedName", "email":"updatedmail@gmail.com", "password":"updatedPass"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/profile --user simple@mail.ru:simple
@@ -71,10 +71,10 @@ curl -s http://localhost:8080/voting/admin/restaurants/103 --user admin@gmail.co
 curl -s -X DELETE http://localhost:8080/voting/admin/restaurants/106 --user admin@gmail.com:password
 
 ###### create Restaurant
-curl -s -X POST -d '{"name": "One More Bar"}' -H 'Content-Type:application/json;charset=UTF-8' curl -s http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
+curl -s -X POST -d '{"name": "One More Bar"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
 
 ###### update Restaurant
-curl -s -X PUT -d '{"id": "109", "name": "He is Always Here Bar"}' -H 'Content-Type:application/json;charset=UTF-8' curl -s http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
+curl -s -X PUT -d '{"id": "109", "name": "He is Always Here Bar"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
 
 ###### get all Restaurants by day with DayMenus
 curl -s http://localhost:8080/voting/admin/restaurants/for?day=2019-07-01 --user admin@gmail.com:password
@@ -100,13 +100,13 @@ curl -s http://localhost:8080/voting/admin/restaurants/103/stat/for?day=2019-07-
 curl -s http://localhost:8080/voting/admin/restaurants/99 --user admin@gmail.com:password
 
 ###### create Restaurant with duplicate name error
-curl -s -X POST -d '{"name": "Why Not Bar"}' -H 'Content-Type:application/json;charset=UTF-8' curl -s http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
+curl -s -X POST -d '{"name": "Why Not Bar"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
 
 ###### update Restaurant with duplicate name error
-curl -s -X PUT -d '{"id": "109", "name": "Why Not Bar"}' -H 'Content-Type:application/json;charset=UTF-8' curl -s http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
+curl -s -X PUT -d '{"id": "109", "name": "Why Not Bar"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
 
 ###### create Restaurant with validation error
-curl -s -X POST -d '{"name": "1"}' -H 'Content-Type:application/json;charset=UTF-8' curl -s http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
+curl -s -X POST -d '{"name": "1"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
 
 ###### get all Restaurants with authentication error
 curl -s http://localhost:8080/voting/admin/restaurants

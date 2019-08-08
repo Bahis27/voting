@@ -52,7 +52,6 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    @Transactional
     public void update(Restaurant restaurant) {
         Assert.notNull(restaurant, "restaurant must not be null");
         checkNotFoundWithId(restaurant, restaurant.getId());
@@ -78,17 +77,6 @@ public class RestaurantServiceImpl implements RestaurantService {
         return restaurantRepository.getAll().stream()
                 .map(this::asTo)
                 .collect(Collectors.toList());
-    }
-
-    @Transactional
-    @Override
-    public List<RestaurantToWithStats> getAllWithStats() {
-        List<RestaurantToWithStats> all = getAll().stream()
-                .map(RestaurantToWithStats::new)
-                .collect(Collectors.toList());
-        all.forEach(r -> r.setStat(getStat(r.getId())));
-        sortByStatAndName(all);
-        return all;
     }
 
     @Override
@@ -141,6 +129,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         return voteRepository.getAll(restaurantId).size();
     }
 
+    @Transactional
     @Override
     public List<RestaurantToWithStats> getAllWithStatsForDay(LocalDate date) {
         if (date == null) {
@@ -151,6 +140,17 @@ public class RestaurantServiceImpl implements RestaurantService {
                 .collect(Collectors.toList());
         LocalDate finalDate = date;
         all.forEach(r -> r.setStat(getStatForDay(finalDate, r.getId())));
+        sortByStatAndName(all);
+        return all;
+    }
+
+    @Transactional
+    @Override
+    public List<RestaurantToWithStats> getAllWithStats() {
+        List<RestaurantToWithStats> all = getAll().stream()
+                .map(RestaurantToWithStats::new)
+                .collect(Collectors.toList());
+        all.forEach(r -> r.setStat(getStat(r.getId())));
         sortByStatAndName(all);
         return all;
     }

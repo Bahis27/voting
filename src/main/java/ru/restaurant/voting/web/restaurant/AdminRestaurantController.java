@@ -109,7 +109,21 @@ public class AdminRestaurantController extends AbstractRestaurantController {
 
     @Override
     @DeleteMapping("/{restaurantId}/dishes/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteDish(@PathVariable int id, @PathVariable int restaurantId) {
         super.deleteDish(id, restaurantId);
+    }
+
+    @Override
+    @PostMapping(value = "/{restaurantId}/dishes", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Dish createDish(@Validated(View.Web.class) @RequestBody Dish dish, @PathVariable int restaurantId) {
+        return super.createDish(dish, restaurantId);
+    }
+
+    @Override
+    @PutMapping(value = "/{restaurantId}/dishes", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateDish(@Validated(View.Web.class) @RequestBody Dish dish, @PathVariable int restaurantId) {
+        super.updateDish(dish, restaurantId);
     }
 }
