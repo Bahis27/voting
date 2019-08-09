@@ -25,6 +25,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static ru.restaurant.voting.util.ValidationUtil.checkNotFoundWithId;
+import static ru.restaurant.voting.util.ValidationUtil.checkNew;
 
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
@@ -48,6 +49,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public Restaurant create(Restaurant restaurant) {
         Assert.notNull(restaurant, "restaurant must not be null");
+        checkNew(restaurant);
         return restaurantRepository.save(restaurant);
     }
 
@@ -59,8 +61,10 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public void delete(int id) throws NotFoundException {
-        checkNotFoundWithId(restaurantRepository.delete(id), id);
+    public List<RestaurantTo> getAll() {
+        return restaurantRepository.getAll().stream()
+                .map(this::asTo)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -73,10 +77,8 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public List<RestaurantTo> getAll() {
-        return restaurantRepository.getAll().stream()
-                .map(this::asTo)
-                .collect(Collectors.toList());
+    public void delete(int id) throws NotFoundException {
+        checkNotFoundWithId(restaurantRepository.delete(id), id);
     }
 
     @Override

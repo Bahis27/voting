@@ -2,56 +2,71 @@ package ru.restaurant.voting.service.daymenu;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.restaurant.voting.model.DayMenu;
 import ru.restaurant.voting.repository.DayMenuRepository;
+import ru.restaurant.voting.repository.RestaurantRepository;
 import ru.restaurant.voting.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import static ru.restaurant.voting.util.ValidationUtil.checkNotFoundWithId;
+import static ru.restaurant.voting.util.ValidationUtil.checkNew;
 
 @Service
 public class DayMenuServiceImpl implements DayMenuService {
 
     private final DayMenuRepository dayMenuRepository;
+    private final RestaurantRepository restaurantRepository;
 
     @Autowired
-    public DayMenuServiceImpl(DayMenuRepository dayMenuRepository) {
+    public DayMenuServiceImpl(DayMenuRepository dayMenuRepository, RestaurantRepository restaurantRepository) {
         this.dayMenuRepository = dayMenuRepository;
+        this.restaurantRepository = restaurantRepository;
     }
 
+    @Transactional
     @Override
-    public DayMenu create(DayMenu dayMenu) {
+    public DayMenu create(DayMenu dayMenu, int restaurantId) {
         Assert.notNull(dayMenu, "dayMenu must not be null");
+        checkNew(dayMenu);
+        dayMenu.setRestaurant(restaurantRepository.findById(restaurantId).orElse(null));
         return dayMenuRepository.save(dayMenu);
     }
 
+    @Transactional
     @Override
-    public void update(DayMenu dayMenu) {
+    public void update(DayMenu dayMenu, int restaurantId) {
         Assert.notNull(dayMenu, "dayMenu must not be null");
-        checkNotFoundWithId(dayMenu, dayMenu.getId());
+        checkNotFoundWithId(dayMenuRepository.get(dayMenu.getId(), restaurantId), dayMenu.getId());
+        dayMenu.setRestaurant(restaurantRepository.findById(restaurantId).orElse(null));
         dayMenuRepository.save(dayMenu);
     }
 
     @Override
-    public void delete(int id) throws NotFoundException {
-        checkNotFoundWithId(dayMenuRepository.delete(id), id);
-    }
-
-    @Override
-    public void deleteAllForDay(int restaurantId, LocalDate date) throws NotFoundException {
-        checkNotFoundWithId(dayMenuRepository.deleteAll(restaurantId, date), restaurantId);
-    }
-
-    @Override
-    public DayMenu get(int id) throws NotFoundException {
-        return checkNotFoundWithId(dayMenuRepository.get(id), id);
+    public List<DayMenu> getAll(int restaurantId) {
+        return dayMenuRepository.getAllByRestaurantId(restaurantId);
     }
 
     @Override
     public List<DayMenu> getAllForDay(int restaurantId, LocalDate date) throws NotFoundException {
         return dayMenuRepository.getAllForDateAndRestaurantId(restaurantId, date);
+    }
+
+    @Override
+    public DayMenu get(int id, int restaurantId) throws NotFoundException {
+        return checkNotFoundWithId(dayMenuRepository.get(id, restaurantId), id);
+    }
+
+    @Override
+    public void delete(int id, int restaurantId) throws NotFoundException {
+        checkNotFoundWithId(dayMenuRepository.delete(id, restaurantId), id);
+    }
+
+    @Override
+    public void deleteAllForDay(int restaurantId, LocalDate date) throws NotFoundException {
+        checkNotFoundWithId(dayMenuRepository.deleteAll(restaurantId, date), restaurantId);
     }
 }

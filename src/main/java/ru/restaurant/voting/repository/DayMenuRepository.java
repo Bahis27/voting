@@ -17,12 +17,12 @@ public interface DayMenuRepository extends JpaRepository<DayMenu, Integer> {
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM DayMenu m WHERE m.id=:id")
-    int deleteWithId(@Param("id") int id);
+    @Query("DELETE FROM DayMenu m WHERE m.id=:id AND m.restaurant.id=:restaurantId")
+    int deleteWithId(@Param("id") int id, @Param("restaurantId") int restaurantId);
 
     @Transactional
-    default boolean delete(int id) {
-        return deleteWithId(id) != 0;
+    default boolean delete(int id, int restaurantId) {
+        return deleteWithId(id, restaurantId) != 0;
     }
 
     @Transactional
@@ -39,10 +39,12 @@ public interface DayMenuRepository extends JpaRepository<DayMenu, Integer> {
     @Override
     DayMenu save(DayMenu dayMenu);
 
-    @Transactional
     @Query("SELECT DISTINCT m FROM DayMenu m JOIN FETCH m.dish WHERE m.restaurant.id=:id AND m.menuDate=:date")
     List<DayMenu> getAllForDateAndRestaurantId(@Param("id") int restaurantId, @Param("date") LocalDate date);
 
-    @Query("SELECT DISTINCT m FROM DayMenu m JOIN FETCH m.dish JOIN FETCH m.restaurant WHERE m.id=:id")
-    DayMenu get(@Param("id") int id);
+    @Query("SELECT DISTINCT m FROM DayMenu m JOIN FETCH m.dish WHERE m.restaurant.id=:id")
+    List<DayMenu> getAllByRestaurantId(@Param("id") int restaurantId);
+
+    @Query("SELECT DISTINCT m FROM DayMenu m JOIN FETCH m.dish JOIN FETCH m.restaurant WHERE m.id=:id AND m.restaurant.id=:restaurantId")
+    DayMenu get(@Param("id") int id, @Param("restaurantId") int restaurantId);
 }

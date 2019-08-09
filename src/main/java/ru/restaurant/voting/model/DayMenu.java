@@ -46,6 +46,11 @@ public class DayMenu extends AbstractBaseEntity {
         this.dish = dish;
     }
 
+    public DayMenu(Integer id, @NotNull LocalDate menuDate) {
+        super(id);
+        this.menuDate = menuDate;
+    }
+
     public LocalDate getMenuDate() {
         return menuDate;
     }

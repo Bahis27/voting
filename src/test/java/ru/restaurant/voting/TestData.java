@@ -224,6 +224,8 @@ public class TestData {
     public static final DayMenu DAYMENU38 = new DayMenu(DAYMENU38_ID, LocalDate.of(2019, 7, 3), RES9, DISH27);
     public static final DayMenu DAYMENU39 = new DayMenu(DAYMENU39_ID, LocalDate.of(2019, 7, 3), RES9, DISH26);
 
+    public static final List<DayMenu> RES8_DAYMENUS = List.of(DAYMENU24, DAYMENU26, DAYMENU34, DAYMENU35, DAYMENU36);
+
     public static final Vote VOTE1 = new Vote(LocalDate.of(2019, 7, 1), 18, 109);
     public static final Vote VOTE2 = new Vote(LocalDate.of(2019, 7, 1), 11, 101);
     public static final Vote VOTE3 = new Vote(LocalDate.of(2019, 7, 1), 12, 103);

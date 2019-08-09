@@ -7,9 +7,11 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.restaurant.voting.TestUtil;
+import ru.restaurant.voting.model.DayMenu;
 import ru.restaurant.voting.model.Dish;
 import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.service.Dish.DishService;
+import ru.restaurant.voting.service.daymenu.DayMenuService;
 import ru.restaurant.voting.service.restaurant.RestaurantService;
 import ru.restaurant.voting.to.RestaurantTo;
 import ru.restaurant.voting.to.RestaurantToWithStats;
@@ -18,10 +20,12 @@ import ru.restaurant.voting.web.AbstractControllerTest;
 import ru.restaurant.voting.web.ExceptionInfoHandler;
 import ru.restaurant.voting.web.json.JsonUtil;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -38,6 +42,9 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
 
     @Autowired
     private DishService dishService;
+
+    @Autowired
+    private DayMenuService dayMenuService;
 
     private static final String REST_URL = AdminRestaurantController.REST_URL + '/';
 
@@ -100,23 +107,13 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void testDelete() throws Exception {
-        mockMvc.perform(delete(REST_URL + RES1_ID)
+    void testGetAll() throws Exception {
+        mockMvc.perform(get(REST_URL)
                 .with(userHttpBasic(ADMIN)))
-                .andExpect(status().isNoContent())
-                .andDo(print());
-
-        assertMatch(TestUtil.toEntityList(restaurantService.getAll()), RES2, RES3, RES4, RES5, RES6, RES7, RES8, RES9);
-        assertThrows(NotFoundException.class, () -> restaurantService.get(RES1_ID));
-    }
-
-    @Test
-    void testDeleteNotFound() throws Exception {
-        mockMvc.perform(delete(REST_URL + RES1_ID + 100500)
-                .with(userHttpBasic(ADMIN)))
-                .andExpect(status().isUnprocessableEntity())
-                .andExpect(errorType(DATA_NOT_FOUND))
-                .andDo(print());
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(contentJson(RestaurantTo.class, TestUtil.toToList(RESTAURANTS)));
     }
 
     @Test
@@ -154,13 +151,23 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void testGetAll() throws Exception {
-        mockMvc.perform(get(REST_URL)
+    void testDelete() throws Exception {
+        mockMvc.perform(delete(REST_URL + RES1_ID)
                 .with(userHttpBasic(ADMIN)))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(RestaurantTo.class, TestUtil.toToList(RESTAURANTS)));
+                .andExpect(status().isNoContent())
+                .andDo(print());
+
+        assertMatch(TestUtil.toEntityList(restaurantService.getAll()), RES2, RES3, RES4, RES5, RES6, RES7, RES8, RES9);
+        assertThrows(NotFoundException.class, () -> restaurantService.get(RES1_ID));
+    }
+
+    @Test
+    void testDeleteNotFound() throws Exception {
+        mockMvc.perform(delete(REST_URL + RES1_ID + 100500)
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(errorType(DATA_NOT_FOUND))
+                .andDo(print());
     }
 
     @Test
@@ -260,6 +267,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .andExpect(detailMessage(ExceptionInfoHandler.EXCEPTION_DUPLICATE_RESTAURANT_NAME));
     }
 
+    //stat
     @Test
     void testGetStatForDay() throws Exception {
         mockMvc.perform(get(REST_URL + RES8_ID + "/stat/for?day=2019-07-03")
@@ -298,6 +306,50 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(contentJson(RestaurantToWithStats.class, RESTAURANTS_WITH_STAT_FORDAY))
                 .andDo(print());
+    }
+
+    //dishes
+    @Test
+    void testCreateDish() throws Exception {
+        Dish created = new Dish(null, "Yummy", 100500);
+        ResultActions action = mockMvc.perform(post(REST_URL + RES9_ID + "/dishes")
+                .with(userHttpBasic(ADMIN))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(created)))
+                .andExpect(status().isOk())
+                .andDo(print());
+
+        Dish returned = readFromJson(action, Dish.class);
+        created.setId(returned.getId());
+        assertMatch(created, returned, "restaurant");
+
+        Dish saved = dishService.get(returned.getId(), RES9_ID);
+        assertMatch(returned, saved, "restaurant");
+    }
+
+    @Test
+    void testCreateNotNewDish() throws Exception {
+        Dish notNewDish = new Dish(DISH16);
+        mockMvc.perform(post(REST_URL + RES1_ID + "/dishes")
+                .with(userHttpBasic(ADMIN))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(notNewDish)))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(errorType(VALIDATION_ERROR))
+                .andDo(print());
+    }
+
+    @Test
+    void testUpdateDish() throws Exception {
+        Dish updated = new Dish(DISH11_ID, "Updated Dish", 700);
+        mockMvc.perform(put(REST_URL + RES4_ID + "/dishes")
+                .with(userHttpBasic(ADMIN))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(updated)))
+                .andExpect(status().isNoContent())
+                .andDo(print());
+
+        assertMatch(dishService.get(DISH11_ID, RES4_ID), updated, "restaurant");
     }
 
     @Test
@@ -340,34 +392,87 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
         assertThrows(NotFoundException.class, () -> dishService.get(DISH7_ID, RES3_ID));
     }
 
+    //dayMenus
     @Test
-    void testCreateDish() throws Exception {
-        Dish created = new Dish(null, "Yummy", 100500);
-        ResultActions action = mockMvc.perform(post(REST_URL + RES9_ID + "/dishes")
+    void testCreateDayMenu() throws Exception {
+        DayMenu created = new DayMenu(null, LocalDate.now(), RES4, DISH11);
+        ResultActions action = mockMvc.perform(post(REST_URL + RES4_ID + "/menus")
                 .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(created)))
                 .andExpect(status().isOk())
                 .andDo(print());
 
-        Dish returned = readFromJson(action, Dish.class);
+        DayMenu returned = readFromJson(action, DayMenu.class);
         created.setId(returned.getId());
         assertMatch(created, returned, "restaurant");
 
-        Dish saved = dishService.get(returned.getId(), RES9_ID);
+        DayMenu saved = dayMenuService.get(returned.getId(), RES4_ID);
         assertMatch(returned, saved, "restaurant");
     }
 
     @Test
-    void testUpdateDish() throws Exception {
-        Dish updated = new Dish(DISH11_ID, "Updated Dish", 700);
-        mockMvc.perform(put(REST_URL + RES4_ID + "/dishes")
+    void testUpdateDayMenu() throws Exception {
+        DayMenu updated = new DayMenu(DAYMENU39);
+        updated.setMenuDate(LocalDate.now());
+        mockMvc.perform(put(REST_URL + RES9_ID + "/menus")
                 .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isNoContent())
                 .andDo(print());
 
-        assertMatch(dishService.get(DISH11_ID, RES4_ID), updated, "restaurant");
+        assertMatch(dayMenuService.get(DAYMENU39_ID, RES9_ID), updated, "restaurant");
+    }
+
+    @Test
+    void testGetAllDayMenus() throws Exception {
+        mockMvc.perform(get(REST_URL + RES8_ID + "/menus")
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(contentJson(DayMenu.class, RES8_DAYMENUS))
+                .andDo(print());
+    }
+
+    @Test
+    void testGetAllDayMenusForDay() throws Exception {
+        mockMvc.perform(get(REST_URL + RES8_ID + "/menus/for?day=2019-07-02")
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(contentJson(DayMenu.class, DAYMENU24, DAYMENU26))
+                .andDo(print());
+    }
+
+    @Test
+    void testGetDayMenu() throws Exception {
+        mockMvc.perform(get(REST_URL + RES2_ID + "/menus/" + DAYMENU17_ID)
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(result -> assertMatch(readFromJsonMvcResult(result, DayMenu.class), DAYMENU17, "restaurant"))
+                .andDo(print());
+    }
+
+    @Test
+    void testDeleteDayMenu() throws Exception {
+        mockMvc.perform(delete(REST_URL + RES7_ID + "/menus/" + DAYMENU37_ID)
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isNoContent())
+                .andDo(print());
+
+        assertMatch(dayMenuService.getAll(RES7_ID), DAYMENU9, DAYMENU10, DAYMENU11, DAYMENU23);
+        assertThrows(NotFoundException.class, () -> dishService.get(DAYMENU37_ID, RES7_ID));
+    }
+
+    @Test
+    void testDeleteAllDayMenuDorDay() throws Exception {
+        mockMvc.perform(delete(REST_URL + RES1_ID + "/menus/for?day=2019-07-01")
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isNoContent())
+                .andDo(print());
+
+        assertTrue(dayMenuService.getAllForDay(RES1_ID, LocalDate.of(2019, 7, 1)).isEmpty());
     }
 }

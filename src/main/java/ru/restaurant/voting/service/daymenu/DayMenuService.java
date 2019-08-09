@@ -8,15 +8,17 @@ import java.util.List;
 
 public interface DayMenuService {
 
-    DayMenu create(DayMenu dayMenu);
+    DayMenu create(DayMenu dayMenu, int restaurantId);
 
-    void update(DayMenu dayMenu);
+    void update(DayMenu dayMenu, int restaurantId);
 
-    void delete(int id) throws NotFoundException;
+    List<DayMenu> getAll(int restaurantId);
 
-    void deleteAllForDay(int restaurantId, LocalDate date) throws NotFoundException;
+    List<DayMenu> getAllForDay(int restaurantId, LocalDate date);
 
-    DayMenu get(int id) throws NotFoundException;
+    DayMenu get(int id, int restaurantId) throws NotFoundException;
 
-    List<DayMenu> getAllForDay(int restaurantId, LocalDate date) throws NotFoundException;
+    void delete(int id, int restaurantId) throws NotFoundException;
+
+    void deleteAllForDay(int restaurantId, LocalDate date);
 }

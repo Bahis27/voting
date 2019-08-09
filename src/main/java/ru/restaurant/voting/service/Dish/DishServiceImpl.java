@@ -12,6 +12,7 @@ import ru.restaurant.voting.util.exception.NotFoundException;
 import java.util.List;
 
 import static ru.restaurant.voting.util.ValidationUtil.checkNotFoundWithId;
+import static ru.restaurant.voting.util.ValidationUtil.checkNew;
 
 @Service
 public class DishServiceImpl implements DishService {
@@ -29,6 +30,7 @@ public class DishServiceImpl implements DishService {
     @Override
     public Dish create(Dish dish, int restaurantId) {
         Assert.notNull(dish, "dish must not be null");
+        checkNew(dish);
         dish.setRestaurant(restaurantRepository.findById(restaurantId).orElse(null));
         return dishRepository.save(dish);
     }
@@ -43,8 +45,8 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
-    public void delete(int id, int restaurantId) throws NotFoundException {
-        checkNotFoundWithId(dishRepository.delete(id, restaurantId), id);
+    public List<Dish> getAll(int restaurantId) {
+        return dishRepository.getAllByRestaurantId(restaurantId);
     }
 
     @Override
@@ -53,7 +55,7 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
-    public List<Dish> getAll(int restaurantId) {
-        return dishRepository.getAllDishesByRestaurantId(restaurantId);
+    public void delete(int id, int restaurantId) throws NotFoundException {
+        checkNotFoundWithId(dishRepository.delete(id, restaurantId), id);
     }
 }

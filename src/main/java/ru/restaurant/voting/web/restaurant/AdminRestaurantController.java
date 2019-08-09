@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.restaurant.voting.View;
+import ru.restaurant.voting.model.DayMenu;
 import ru.restaurant.voting.model.Dish;
 import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.to.RestaurantTo;
@@ -41,10 +42,9 @@ public class AdminRestaurantController extends AbstractRestaurantController {
     }
 
     @Override
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable int id) {
-        super.delete(id);
+    @GetMapping
+    public List<RestaurantTo> getAll() {
+        return super.getAll();
     }
 
     @Override
@@ -54,9 +54,10 @@ public class AdminRestaurantController extends AbstractRestaurantController {
     }
 
     @Override
-    @GetMapping
-    public List<RestaurantTo> getAll() {
-        return super.getAll();
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable int id) {
+        super.delete(id);
     }
 
     @Override
@@ -71,6 +72,7 @@ public class AdminRestaurantController extends AbstractRestaurantController {
         return super.getAllForDay(day);
     }
 
+    //statistics
     @Override
     @GetMapping("/{id}/stat/for")
     public int getStatForDay(@RequestParam LocalDate day, @PathVariable int id) {
@@ -95,10 +97,24 @@ public class AdminRestaurantController extends AbstractRestaurantController {
         return super.getAllWithStatForDay(day);
     }
 
+    //dishes
     @Override
-    @GetMapping("/{id}/dishes")
-    public List<Dish> getAllDishes(@PathVariable int id) {
-        return super.getAllDishes(id);
+    @PostMapping(value = "/{restaurantId}/dishes", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Dish createDish(@Validated(View.Web.class) @RequestBody Dish dish, @PathVariable int restaurantId) {
+        return super.createDish(dish, restaurantId);
+    }
+
+    @Override
+    @PutMapping(value = "/{restaurantId}/dishes", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateDish(@Validated(View.Web.class) @RequestBody Dish dish, @PathVariable int restaurantId) {
+        super.updateDish(dish, restaurantId);
+    }
+
+    @Override
+    @GetMapping("/{restaurantId}/dishes")
+    public List<Dish> getAllDishes(@PathVariable int restaurantId) {
+        return super.getAllDishes(restaurantId);
     }
 
     @Override
@@ -114,16 +130,49 @@ public class AdminRestaurantController extends AbstractRestaurantController {
         super.deleteDish(id, restaurantId);
     }
 
+    //dayMenus
     @Override
-    @PostMapping(value = "/{restaurantId}/dishes", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Dish createDish(@Validated(View.Web.class) @RequestBody Dish dish, @PathVariable int restaurantId) {
-        return super.createDish(dish, restaurantId);
+    @PostMapping(value = "/{restaurantId}/menus", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public DayMenu createDayMenu(@Validated(View.Web.class) @RequestBody DayMenu dayMenu, @PathVariable int restaurantId) {
+        return super.createDayMenu(dayMenu, restaurantId);
     }
 
     @Override
-    @PutMapping(value = "/{restaurantId}/dishes", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/{restaurantId}/menus", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateDish(@Validated(View.Web.class) @RequestBody Dish dish, @PathVariable int restaurantId) {
-        super.updateDish(dish, restaurantId);
+    public void updateDayMenu(@Validated(View.Web.class) @RequestBody DayMenu dayMenu, @PathVariable int restaurantId) {
+        super.updateDayMenu(dayMenu, restaurantId);
+    }
+
+    @Override
+    @GetMapping("/{restaurantId}/menus")
+    public List<DayMenu> getAllDayMenus(@PathVariable int restaurantId) {
+        return super.getAllDayMenus(restaurantId);
+    }
+
+    @Override
+    @GetMapping("/{restaurantId}/menus/for")
+    public List<DayMenu> getAllDayMenusForDay(@PathVariable int restaurantId, @RequestParam LocalDate day) {
+        return super.getAllDayMenusForDay(restaurantId, day);
+    }
+
+    @Override
+    @GetMapping("/{restaurantId}/menus/{id}")
+    public DayMenu getDayMenu(@PathVariable int id, @PathVariable int restaurantId) {
+        return super.getDayMenu(id, restaurantId);
+    }
+
+    @Override
+    @DeleteMapping("/{restaurantId}/menus/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteDayMenu(@PathVariable int id, @PathVariable int restaurantId) {
+        super.deleteDayMenu(id, restaurantId);
+    }
+
+    @Override
+    @DeleteMapping("/{restaurantId}/menus/for")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAllDayMenusForDay(@PathVariable int restaurantId, @RequestParam LocalDate day) {
+        super.deleteAllDayMenusForDay(restaurantId, day);
     }
 }

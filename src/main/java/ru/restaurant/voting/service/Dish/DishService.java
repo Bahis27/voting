@@ -10,9 +10,9 @@ public interface DishService {
 
     void update(Dish dish, int restaurantId);
 
-    void delete(int id, int restaurantId) throws NotFoundException;
+    List<Dish> getAll(int restaurantId);
 
     Dish get(int id, int restaurantId) throws NotFoundException;
 
-    List<Dish> getAll(int restaurantId);
+    void delete(int id, int restaurantId) throws NotFoundException;
 }

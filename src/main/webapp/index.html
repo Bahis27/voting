@@ -199,6 +199,10 @@
         get Dish for not this Restaurant by id <br>
         curl -s http://localhost:8080/voting/admin/restaurants/107/dishes/1006 --user admin@gmail.com:password
     </li> <br>
+    <li>
+        create not new Dish <br>
+        curl -s -X POST -d '{"id": "1000012", "name": "Yummy", "price": "100500"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/dishes --user admin@gmail.com:password
+    </li> <br>
 </ul>
 
 <hr>

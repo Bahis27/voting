@@ -21,6 +21,7 @@ import static ru.restaurant.voting.util.UserUtil.prepareToSave;
 import static ru.restaurant.voting.util.UserUtil.updateFromTo;
 import static ru.restaurant.voting.util.ValidationUtil.checkNotFound;
 import static ru.restaurant.voting.util.ValidationUtil.checkNotFoundWithId;
+import static ru.restaurant.voting.util.ValidationUtil.checkNew;
 
 @Service("userService")
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -38,6 +39,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User create(User user) {
         Assert.notNull(user, "user must not be null");
+        checkNew(user);
         return repository.save(prepareToSave(user, passwordEncoder));
     }
 

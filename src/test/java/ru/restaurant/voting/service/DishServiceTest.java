@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import ru.restaurant.voting.model.Dish;
 import ru.restaurant.voting.service.Dish.DishService;
+import ru.restaurant.voting.util.exception.IllegalRequestDataException;
 import ru.restaurant.voting.util.exception.NotFoundException;
 
 import java.util.List;
@@ -27,6 +28,13 @@ public class DishServiceTest extends AbstractServiceTest {
     }
 
     @Test
+    void createNotNew() throws Exception {
+        Dish notNewDish = new Dish(DISH17);
+        assertThrows(IllegalRequestDataException.class, () ->
+                dishService.create(notNewDish, RES6_ID));
+    }
+
+    @Test
     void duplicateCreate() throws Exception {
         Dish newDish = new Dish(DISH9);
         newDish.setId(null);
@@ -41,6 +49,14 @@ public class DishServiceTest extends AbstractServiceTest {
         updated.setPrice(500);
         dishService.update(new Dish(updated), RES3_ID);
         assertMatch(updated, dishService.get(DISH7_ID, RES3_ID), "dayMenus");
+    }
+
+    @Test
+    void updateNotRestaurantDish() throws Exception {
+        Dish updated = new Dish(DISH18);
+        updated.setPrice(500);
+        assertThrows(NotFoundException.class, () ->
+                dishService.update(new Dish(updated), RES4_ID));
     }
 
     @Test

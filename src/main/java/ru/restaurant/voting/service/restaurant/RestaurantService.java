@@ -16,11 +16,11 @@ public interface RestaurantService {
 
     void update(Restaurant restaurant);
 
-    void delete(int id) throws NotFoundException;
+    List<RestaurantTo> getAll();
 
     Restaurant get(int id) throws NotFoundException;
 
-    List<RestaurantTo> getAll();
+    void delete(int id) throws NotFoundException;
 
     List<RestaurantToWithStats> getAllWithStats();
 

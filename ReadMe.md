@@ -139,6 +139,9 @@ curl -s -X POST -d '{"name":"<script>alert(123)</script>"}' -H 'Content-Type:app
 ###### get Dish for not this Restaurant by id
 curl -s http://localhost:8080/voting/admin/restaurants/107/dishes/1006 --user admin@gmail.com:password
 
+###### create not new Dish
+curl -s -X POST -d '{"id": "1000012", "name": "Yummy", "price": "100500"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/dishes --user admin@gmail.com:password
+
 <hr>
 
 ## /restaurants

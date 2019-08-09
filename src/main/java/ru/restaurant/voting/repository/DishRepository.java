@@ -29,7 +29,7 @@ public interface DishRepository extends JpaRepository<Dish, Integer> {
     Dish save(Dish dish);
 
     @Query("SELECT d FROM Dish d WHERE d.restaurant.id=:restaurantId")
-    List<Dish> getAllDishesByRestaurantId(@Param("restaurantId") int restaurantId);
+    List<Dish> getAllByRestaurantId(@Param("restaurantId") int restaurantId);
 
     @Query("SELECT DISTINCT d FROM Dish d JOIN FETCH d.restaurant WHERE d.id=:id AND d.restaurant.id=:restaurantId")
     Dish get(@Param("id") int id, @Param("restaurantId") int restaurantId);
