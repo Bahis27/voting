@@ -20,8 +20,8 @@ public class DayMenuServiceTest extends AbstractServiceTest {
 
     @Test
     void create() throws Exception {
-        DayMenu newDayMenu = new DayMenu(null, LocalDate.now(), RES4, DISH10);
-        DayMenu created = dayMenuService.create(newDayMenu, RES4_ID);
+        DayMenu newDayMenu = new DayMenu(null, LocalDate.now());
+        DayMenu created = dayMenuService.create(newDayMenu, RES4_ID, DISH10_ID);
         newDayMenu.setId(created.getId());
         assertMatch(newDayMenu, created);
     }
@@ -31,15 +31,22 @@ public class DayMenuServiceTest extends AbstractServiceTest {
         DayMenu newDayMenu = new DayMenu(DAYMENU5);
         newDayMenu.setId(null);
         assertThrows(DataAccessException.class, () ->
-                dayMenuService.create(newDayMenu, RES3_ID));
+                dayMenuService.create(newDayMenu, RES3_ID, DISH7_ID));
     }
 
     @Test
     void update() throws Exception {
         DayMenu updated = new DayMenu(DAYMENU7);
         updated.setMenuDate(LocalDate.now());
-        dayMenuService.update(new DayMenu(updated), RES4_ID);
+        dayMenuService.update(new DayMenu(updated), RES4_ID, DISH12_ID);
         assertMatch(updated, dayMenuService.get(DAYMENU7_ID, RES4_ID));
+    }
+
+    @Test
+    void updateWithAlreadyExistingDayMenuInThisDay() throws Exception {
+        DayMenu updated = new DayMenu(DAYMENU1);
+        assertThrows(DataAccessException.class, () ->
+                dayMenuService.update(new DayMenu(updated), RES1_ID, DISH2_ID));
     }
 
     @Test

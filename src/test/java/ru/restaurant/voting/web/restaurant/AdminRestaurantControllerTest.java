@@ -32,8 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.restaurant.voting.TestData.*;
 import static ru.restaurant.voting.TestUtil.*;
-import static ru.restaurant.voting.util.exception.ErrorType.DATA_NOT_FOUND;
-import static ru.restaurant.voting.util.exception.ErrorType.VALIDATION_ERROR;
+import static ru.restaurant.voting.util.exception.ErrorType.*;
 
 class AdminRestaurantControllerTest extends AbstractControllerTest {
 
@@ -395,8 +394,8 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
     //dayMenus
     @Test
     void testCreateDayMenu() throws Exception {
-        DayMenu created = new DayMenu(null, LocalDate.now(), RES4, DISH11);
-        ResultActions action = mockMvc.perform(post(REST_URL + RES4_ID + "/menus")
+        DayMenu created = new DayMenu(null, LocalDate.now());
+        ResultActions action = mockMvc.perform(post(REST_URL + RES4_ID + "/menus/" + DISH11_ID)
                 .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(created)))
@@ -405,17 +404,31 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
 
         DayMenu returned = readFromJson(action, DayMenu.class);
         created.setId(returned.getId());
-        assertMatch(created, returned, "restaurant");
+        assertMatch(created, returned, "restaurant", "dish");
 
         DayMenu saved = dayMenuService.get(returned.getId(), RES4_ID);
         assertMatch(returned, saved, "restaurant");
     }
 
     @Test
+    @Transactional(propagation = Propagation.NEVER)
+    void testCreateDuplicateDayMenu() throws Exception {
+        DayMenu created = new DayMenu(DAYMENU27);
+        created.setId(null);
+        mockMvc.perform(post(REST_URL + RES1_ID + "/menus/" + DISH1_ID)
+                .with(userHttpBasic(ADMIN))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(created)))
+                .andExpect(status().isConflict())
+                .andExpect(errorType(DATA_ERROR))
+                .andDo(print());
+    }
+
+    @Test
     void testUpdateDayMenu() throws Exception {
         DayMenu updated = new DayMenu(DAYMENU39);
         updated.setMenuDate(LocalDate.now());
-        mockMvc.perform(put(REST_URL + RES9_ID + "/menus")
+        mockMvc.perform(put(REST_URL + RES9_ID + "/menus/" + DISH26_ID)
                 .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated)))
@@ -423,6 +436,19 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .andDo(print());
 
         assertMatch(dayMenuService.get(DAYMENU39_ID, RES9_ID), updated, "restaurant");
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.NEVER)
+    void updateWithAlreadyExistingDayMenuInThisDay() throws Exception {
+        DayMenu updated = new DayMenu(DAYMENU1);
+        mockMvc.perform(put(REST_URL + RES1_ID + "/menus/" + DISH2_ID)
+                .with(userHttpBasic(ADMIN))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(updated)))
+                .andExpect(status().isConflict())
+                .andExpect(errorType(DATA_ERROR))
+                .andDo(print());
     }
 
     @Test

@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.restaurant.voting.model.DayMenu;
 import ru.restaurant.voting.repository.DayMenuRepository;
+import ru.restaurant.voting.repository.DishRepository;
 import ru.restaurant.voting.repository.RestaurantRepository;
 import ru.restaurant.voting.util.exception.NotFoundException;
 
@@ -20,28 +21,34 @@ public class DayMenuServiceImpl implements DayMenuService {
 
     private final DayMenuRepository dayMenuRepository;
     private final RestaurantRepository restaurantRepository;
+    private final DishRepository dishRepository;
 
     @Autowired
-    public DayMenuServiceImpl(DayMenuRepository dayMenuRepository, RestaurantRepository restaurantRepository) {
+    public DayMenuServiceImpl(DayMenuRepository dayMenuRepository,
+                              RestaurantRepository restaurantRepository,
+                              DishRepository dishRepository) {
         this.dayMenuRepository = dayMenuRepository;
         this.restaurantRepository = restaurantRepository;
+        this.dishRepository = dishRepository;
     }
 
     @Transactional
     @Override
-    public DayMenu create(DayMenu dayMenu, int restaurantId) {
+    public DayMenu create(DayMenu dayMenu, int restaurantId, int dishId) {
         Assert.notNull(dayMenu, "dayMenu must not be null");
         checkNew(dayMenu);
         dayMenu.setRestaurant(restaurantRepository.findById(restaurantId).orElse(null));
+        dayMenu.setDish(dishRepository.get(dishId, restaurantId));
         return dayMenuRepository.save(dayMenu);
     }
 
     @Transactional
     @Override
-    public void update(DayMenu dayMenu, int restaurantId) {
+    public void update(DayMenu dayMenu, int restaurantId, int dishId) {
         Assert.notNull(dayMenu, "dayMenu must not be null");
         checkNotFoundWithId(dayMenuRepository.get(dayMenu.getId(), restaurantId), dayMenu.getId());
         dayMenu.setRestaurant(restaurantRepository.findById(restaurantId).orElse(null));
+        dayMenu.setDish(dishRepository.get(dishId, restaurantId));
         dayMenuRepository.save(dayMenu);
     }
 

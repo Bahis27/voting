@@ -118,14 +118,14 @@ public abstract class AbstractRestaurantController {
     }
 
     //dayMenus
-    public DayMenu createDayMenu(DayMenu dayMenu, int restaurantId) {
-        log.info("create dayMenu for restaurant with id={}", restaurantId);
-        return dayMenuService.create(dayMenu, restaurantId);
+    public DayMenu createDayMenu(DayMenu dayMenu, int restaurantId, int dishId) {
+        log.info("create dayMenu for restaurant with id={} and dish with id={}", restaurantId, dishId);
+        return dayMenuService.create(dayMenu, restaurantId, dishId);
     }
 
-    public void updateDayMenu(DayMenu dayMenu, int restaurantId) {
-        log.info("update dayMenu with id={} for restaurant with id={}", dayMenu.getId(), restaurantId);
-        dayMenuService.update(dayMenu, restaurantId);
+    public void updateDayMenu(DayMenu dayMenu, int restaurantId, int dishId) {
+        log.info("update dayMenu with id={} for restaurant with id={} and dish with id={}", dayMenu.getId(), restaurantId, dishId);
+        dayMenuService.update(dayMenu, restaurantId, dishId);
     }
 
     public List<DayMenu> getAllDayMenus(int restaurantId) {

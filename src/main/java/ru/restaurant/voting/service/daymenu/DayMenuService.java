@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface DayMenuService {
 
-    DayMenu create(DayMenu dayMenu, int restaurantId);
+    DayMenu create(DayMenu dayMenu, int restaurantId, int dishId);
 
-    void update(DayMenu dayMenu, int restaurantId);
+    void update(DayMenu dayMenu, int restaurantId, int dishId);
 
     List<DayMenu> getAll(int restaurantId);
 

@@ -132,16 +132,20 @@ public class AdminRestaurantController extends AbstractRestaurantController {
 
     //dayMenus
     @Override
-    @PostMapping(value = "/{restaurantId}/menus", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public DayMenu createDayMenu(@Validated(View.Web.class) @RequestBody DayMenu dayMenu, @PathVariable int restaurantId) {
-        return super.createDayMenu(dayMenu, restaurantId);
+    @PostMapping(value = "/{restaurantId}/menus/{dishId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public DayMenu createDayMenu(@Validated(View.Web.class) @RequestBody DayMenu dayMenu,
+                                 @PathVariable int restaurantId,
+                                 @PathVariable int dishId) {
+        return super.createDayMenu(dayMenu, restaurantId, dishId);
     }
 
     @Override
-    @PutMapping(value = "/{restaurantId}/menus", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/{restaurantId}/menus/{dishId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateDayMenu(@Validated(View.Web.class) @RequestBody DayMenu dayMenu, @PathVariable int restaurantId) {
-        super.updateDayMenu(dayMenu, restaurantId);
+    public void updateDayMenu(@Validated(View.Web.class) @RequestBody DayMenu dayMenu,
+                              @PathVariable int restaurantId,
+                              @PathVariable int dishId) {
+        super.updateDayMenu(dayMenu, restaurantId, dishId);
     }
 
     @Override
