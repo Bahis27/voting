@@ -28,6 +28,9 @@ public interface DishRepository extends JpaRepository<Dish, Integer> {
     @Override
     Dish save(Dish dish);
 
+    @Query("SELECT d FROM Dish d")
+    List<Dish> getAll();
+
     @Query("SELECT d FROM Dish d WHERE d.restaurant.id=:restaurantId")
     List<Dish> getAllByRestaurantId(@Param("restaurantId") int restaurantId);
 

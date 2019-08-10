@@ -12,6 +12,7 @@ import ru.restaurant.voting.repository.RestaurantRepository;
 import ru.restaurant.voting.repository.VoteRepository;
 import ru.restaurant.voting.to.RestaurantTo;
 import ru.restaurant.voting.to.RestaurantToWithStats;
+import ru.restaurant.voting.util.ToUtil;
 import ru.restaurant.voting.util.exception.NotFoundException;
 import ru.restaurant.voting.util.exception.RestaurantHasNotMenuForThisDay;
 import ru.restaurant.voting.util.exception.UserAlreadyHasVotedException;
@@ -62,9 +63,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public List<RestaurantTo> getAll() {
-        return restaurantRepository.getAll().stream()
-                .map(this::asTo)
-                .collect(Collectors.toList());
+        return ToUtil.restaurantsAsToList(restaurantRepository.getAll());
     }
 
     @Override
@@ -162,9 +161,5 @@ public class RestaurantServiceImpl implements RestaurantService {
                 .comparing(RestaurantToWithStats::getStat)
                 .reversed()
                 .thenComparing(RestaurantToWithStats::getName));
-    }
-
-    private RestaurantTo asTo(Restaurant restaurant) {
-        return new RestaurantTo(restaurant.getId(), restaurant.getName());
     }
 }

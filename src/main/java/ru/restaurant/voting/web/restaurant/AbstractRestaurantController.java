@@ -10,6 +10,8 @@ import ru.restaurant.voting.model.Vote;
 import ru.restaurant.voting.service.Dish.DishService;
 import ru.restaurant.voting.service.daymenu.DayMenuService;
 import ru.restaurant.voting.service.restaurant.RestaurantService;
+import ru.restaurant.voting.to.DayMenuTO;
+import ru.restaurant.voting.to.DishTo;
 import ru.restaurant.voting.to.RestaurantTo;
 import ru.restaurant.voting.to.RestaurantToWithStats;
 
@@ -102,9 +104,14 @@ public abstract class AbstractRestaurantController {
         dishService.update(dish, restaurantId);
     }
 
-    public List<Dish> getAllDishes(int restaurantId) {
+    public List<Dish> getAllDishesForRestaurant(int restaurantId) {
         log.info("get all dishes for restaurant with id={}", restaurantId);
         return dishService.getAll(restaurantId);
+    }
+
+    public List<DishTo> getAllDishes() {
+        log.info("get all dishes");
+        return dishService.getAll();
     }
 
     public Dish getDish(int id, int restaurantId) {
@@ -128,9 +135,14 @@ public abstract class AbstractRestaurantController {
         dayMenuService.update(dayMenu, restaurantId, dishId);
     }
 
-    public List<DayMenu> getAllDayMenus(int restaurantId) {
+    public List<DayMenu> getAllDayMenusForRestaurant(int restaurantId) {
         log.info("get all dayMenus for restaurant with id={}", restaurantId);
         return dayMenuService.getAll(restaurantId);
+    }
+
+    public List<DayMenuTO> getAllDayMenus() {
+        log.info("get all dayMenus");
+        return dayMenuService.getAll();
     }
 
     public List<DayMenu> getAllDayMenusForDayByRestaurantId(int restaurantId, LocalDate date) {

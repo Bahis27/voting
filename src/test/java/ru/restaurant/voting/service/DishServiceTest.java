@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import ru.restaurant.voting.model.Dish;
 import ru.restaurant.voting.service.Dish.DishService;
+import ru.restaurant.voting.to.DishTo;
+import ru.restaurant.voting.util.ToUtil;
 import ru.restaurant.voting.util.exception.IllegalRequestDataException;
 import ru.restaurant.voting.util.exception.NotFoundException;
 
@@ -85,8 +87,14 @@ public class DishServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    void getAll() throws Exception {
+    void getAllForRestaurant() throws Exception {
         List<Dish> dishes = dishService.getAll(RES8_ID);
         assertMatch(dishes, DISH22, DISH23, DISH24);
+    }
+
+    @Test
+    void getAll() throws Exception {
+        List<DishTo> all = dishService.getAll();
+        assertMatch(all, ToUtil.dishesAsToList(DISHES));
     }
 }

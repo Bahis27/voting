@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import ru.restaurant.voting.model.DayMenu;
 import ru.restaurant.voting.service.daymenu.DayMenuService;
+import ru.restaurant.voting.to.DayMenuTO;
+import ru.restaurant.voting.util.ToUtil;
 import ru.restaurant.voting.util.exception.NotFoundException;
 
 import java.time.LocalDate;
@@ -94,8 +96,14 @@ public class DayMenuServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    void getAll() throws Exception {
+    void getAllForRestaurant() throws Exception {
         List<DayMenu> allDayMenus = dayMenuService.getAll(RES5_ID);
         assertMatch(allDayMenus, List.of(DAYMENU8, DAYMENU21, DAYMENU22, DAYMENU31));
+    }
+
+    @Test
+    void getAll() throws Exception {
+        List<DayMenuTO> all = dayMenuService.getAll();
+        assertMatch(all, ToUtil.dayMenusAsToList(DAY_MENUS));
     }
 }

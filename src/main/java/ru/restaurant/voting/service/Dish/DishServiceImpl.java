@@ -7,9 +7,12 @@ import org.springframework.util.Assert;
 import ru.restaurant.voting.model.Dish;
 import ru.restaurant.voting.repository.DishRepository;
 import ru.restaurant.voting.repository.RestaurantRepository;
+import ru.restaurant.voting.to.DishTo;
+import ru.restaurant.voting.util.ToUtil;
 import ru.restaurant.voting.util.exception.NotFoundException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static ru.restaurant.voting.util.ValidationUtil.checkNotFoundWithId;
 import static ru.restaurant.voting.util.ValidationUtil.checkNew;
@@ -42,6 +45,11 @@ public class DishServiceImpl implements DishService {
         checkNotFoundWithId(dishRepository.get(dish.getId(), restaurantId), dish.getId());
         dish.setRestaurant(restaurantRepository.findById(restaurantId).orElse(null));
         dishRepository.save(dish);
+    }
+
+    @Override
+    public List<DishTo> getAll() {
+        return ToUtil.dishesAsToList(dishRepository.getAll());
     }
 
     @Override

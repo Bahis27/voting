@@ -39,6 +39,9 @@ public interface DayMenuRepository extends JpaRepository<DayMenu, Integer> {
     @Override
     DayMenu save(DayMenu dayMenu);
 
+    @Query("SELECT m FROM DayMenu m")
+    List<DayMenu> getAll();
+
     @Query("SELECT DISTINCT m FROM DayMenu m JOIN FETCH m.dish WHERE m.restaurant.id=:id AND m.menuDate=:date")
     List<DayMenu> getAllForDateAndRestaurantId(@Param("id") int restaurantId, @Param("date") LocalDate date);
 

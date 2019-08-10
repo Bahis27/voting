@@ -1,6 +1,7 @@
 package ru.restaurant.voting.service.daymenu;
 
 import ru.restaurant.voting.model.DayMenu;
+import ru.restaurant.voting.to.DayMenuTO;
 import ru.restaurant.voting.util.exception.NotFoundException;
 
 import java.time.LocalDate;
@@ -11,6 +12,8 @@ public interface DayMenuService {
     DayMenu create(DayMenu dayMenu, int restaurantId, int dishId);
 
     void update(DayMenu dayMenu, int restaurantId, int dishId);
+
+    List<DayMenuTO> getAll();
 
     List<DayMenu> getAll(int restaurantId);
 

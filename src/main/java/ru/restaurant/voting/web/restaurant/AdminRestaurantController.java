@@ -10,6 +10,8 @@ import ru.restaurant.voting.View;
 import ru.restaurant.voting.model.DayMenu;
 import ru.restaurant.voting.model.Dish;
 import ru.restaurant.voting.model.Restaurant;
+import ru.restaurant.voting.to.DayMenuTO;
+import ru.restaurant.voting.to.DishTo;
 import ru.restaurant.voting.to.RestaurantTo;
 import ru.restaurant.voting.to.RestaurantToWithStats;
 
@@ -113,8 +115,14 @@ public class AdminRestaurantController extends AbstractRestaurantController {
 
     @Override
     @GetMapping("/{restaurantId}/dishes")
-    public List<Dish> getAllDishes(@PathVariable int restaurantId) {
-        return super.getAllDishes(restaurantId);
+    public List<Dish> getAllDishesForRestaurant(@PathVariable int restaurantId) {
+        return super.getAllDishesForRestaurant(restaurantId);
+    }
+
+    @Override
+    @GetMapping("/dishes")
+    public List<DishTo> getAllDishes() {
+        return super.getAllDishes();
     }
 
     @Override
@@ -150,8 +158,14 @@ public class AdminRestaurantController extends AbstractRestaurantController {
 
     @Override
     @GetMapping("/{restaurantId}/menus")
-    public List<DayMenu> getAllDayMenus(@PathVariable int restaurantId) {
-        return super.getAllDayMenus(restaurantId);
+    public List<DayMenu> getAllDayMenusForRestaurant(@PathVariable int restaurantId) {
+        return super.getAllDayMenusForRestaurant(restaurantId);
+    }
+
+    @Override
+    @GetMapping("/menus")
+    public List<DayMenuTO> getAllDayMenus() {
+        return super.getAllDayMenus();
     }
 
     @Override

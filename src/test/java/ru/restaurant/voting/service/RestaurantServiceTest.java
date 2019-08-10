@@ -3,13 +3,13 @@ package ru.restaurant.voting.service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import ru.restaurant.voting.TestUtil;
 import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.model.Vote;
 import ru.restaurant.voting.repository.VoteRepository;
 import ru.restaurant.voting.service.restaurant.RestaurantService;
 import ru.restaurant.voting.to.RestaurantTo;
 import ru.restaurant.voting.to.RestaurantToWithStats;
+import ru.restaurant.voting.util.ToUtil;
 import ru.restaurant.voting.util.exception.NotFoundException;
 import ru.restaurant.voting.util.exception.RestaurantHasNotMenuForThisDay;
 import ru.restaurant.voting.util.exception.UserAlreadyHasVotedException;
@@ -53,8 +53,9 @@ class RestaurantServiceTest extends AbstractServiceTest {
 
     @Test
     void delete() throws Exception {
-        restaurantService.delete(RES5_ID);
-        assertMatch(TestUtil.toEntityList(restaurantService.getAll()), RES1, RES2, RES3, RES4, RES6, RES7, RES8, RES9);
+        assertMatch(restaurantService.getAllForDay(LocalDate.of(2019, 7, 1)), RESTAURANTS_FOR_DAY_20190701);
+        restaurantService.delete(RES1_ID);
+        assertMatch(restaurantService.getAllForDay(LocalDate.of(2019, 7, 1)), RESTAURANTS_FOR_DAY_20190701_WITHOUT_RES1);
     }
 
     @Test
@@ -78,7 +79,7 @@ class RestaurantServiceTest extends AbstractServiceTest {
     @Test
     void getAll() throws Exception {
         List<RestaurantTo> all = restaurantService.getAll();
-        assertMatch(all, TestUtil.toToList(RESTAURANTS));
+        assertMatch(all, ToUtil.restaurantsAsToList(RESTAURANTS));
     }
 
     @Test

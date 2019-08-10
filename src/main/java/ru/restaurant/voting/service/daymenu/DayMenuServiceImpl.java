@@ -8,10 +8,13 @@ import ru.restaurant.voting.model.DayMenu;
 import ru.restaurant.voting.repository.DayMenuRepository;
 import ru.restaurant.voting.repository.DishRepository;
 import ru.restaurant.voting.repository.RestaurantRepository;
+import ru.restaurant.voting.to.DayMenuTO;
+import ru.restaurant.voting.util.ToUtil;
 import ru.restaurant.voting.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static ru.restaurant.voting.util.ValidationUtil.checkNotFoundWithId;
 import static ru.restaurant.voting.util.ValidationUtil.checkNew;
@@ -50,6 +53,11 @@ public class DayMenuServiceImpl implements DayMenuService {
         dayMenu.setRestaurant(restaurantRepository.findById(restaurantId).orElse(null));
         dayMenu.setDish(dishRepository.get(dishId, restaurantId));
         dayMenuRepository.save(dayMenu);
+    }
+
+    @Override
+    public List<DayMenuTO> getAll() {
+        return ToUtil.dayMenusAsToList(dayMenuRepository.getAll());
     }
 
     @Override

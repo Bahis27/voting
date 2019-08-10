@@ -44,16 +44,4 @@ public class TestUtil {
     public static RequestPostProcessor userAuth(User user) {
         return SecurityMockMvcRequestPostProcessors.authentication(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
     }
-
-    public static List<Restaurant> toEntityList(List<RestaurantTo> restaurantTos) {
-        return restaurantTos.stream()
-                .map(Restaurant::new)
-                .collect(Collectors.toList());
-    }
-
-    public static List<RestaurantTo> toToList(List<Restaurant> restaurants) {
-        return restaurants.stream()
-                .map(RestaurantTo::new)
-                .collect(Collectors.toList());
-    }
 }

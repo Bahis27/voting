@@ -28,10 +28,6 @@ public class Restaurant extends AbstractNamedEntity {
         this.dayMenus = dayMenus;
     }
 
-    public Restaurant(RestaurantTo restaurantTo) {
-        this(restaurantTo.getId(), restaurantTo.getName());
-    }
-
     public Restaurant(Restaurant restaurant) {
         super(restaurant.getId(), restaurant.getName());
         this.setDayMenus(restaurant.getDayMenus());

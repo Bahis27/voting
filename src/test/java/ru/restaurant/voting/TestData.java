@@ -55,6 +55,8 @@ public class TestData {
     public static final Restaurant RES9 = new Restaurant(RES9_ID, "He is Not Here Bar");
 
     public static final List<Restaurant> RESTAURANTS = List.of(RES1, RES2, RES3, RES4, RES5, RES6, RES7, RES8, RES9);
+    public static final List<Restaurant> RESTAURANTS_FOR_DAY_20190701 = List.of(RES9, RES1, RES3, RES4, RES5, RES7, RES2);
+    public static final List<Restaurant> RESTAURANTS_FOR_DAY_20190701_WITHOUT_RES1 = List.of(RES9, RES3, RES4, RES5, RES7, RES2);
 
     public static final RestaurantToWithStats RES1_TO_WS = new RestaurantToWithStats(RES1_ID, "Kale Me Crazy", 4);
     public static final RestaurantToWithStats RES2_TO_WS = new RestaurantToWithStats(RES2_ID, "Wok And Roll", 1);
@@ -142,6 +144,10 @@ public class TestData {
     public static final Dish DISH27 = new Dish(DISH27_ID, "New York Pizza", 370, RES9);
 
     public static final List<Dish> RES3_DISHES = List.of(DISH7, DISH8, DISH9);
+
+    public static final List<Dish> DISHES = List.of(DISH1, DISH2, DISH3, DISH4, DISH5, DISH6, DISH7,
+            DISH8, DISH9, DISH10, DISH11, DISH12, DISH13, DISH14, DISH15, DISH16, DISH17, DISH18,
+            DISH19, DISH20, DISH21, DISH22, DISH23, DISH24, DISH25, DISH26, DISH27);
 
     public static final int START_DAYMENU_SEQ = 10000;
     public static final int DAYMENU1_ID = START_DAYMENU_SEQ + 1;
@@ -231,6 +237,12 @@ public class TestData {
 
     public static final List<DayMenu> DAYMENUS_FOR_20190702 = List.of(DAYMENU14, DAYMENU15, DAYMENU16, DAYMENU17,
             DAYMENU18, DAYMENU19, DAYMENU20, DAYMENU21, DAYMENU22, DAYMENU23, DAYMENU24, DAYMENU25, DAYMENU26);
+
+    public static final List<DayMenu> DAY_MENUS = List.of(DAYMENU1, DAYMENU2, DAYMENU3, DAYMENU4, DAYMENU5, DAYMENU6,
+            DAYMENU7, DAYMENU8, DAYMENU9, DAYMENU10, DAYMENU11, DAYMENU12, DAYMENU13, DAYMENU14, DAYMENU15, DAYMENU16,
+            DAYMENU17, DAYMENU18, DAYMENU19, DAYMENU20, DAYMENU21, DAYMENU22, DAYMENU23, DAYMENU24, DAYMENU25, DAYMENU26,
+            DAYMENU27, DAYMENU28, DAYMENU29, DAYMENU30, DAYMENU31, DAYMENU32, DAYMENU33, DAYMENU34, DAYMENU35, DAYMENU36,
+            DAYMENU37, DAYMENU38, DAYMENU39);
 
     public static final Vote VOTE1 = new Vote(LocalDate.of(2019, 7, 1), 18, 109);
     public static final Vote VOTE2 = new Vote(LocalDate.of(2019, 7, 1), 11, 101);

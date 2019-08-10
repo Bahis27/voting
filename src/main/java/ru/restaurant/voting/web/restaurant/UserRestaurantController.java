@@ -13,7 +13,6 @@ import ru.restaurant.voting.model.Vote;
 import ru.restaurant.voting.to.RestaurantToWithStats;
 
 import java.net.URI;
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -54,8 +53,8 @@ public class UserRestaurantController extends AbstractRestaurantController {
 
     @Override
     @GetMapping("/{id}/dishes")
-    public List<Dish> getAllDishes(@PathVariable int id) {
-        return super.getAllDishes(id);
+    public List<Dish> getAllDishesForRestaurant(@PathVariable int id) {
+        return super.getAllDishesForRestaurant(id);
     }
 
     @GetMapping("/{id}/menus")

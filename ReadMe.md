@@ -61,7 +61,7 @@ curl -s -X DELETE http://localhost:8080/voting/profile --user volk27@mail.ru:NuZ
 
 ## /admin/restaurants
 
-###### get all Restaurants (Only name list)
+###### get all Restaurants (without links)
 curl -s http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
 
 ###### get Restaurant by id with all DayMenus
@@ -98,6 +98,9 @@ curl -s http://localhost:8080/voting/admin/restaurants/103/stat/for?day=2019-07-
 
 ### dishes
 
+###### get all Dishes (without links)
+curl -s http://localhost:8080/voting/admin/restaurants/dishes --user admin@gmail.com:password
+
 ###### get all Dishes for Restaurant
 curl -s http://localhost:8080/voting/admin/restaurants/102/dishes --user admin@gmail.com:password
 
@@ -115,11 +118,8 @@ curl -s -X PUT -d '{"id": "1027", "name": "Neapolitan Pizza", "price": "500"}' -
 
 ### menus
 
-###### create DayMenu for Restaurant
-curl -s -X POST -d '{"menuDate": "2019-08-10"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/108/menus/1023 --user admin@gmail.com:password
-
-###### update DayMenu for Restaurant
-curl -s -X PUT -d '{"id": "10039", "menuDate": "2019-08-10"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/menus/1026 --user admin@gmail.com:password
+###### get all DayMenus (without links)
+curl -s http://localhost:8080/voting/admin/restaurants/menus --user admin@gmail.com:password
 
 ###### get all DayMenus for Restaurant
 curl -s http://localhost:8080/voting/admin/restaurants/104/menus --user admin@gmail.com:password
@@ -138,6 +138,12 @@ curl -s -X DELETE http://localhost:8080/voting/admin/restaurants/107/menus/10037
 
 ###### delete all DayMenus for Restaurant for day
 curl -s -X DELETE http://localhost:8080/voting/admin/restaurants/101/menus/for?day=2019-07-01 --user admin@gmail.com:password
+
+###### create DayMenu for Restaurant
+curl -s -X POST -d '{"menuDate": "2019-08-10"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/108/menus/1023 --user admin@gmail.com:password
+
+###### update DayMenu for Restaurant
+curl -s -X PUT -d '{"id": "10039", "menuDate": "2019-08-10"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/menus/1026 --user admin@gmail.com:password
 
 ### error examples
 
