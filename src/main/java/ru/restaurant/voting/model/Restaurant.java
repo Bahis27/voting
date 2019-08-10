@@ -1,7 +1,5 @@
 package ru.restaurant.voting.model;
 
-import ru.restaurant.voting.to.RestaurantTo;
-
 import javax.persistence.*;
 import java.util.List;
 

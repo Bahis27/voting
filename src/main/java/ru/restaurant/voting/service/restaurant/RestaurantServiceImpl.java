@@ -7,7 +7,6 @@ import org.springframework.util.Assert;
 import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.model.Vote;
 import ru.restaurant.voting.repository.DayMenuRepository;
-import ru.restaurant.voting.repository.DishRepository;
 import ru.restaurant.voting.repository.RestaurantRepository;
 import ru.restaurant.voting.repository.VoteRepository;
 import ru.restaurant.voting.to.RestaurantTo;
@@ -25,8 +24,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static ru.restaurant.voting.util.ValidationUtil.checkNotFoundWithId;
 import static ru.restaurant.voting.util.ValidationUtil.checkNew;
+import static ru.restaurant.voting.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
@@ -101,12 +100,12 @@ public class RestaurantServiceImpl implements RestaurantService {
         }
         Optional<Vote> optionalVote = voteRepository.findByUserIdAndVotingDate(userId, date);
         if (optionalVote.isEmpty()) {
-            return voteRepository.save(new Vote(date, userId, restaurantId));
+            return voteRepository.save(new Vote(null, date, userId, restaurantId));
         } else {
             Vote vote = null;
             if (time.isBefore(LocalTime.of(11, 0, 0))) {
                 voteRepository.deleteByUserIdAndVotingDate(userId, date);
-                vote = voteRepository.save(new Vote(date, userId, restaurantId));
+                vote = voteRepository.save(new Vote(null, date, userId, restaurantId));
             } else {
                 throw new UserAlreadyHasVotedException(String.format("User with userId = %d already has voted", userId));
             }

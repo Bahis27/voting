@@ -7,7 +7,7 @@ import ru.restaurant.voting.model.DayMenu;
 import ru.restaurant.voting.model.Dish;
 import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.model.Vote;
-import ru.restaurant.voting.service.Dish.DishService;
+import ru.restaurant.voting.service.dish.DishService;
 import ru.restaurant.voting.service.daymenu.DayMenuService;
 import ru.restaurant.voting.service.restaurant.RestaurantService;
 import ru.restaurant.voting.to.DayMenuTO;

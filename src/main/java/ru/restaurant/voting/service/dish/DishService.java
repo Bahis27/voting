@@ -1,4 +1,4 @@
-package ru.restaurant.voting.service.Dish;
+package ru.restaurant.voting.service.dish;
 
 import ru.restaurant.voting.model.Dish;
 import ru.restaurant.voting.to.DishTo;

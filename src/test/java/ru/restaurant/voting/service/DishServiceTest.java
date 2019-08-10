@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import ru.restaurant.voting.model.Dish;
-import ru.restaurant.voting.service.Dish.DishService;
+import ru.restaurant.voting.service.dish.DishService;
 import ru.restaurant.voting.to.DishTo;
 import ru.restaurant.voting.util.ToUtil;
 import ru.restaurant.voting.util.exception.IllegalRequestDataException;

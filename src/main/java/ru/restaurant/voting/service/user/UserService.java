@@ -4,7 +4,6 @@ import ru.restaurant.voting.model.User;
 import ru.restaurant.voting.to.UserTo;
 import ru.restaurant.voting.util.exception.NotFoundException;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface UserService {
@@ -22,8 +21,4 @@ public interface UserService {
     void update(UserTo user);
 
     List<User> getAll();
-
-    int getStatForDay(LocalDate date, int userId);
-
-    int getStat(int userId);
 }

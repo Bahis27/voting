@@ -6,14 +6,11 @@ import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequ
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
-import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.model.User;
-import ru.restaurant.voting.to.RestaurantTo;
 import ru.restaurant.voting.web.json.JsonUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class TestUtil {
     public static String getContent(MvcResult result) throws UnsupportedEncodingException {

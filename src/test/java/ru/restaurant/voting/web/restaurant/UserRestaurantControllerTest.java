@@ -1,13 +1,11 @@
 package ru.restaurant.voting.web.restaurant;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import ru.restaurant.voting.TestUtil;
 import ru.restaurant.voting.model.DayMenu;
 import ru.restaurant.voting.model.Dish;
 import ru.restaurant.voting.model.Restaurant;
-import ru.restaurant.voting.repository.VoteRepository;
 import ru.restaurant.voting.to.RestaurantToWithStats;
 import ru.restaurant.voting.web.AbstractControllerTest;
 
@@ -26,9 +24,6 @@ import static ru.restaurant.voting.util.exception.ErrorType.DATA_NOT_FOUND;
 import static ru.restaurant.voting.util.exception.ErrorType.WRONG_REQUEST;
 
 class UserRestaurantControllerTest extends AbstractControllerTest {
-
-    @Autowired
-    private VoteRepository voteRepository;
 
     private static final String REST_URL = UserRestaurantController.REST_URL + '/';
 

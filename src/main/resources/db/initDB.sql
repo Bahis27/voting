@@ -57,10 +57,10 @@ CREATE UNIQUE INDEX daymenus_unique_menuday_restaurantid_dishid_idx ON day_menus
 
 CREATE TABLE votes
 (
+    id            INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
     vote_day      DATE    NOT NULL,
     user_id       INTEGER NOT NULL,
     restaurant_id INTEGER NOT NULL,
-    PRIMARY KEY (vote_day, user_id, restaurant_id),
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
     FOREIGN KEY (restaurant_id) REFERENCES restaurants (id) ON DELETE CASCADE
 );

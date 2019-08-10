@@ -17,9 +17,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.restaurant.voting.TestData.*;
 import static ru.restaurant.voting.TestUtil.*;
-import static ru.restaurant.voting.util.exception.ErrorType.*;
-import static ru.restaurant.voting.web.user.ProfileRestController.REST_URL;
+import static ru.restaurant.voting.util.exception.ErrorType.VALIDATION_ERROR;
 import static ru.restaurant.voting.web.ExceptionInfoHandler.EXCEPTION_DUPLICATE_EMAIL;
+import static ru.restaurant.voting.web.user.ProfileRestController.REST_URL;
 
 class ProfileRestControllerTest extends AbstractControllerTest {
 

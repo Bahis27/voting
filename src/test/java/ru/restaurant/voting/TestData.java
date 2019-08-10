@@ -244,30 +244,60 @@ public class TestData {
             DAYMENU27, DAYMENU28, DAYMENU29, DAYMENU30, DAYMENU31, DAYMENU32, DAYMENU33, DAYMENU34, DAYMENU35, DAYMENU36,
             DAYMENU37, DAYMENU38, DAYMENU39);
 
-    public static final Vote VOTE1 = new Vote(LocalDate.of(2019, 7, 1), 18, 109);
-    public static final Vote VOTE2 = new Vote(LocalDate.of(2019, 7, 1), 11, 101);
-    public static final Vote VOTE3 = new Vote(LocalDate.of(2019, 7, 1), 12, 103);
-    public static final Vote VOTE4 = new Vote(LocalDate.of(2019, 7, 1), 13, 105);
-    public static final Vote VOTE5 = new Vote(LocalDate.of(2019, 7, 1), 14, 103);
-    public static final Vote VOTE6 = new Vote(LocalDate.of(2019, 7, 1), 15, 103);
-    public static final Vote VOTE7 = new Vote(LocalDate.of(2019, 7, 1), 16, 101);
-    public static final Vote VOTE8 = new Vote(LocalDate.of(2019, 7, 1), 17, 108);
-    public static final Vote VOTE9 = new Vote(LocalDate.of(2019, 7, 2), 18, 109);
-    public static final Vote VOTE10 = new Vote(LocalDate.of(2019, 7, 2), 11, 107);
-    public static final Vote VOTE11 = new Vote(LocalDate.of(2019, 7, 2), 12, 103);
-    public static final Vote VOTE12 = new Vote(LocalDate.of(2019, 7, 2), 13, 106);
-    public static final Vote VOTE13 = new Vote(LocalDate.of(2019, 7, 2), 14, 103);
-    public static final Vote VOTE14 = new Vote(LocalDate.of(2019, 7, 2), 15, 105);
-    public static final Vote VOTE15 = new Vote(LocalDate.of(2019, 7, 2), 16, 101);
-    public static final Vote VOTE16 = new Vote(LocalDate.of(2019, 7, 2), 17, 102);
-    public static final Vote VOTE17 = new Vote(LocalDate.of(2019, 7, 3), 18, 103);
-    public static final Vote VOTE18 = new Vote(LocalDate.of(2019, 7, 3), 11, 103);
-    public static final Vote VOTE19 = new Vote(LocalDate.of(2019, 7, 3), 12, 103);
-    public static final Vote VOTE20 = new Vote(LocalDate.of(2019, 7, 3), 13, 108);
-    public static final Vote VOTE21 = new Vote(LocalDate.of(2019, 7, 3), 14, 108);
-    public static final Vote VOTE22 = new Vote(LocalDate.of(2019, 7, 3), 15, 108);
-    public static final Vote VOTE23 = new Vote(LocalDate.of(2019, 7, 3), 16, 101);
-    public static final Vote VOTE24 = new Vote(LocalDate.of(2019, 7, 3), 17, 104);
+    public static final int START_VOTE_SEQ = 50000;
+    public static final int VOTE1_ID = START_VOTE_SEQ + 1;
+    public static final int VOTE2_ID = START_VOTE_SEQ + 2;
+    public static final int VOTE3_ID = START_VOTE_SEQ + 3;
+    public static final int VOTE4_ID = START_VOTE_SEQ + 4;
+    public static final int VOTE5_ID = START_VOTE_SEQ + 5;
+    public static final int VOTE6_ID = START_VOTE_SEQ + 6;
+    public static final int VOTE7_ID = START_VOTE_SEQ + 7;
+    public static final int VOTE8_ID = START_VOTE_SEQ + 8;
+    public static final int VOTE9_ID = START_VOTE_SEQ + 9;
+    public static final int VOTE10_ID = START_VOTE_SEQ + 10;
+    public static final int VOTE11_ID = START_VOTE_SEQ + 11;
+    public static final int VOTE12_ID = START_VOTE_SEQ + 12;
+    public static final int VOTE13_ID = START_VOTE_SEQ + 13;
+    public static final int VOTE14_ID = START_VOTE_SEQ + 14;
+    public static final int VOTE15_ID = START_VOTE_SEQ + 15;
+    public static final int VOTE16_ID = START_VOTE_SEQ + 16;
+    public static final int VOTE17_ID = START_VOTE_SEQ + 17;
+    public static final int VOTE18_ID = START_VOTE_SEQ + 18;
+    public static final int VOTE19_ID = START_VOTE_SEQ + 19;
+    public static final int VOTE20_ID = START_VOTE_SEQ + 20;
+    public static final int VOTE21_ID = START_VOTE_SEQ + 21;
+    public static final int VOTE22_ID = START_VOTE_SEQ + 22;
+    public static final int VOTE23_ID = START_VOTE_SEQ + 23;
+    public static final int VOTE24_ID = START_VOTE_SEQ + 24;
+
+    public static final Vote VOTE1 = new Vote(VOTE1_ID, LocalDate.of(2019, 7, 1), 18, 109);
+    public static final Vote VOTE2 = new Vote(VOTE2_ID, LocalDate.of(2019, 7, 1), 11, 101);
+    public static final Vote VOTE3 = new Vote(VOTE3_ID, LocalDate.of(2019, 7, 1), 12, 103);
+    public static final Vote VOTE4 = new Vote(VOTE4_ID, LocalDate.of(2019, 7, 1), 13, 105);
+    public static final Vote VOTE5 = new Vote(VOTE5_ID, LocalDate.of(2019, 7, 1), 14, 103);
+    public static final Vote VOTE6 = new Vote(VOTE6_ID, LocalDate.of(2019, 7, 1), 15, 103);
+    public static final Vote VOTE7 = new Vote(VOTE7_ID, LocalDate.of(2019, 7, 1), 16, 101);
+    public static final Vote VOTE8 = new Vote(VOTE8_ID, LocalDate.of(2019, 7, 1), 17, 108);
+    public static final Vote VOTE9 = new Vote(VOTE9_ID, LocalDate.of(2019, 7, 2), 18, 109);
+    public static final Vote VOTE10 = new Vote(VOTE10_ID, LocalDate.of(2019, 7, 2), 11, 107);
+    public static final Vote VOTE11 = new Vote(VOTE11_ID, LocalDate.of(2019, 7, 2), 12, 103);
+    public static final Vote VOTE12 = new Vote(VOTE12_ID, LocalDate.of(2019, 7, 2), 13, 106);
+    public static final Vote VOTE13 = new Vote(VOTE13_ID, LocalDate.of(2019, 7, 2), 14, 103);
+    public static final Vote VOTE14 = new Vote(VOTE14_ID, LocalDate.of(2019, 7, 2), 15, 105);
+    public static final Vote VOTE15 = new Vote(VOTE15_ID, LocalDate.of(2019, 7, 2), 16, 101);
+    public static final Vote VOTE16 = new Vote(VOTE16_ID, LocalDate.of(2019, 7, 2), 17, 102);
+    public static final Vote VOTE17 = new Vote(VOTE17_ID, LocalDate.of(2019, 7, 3), 18, 103);
+    public static final Vote VOTE18 = new Vote(VOTE18_ID, LocalDate.of(2019, 7, 3), 11, 103);
+    public static final Vote VOTE19 = new Vote(VOTE19_ID, LocalDate.of(2019, 7, 3), 12, 103);
+    public static final Vote VOTE20 = new Vote(VOTE20_ID, LocalDate.of(2019, 7, 3), 13, 108);
+    public static final Vote VOTE21 = new Vote(VOTE21_ID, LocalDate.of(2019, 7, 3), 14, 108);
+    public static final Vote VOTE22 = new Vote(VOTE22_ID, LocalDate.of(2019, 7, 3), 15, 108);
+    public static final Vote VOTE23 = new Vote(VOTE23_ID, LocalDate.of(2019, 7, 3), 16, 101);
+    public static final Vote VOTE24 = new Vote(VOTE24_ID, LocalDate.of(2019, 7, 3), 17, 104);
+
+    public static final List<Vote> VOTES = List.of(VOTE1, VOTE2, VOTE3, VOTE4, VOTE5, VOTE6, VOTE7, VOTE8, VOTE9,
+            VOTE10, VOTE11, VOTE12, VOTE13, VOTE14, VOTE15, VOTE16, VOTE17, VOTE18, VOTE19, VOTE20, VOTE21, VOTE22,
+            VOTE23, VOTE24);
 
     public static <T> void assertMatch(T actual, T expected) {
         assertThat(actual).isEqualToComparingFieldByFieldRecursively(expected);

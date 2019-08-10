@@ -263,15 +263,32 @@
 
 <hr>
 
+<h2>/admin/votes</h2>
+<ul>
+    <li>
+        get all Votes <br>
+        curl -s http://localhost:8080/voting/admin/votes --user admin@gmail.com:password
+    </li>
+    <li>
+        get Vote by id <br>
+        curl -s http://localhost:8080/voting/admin/votes/50009 --user admin@gmail.com:password
+    </li>
+</ul>
+
+<hr>
+
 <h2>/restaurants</h2>
 <ul>
     <li>
-        vote for Restaurant <br>
+        vote for Restaurant (create DayMenu for today before voting) <br>
+        curl -s -X POST -d '{}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/108/menus/1023 --user admin@gmail.com:password <br>
         curl -s -X POST http://localhost:8080/voting/restaurants/vote/108 --user simple@mail.ru:simple
     </li>
     <li>
-        vote for Restaurant second time (Till 11 a.m. o'clock - changed the decision, after 11 a.m. it will not work) <br>
-        curl -s -X POST http://localhost:8080/voting/restaurants/vote/105 --user simple@mail.ru:simple <br>
+        vote for Restaurant second time (Till 11 a.m. o'clock - changed the decision, after 11 a.m. it will not work)(create DayMenu for today before voting) <br>
+        curl -s -X POST -d '{}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/108/menus/1023 --user admin@gmail.com:password <br>
+        curl -s -X POST http://localhost:8080/voting/restaurants/vote/108 --user simple@mail.ru:simple <br>
+        curl -s -X POST -d '{}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/106/menus/1017 --user admin@gmail.com:password <br>
         curl -s -X POST http://localhost:8080/voting/restaurants/vote/106 --user simple@mail.ru:simple
     </li>
     <li>
@@ -301,6 +318,44 @@
     <li>
         get all DayMenus for current day <br>
         curl -s http://localhost:8080/voting/restaurants/menus --user simple@mail.ru:simple
+    </li>
+</ul>
+
+<hr>
+
+<h2>Full Case</h2>
+<ul>
+    <li>
+        create new restaurant <br>
+        curl -s -X POST -d '{"name": "The Most Amazing Restaurant"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
+    </li>
+    <li>
+        check <br>
+        curl -s http://localhost:8080/voting/admin/restaurants/100000 --user admin@gmail.com:password
+    </li>
+    <li>
+        create new dish <br>
+        curl -s -X POST -d '{"name": "The Most Delicious Rib Eye Steak", "price": "100500"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/100000/dishes --user admin@gmail.com:password
+    </li>
+    <li>
+        check <br>
+        curl -s http://localhost:8080/voting/admin/restaurants/100000/dishes --user admin@gmail.com:password
+    </li>
+    <li>
+        create new DayMenu <br>
+        curl -s -X POST -d '{}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/100000/menus/100001 --user admin@gmail.com:password
+    </li>
+    <li>
+        check <br>
+        curl -s http://localhost:8080/voting/admin/restaurants/100000 --user admin@gmail.com:password
+    </li>
+    <li>
+        voting for new DayMenu <br>
+        curl -s -X POST http://localhost:8080/voting/restaurants/vote/100000 --user admin@gmail.com:password
+    </li>
+    <li>
+        check <br>
+        curl -s http://localhost:8080/voting/admin/votes/100003 --user admin@gmail.com:password
     </li>
 </ul>
 

@@ -1,4 +1,4 @@
-package ru.restaurant.voting.service.Dish;
+package ru.restaurant.voting.service.dish;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
