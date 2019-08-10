@@ -22,8 +22,6 @@ public interface RestaurantService {
 
     void delete(int id) throws NotFoundException;
 
-    List<RestaurantToWithStats> getAllWithStats();
-
     Restaurant getForDay(int id, LocalDate localDate) throws NotFoundException;
 
     List<Restaurant> getAllForDay(LocalDate localDate);
@@ -35,4 +33,6 @@ public interface RestaurantService {
     int getStat(int restaurantId);
 
     List<RestaurantToWithStats> getAllWithStatsForDay(LocalDate date);
+
+    List<RestaurantToWithStats> getAllWithStats();
 }

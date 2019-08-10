@@ -11,28 +11,30 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.restaurant.voting.AuthorizedUser;
 import ru.restaurant.voting.model.User;
+import ru.restaurant.voting.repository.VoteRepository;
 import ru.restaurant.voting.repository.user.UserRepository;
 import ru.restaurant.voting.to.UserTo;
 import ru.restaurant.voting.util.exception.NotFoundException;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static ru.restaurant.voting.util.UserUtil.prepareToSave;
 import static ru.restaurant.voting.util.UserUtil.updateFromTo;
-import static ru.restaurant.voting.util.ValidationUtil.checkNotFound;
-import static ru.restaurant.voting.util.ValidationUtil.checkNotFoundWithId;
-import static ru.restaurant.voting.util.ValidationUtil.checkNew;
+import static ru.restaurant.voting.util.ValidationUtil.*;
 
 @Service("userService")
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
+    private final VoteRepository voteRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository repository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository repository, PasswordEncoder passwordEncoder, VoteRepository voteRepository) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
+        this.voteRepository = voteRepository;
     }
 
     @CacheEvict(value = "users", allEntries = true)
@@ -88,5 +90,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new UsernameNotFoundException("User " + email + " is not found");
         }
         return new AuthorizedUser(user);
+    }
+
+    @Override
+    public int getStatForDay(LocalDate date, int userId) {
+        if (date == null) {
+            date = LocalDate.now();
+        }
+        return voteRepository.getAllForDateForUser(date, userId).size();
+    }
+
+    @Override
+    public int getStat(int userId) {
+        return voteRepository.getAllForUser(userId).size();
     }
 }

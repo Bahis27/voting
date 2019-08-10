@@ -7,13 +7,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
-public class UserTo extends BaseTo implements Serializable {
+public class UserTo extends NamedTo implements Serializable {
     private static final long serialVersionUID = 1L;
-
-    @NotBlank
-    @Size(min = 2, max = 100)
-    @SafeHtml
-    private String name;
 
     @Email
     @NotBlank
@@ -28,8 +23,7 @@ public class UserTo extends BaseTo implements Serializable {
     }
 
     public UserTo(Integer id, String name, String email, String password) {
-        super(id);
-        this.name = name;
+        super(id, name);
         this.email = email;
         this.password = password;
     }
@@ -40,14 +34,6 @@ public class UserTo extends BaseTo implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getEmail() {
@@ -62,7 +48,7 @@ public class UserTo extends BaseTo implements Serializable {
     public String toString() {
         return "UserTo{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", name='" + getName() + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }

@@ -42,14 +42,14 @@ public interface DayMenuRepository extends JpaRepository<DayMenu, Integer> {
     @Query("SELECT m FROM DayMenu m")
     List<DayMenu> getAll();
 
-    @Query("SELECT DISTINCT m FROM DayMenu m JOIN FETCH m.dish WHERE m.restaurant.id=:id AND m.menuDate=:date")
-    List<DayMenu> getAllForDateAndRestaurantId(@Param("id") int restaurantId, @Param("date") LocalDate date);
+    @Query("SELECT DISTINCT m FROM DayMenu m JOIN FETCH m.dish WHERE m.restaurant.id=:restaurantId AND m.menuDate=:date")
+    List<DayMenu> getAllForDateAndRestaurantId(@Param("restaurantId") int restaurantId, @Param("date") LocalDate date);
 
     @Query("SELECT DISTINCT m FROM DayMenu m JOIN FETCH m.dish WHERE m.menuDate=:date")
     List<DayMenu> getAllForDate(@Param("date") LocalDate date);
 
-    @Query("SELECT DISTINCT m FROM DayMenu m JOIN FETCH m.dish WHERE m.restaurant.id=:id")
-    List<DayMenu> getAllByRestaurantId(@Param("id") int restaurantId);
+    @Query("SELECT DISTINCT m FROM DayMenu m JOIN FETCH m.dish WHERE m.restaurant.id=:restaurantId")
+    List<DayMenu> getAllByRestaurantId(@Param("restaurantId") int restaurantId);
 
     @Query("SELECT DISTINCT m FROM DayMenu m JOIN FETCH m.dish JOIN FETCH m.restaurant WHERE m.id=:id AND m.restaurant.id=:restaurantId")
     DayMenu get(@Param("id") int id, @Param("restaurantId") int restaurantId);

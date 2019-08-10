@@ -33,17 +33,14 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
     private final VoteRepository voteRepository;
-    private final DishRepository dishRepository;
     private final DayMenuRepository dayMenuRepository;
 
     @Autowired
     public RestaurantServiceImpl(RestaurantRepository restaurantRepository,
                                  VoteRepository voteRepository,
-                                 DishRepository dishRepository,
                                  DayMenuRepository dayMenuRepository) {
         this.restaurantRepository = restaurantRepository;
         this.voteRepository = voteRepository;
-        this.dishRepository = dishRepository;
         this.dayMenuRepository = dayMenuRepository;
     }
 
@@ -122,12 +119,12 @@ public class RestaurantServiceImpl implements RestaurantService {
         if (date == null) {
             date = LocalDate.now();
         }
-        return voteRepository.getAllForDate(date, restaurantId).size();
+        return voteRepository.getAllForDateForRestaurant(date, restaurantId).size();
     }
 
     @Override
     public int getStat(int restaurantId) {
-        return voteRepository.getAll(restaurantId).size();
+        return voteRepository.getAllForRestaurant(restaurantId).size();
     }
 
     @Transactional

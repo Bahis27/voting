@@ -24,9 +24,15 @@ public interface VoteRepository extends JpaRepository<Vote, Integer> {
     @Transactional
     void deleteByUserIdAndVotingDate(int userId, LocalDate votingDay);
 
-    @Query("SELECT v FROM Vote v WHERE v.votingDate=:date AND v.restaurantId=:id")
-    List<Vote> getAllForDate(@Param("date") LocalDate date, @Param("id") int restaurantId);
+    @Query("SELECT v FROM Vote v WHERE v.votingDate=:date AND v.restaurantId=:restaurantId")
+    List<Vote> getAllForDateForRestaurant(@Param("date") LocalDate date, @Param("restaurantId") int restaurantId);
 
-    @Query("SELECT v FROM Vote v WHERE v.restaurantId=:id")
-    List<Vote> getAll(@Param("id") int restaurantId);
+    @Query("SELECT v FROM Vote v WHERE v.restaurantId=:restaurantId")
+    List<Vote> getAllForRestaurant(@Param("restaurantId") int restaurantId);
+
+    @Query("SELECT v FROM Vote v WHERE v.votingDate=:date AND v.userId=:userId")
+    List<Vote> getAllForDateForUser(@Param("date") LocalDate date, @Param("userId") int userId);
+
+    @Query("SELECT v FROM Vote v WHERE v.userId=:userId")
+    List<Vote> getAllForUser(@Param("userId") int userId);
 }
