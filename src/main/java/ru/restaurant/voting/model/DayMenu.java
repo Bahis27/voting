@@ -5,7 +5,6 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
@@ -18,7 +17,6 @@ import java.time.LocalDate;
 public class DayMenu extends AbstractBaseEntity {
 
     @Column(name = "menu_day", nullable = false, columnDefinition = "date default current_date")
-    @NotNull
     private LocalDate menuDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -39,16 +37,16 @@ public class DayMenu extends AbstractBaseEntity {
         this(menu.getId(), menu.getMenuDate(), menu.getRestaurant(), menu.getDish());
     }
 
-    public DayMenu(Integer id, @NotNull LocalDate menuDate, Restaurant restaurant, Dish dish) {
+    public DayMenu(Integer id, LocalDate menuDate, Restaurant restaurant, Dish dish) {
         super(id);
-        this.menuDate = menuDate;
+        setMenuDate(menuDate);
         this.restaurant = restaurant;
         this.dish = dish;
     }
 
-    public DayMenu(Integer id, @NotNull LocalDate menuDate) {
+    public DayMenu(Integer id, LocalDate menuDate) {
         super(id);
-        this.menuDate = menuDate;
+        setMenuDate(menuDate);
     }
 
     public LocalDate getMenuDate() {
@@ -56,6 +54,9 @@ public class DayMenu extends AbstractBaseEntity {
     }
 
     public void setMenuDate(LocalDate menuDate) {
+        if (menuDate == null) {
+            menuDate = LocalDate.now();
+        }
         this.menuDate = menuDate;
     }
 

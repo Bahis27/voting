@@ -140,7 +140,7 @@ curl -s -X DELETE http://localhost:8080/voting/admin/restaurants/107/menus/10037
 curl -s -X DELETE http://localhost:8080/voting/admin/restaurants/101/menus/for?day=2019-07-01 --user admin@gmail.com:password
 
 ###### create DayMenu for Restaurant
-curl -s -X POST -d '{"menuDate": "2019-08-10"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/108/menus/1023 --user admin@gmail.com:password
+curl -s -X POST -d '{}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/108/menus/1023 --user admin@gmail.com:password
 
 ###### update DayMenu for Restaurant
 curl -s -X PUT -d '{"id": "10039", "menuDate": "2019-08-10"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/menus/1026 --user admin@gmail.com:password

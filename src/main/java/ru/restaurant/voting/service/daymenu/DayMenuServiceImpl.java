@@ -14,10 +14,9 @@ import ru.restaurant.voting.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static ru.restaurant.voting.util.ValidationUtil.checkNotFoundWithId;
 import static ru.restaurant.voting.util.ValidationUtil.checkNew;
+import static ru.restaurant.voting.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
 public class DayMenuServiceImpl implements DayMenuService {
@@ -40,6 +39,9 @@ public class DayMenuServiceImpl implements DayMenuService {
     public DayMenu create(DayMenu dayMenu, int restaurantId, int dishId) {
         Assert.notNull(dayMenu, "dayMenu must not be null");
         checkNew(dayMenu);
+        if (dayMenu.getMenuDate() == null) {
+            dayMenu.setMenuDate(LocalDate.now());
+        }
         dayMenu.setRestaurant(restaurantRepository.findById(restaurantId).orElse(null));
         dayMenu.setDish(dishRepository.get(dishId, restaurantId));
         return dayMenuRepository.save(dayMenu);
@@ -50,6 +52,9 @@ public class DayMenuServiceImpl implements DayMenuService {
     public void update(DayMenu dayMenu, int restaurantId, int dishId) {
         Assert.notNull(dayMenu, "dayMenu must not be null");
         checkNotFoundWithId(dayMenuRepository.get(dayMenu.getId(), restaurantId), dayMenu.getId());
+        if (dayMenu.getMenuDate() == null) {
+            dayMenu.setMenuDate(LocalDate.now());
+        }
         dayMenu.setRestaurant(restaurantRepository.findById(restaurantId).orElse(null));
         dayMenu.setDish(dishRepository.get(dishId, restaurantId));
         dayMenuRepository.save(dayMenu);

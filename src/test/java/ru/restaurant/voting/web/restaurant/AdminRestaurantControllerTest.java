@@ -476,7 +476,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
 
     @Test
     void testCreateDayMenu() throws Exception {
-        DayMenu created = new DayMenu(null, LocalDate.now());
+        DayMenu created = new DayMenu(null, null);
         ResultActions action = mockMvc.perform(post(REST_URL + RES4_ID + "/menus/" + DISH11_ID)
                 .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
@@ -509,7 +509,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
     @Test
     void testUpdateDayMenu() throws Exception {
         DayMenu updated = new DayMenu(DAYMENU39);
-        updated.setMenuDate(LocalDate.now());
+        updated.setMenuDate(null);
         mockMvc.perform(put(REST_URL + RES9_ID + "/menus/" + DISH26_ID)
                 .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)

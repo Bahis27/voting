@@ -12,10 +12,9 @@ import ru.restaurant.voting.util.ToUtil;
 import ru.restaurant.voting.util.exception.NotFoundException;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static ru.restaurant.voting.util.ValidationUtil.checkNotFoundWithId;
 import static ru.restaurant.voting.util.ValidationUtil.checkNew;
+import static ru.restaurant.voting.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
 public class DishServiceImpl implements DishService {
