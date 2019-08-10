@@ -10,6 +10,7 @@ import ru.restaurant.voting.TestUtil;
 import ru.restaurant.voting.model.DayMenu;
 import ru.restaurant.voting.model.Dish;
 import ru.restaurant.voting.model.Restaurant;
+import ru.restaurant.voting.model.Vote;
 import ru.restaurant.voting.service.daymenu.DayMenuService;
 import ru.restaurant.voting.service.dish.DishService;
 import ru.restaurant.voting.service.restaurant.RestaurantService;
@@ -22,6 +23,7 @@ import ru.restaurant.voting.util.exception.NotFoundException;
 import ru.restaurant.voting.web.AbstractControllerTest;
 import ru.restaurant.voting.web.ExceptionInfoHandler;
 import ru.restaurant.voting.web.json.JsonUtil;
+import ru.restaurant.voting.web.vote.VoteController;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -522,7 +524,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
 
     @Test
     @Transactional(propagation = Propagation.NEVER)
-    void updateWithAlreadyExistingDayMenuInThisDay() throws Exception {
+    void testUpdateWithAlreadyExistingDayMenuInThisDay() throws Exception {
         DayMenu updated = new DayMenu(DAYMENU1);
         mockMvc.perform(put(REST_URL + RES1_ID + "/menus/" + DISH2_ID)
                 .with(userHttpBasic(ADMIN))
@@ -531,5 +533,74 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .andExpect(status().isConflict())
                 .andExpect(errorType(DATA_ERROR))
                 .andDo(print());
+    }
+
+    @Test
+    void testFullCase() throws Exception {
+        //create new restaurant
+        ResultActions restaurantAction = mockMvc.perform(post(REST_URL)
+                .with(userHttpBasic(ADMIN))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(new Restaurant(null, "The Most Amazing Restaurant"))))
+                .andExpect(status().isCreated())
+                .andDo(print());
+        Restaurant newRestaurant = readFromJson(restaurantAction, Restaurant.class);
+
+        //check
+        mockMvc.perform(get(REST_URL + newRestaurant.getId())
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(result -> assertMatch(readFromJsonMvcResult(result, Restaurant.class), newRestaurant, "dayMenus"));
+
+        //create new dish
+        ResultActions dishAction = mockMvc.perform(post(REST_URL + newRestaurant.getId() + "/dishes")
+                .with(userHttpBasic(ADMIN))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(new Dish(null, "The Most Delicious Rib Eye Steak", 100500))))
+                .andExpect(status().isOk())
+                .andDo(print());
+        Dish newDish = readFromJson(dishAction, Dish.class);
+
+        //check
+        mockMvc.perform(get(REST_URL + newRestaurant.getId() + "/dishes")
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(contentJson(Dish.class, newDish))
+                .andDo(print());
+
+        //create new DayMenu
+        ResultActions dayMenuAction = mockMvc.perform(post(REST_URL + newRestaurant.getId() + "/menus/" + newDish.getId())
+                .with(userHttpBasic(ADMIN))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(new DayMenu(null, null))))
+                .andExpect(status().isOk())
+                .andDo(print());
+        DayMenu newDayMenu = readFromJson(dayMenuAction, DayMenu.class);
+
+        //check
+        mockMvc.perform(get(REST_URL + newRestaurant.getId())
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(result -> assertMatch(readFromJsonMvcResult(result, Restaurant.class), newRestaurant));
+
+        //voting for new Restaurant with DayMenu
+        ResultActions voteActions = mockMvc.perform(post(UserRestaurantController.REST_URL + "/vote/" + newRestaurant.getId())
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isCreated())
+                .andDo(print());
+        Vote newVote = readFromJson(voteActions, Vote.class);
+
+        //check
+        mockMvc.perform(get(VoteController.REST_URL + "/" + newVote.getId())
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(result -> assertMatch(readFromJsonMvcResult(result, Vote.class), newVote));
     }
 }
