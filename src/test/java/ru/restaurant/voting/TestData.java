@@ -226,6 +226,12 @@ public class TestData {
 
     public static final List<DayMenu> RES8_DAYMENUS = List.of(DAYMENU24, DAYMENU26, DAYMENU34, DAYMENU35, DAYMENU36);
 
+    public static final List<DayMenu> DAYMENUS_FOR_20190703 = List.of(DAYMENU27, DAYMENU28, DAYMENU29, DAYMENU30,
+            DAYMENU31, DAYMENU32, DAYMENU33, DAYMENU34, DAYMENU35, DAYMENU36, DAYMENU37, DAYMENU38, DAYMENU39);
+
+    public static final List<DayMenu> DAYMENUS_FOR_20190702 = List.of(DAYMENU14, DAYMENU15, DAYMENU16, DAYMENU17,
+            DAYMENU18, DAYMENU19, DAYMENU20, DAYMENU21, DAYMENU22, DAYMENU23, DAYMENU24, DAYMENU25, DAYMENU26);
+
     public static final Vote VOTE1 = new Vote(LocalDate.of(2019, 7, 1), 18, 109);
     public static final Vote VOTE2 = new Vote(LocalDate.of(2019, 7, 1), 11, 101);
     public static final Vote VOTE3 = new Vote(LocalDate.of(2019, 7, 1), 12, 103);

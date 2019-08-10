@@ -52,7 +52,7 @@ public class DayMenuServiceTest extends AbstractServiceTest {
     @Test
     void delete() throws Exception {
         dayMenuService.delete(DAYMENU10_ID, RES7_ID);
-        List<DayMenu> dayMenus = dayMenuService.getAllForDay(RES7_ID, LocalDate.of(2019, 7, 1));
+        List<DayMenu> dayMenus = dayMenuService.getAllForDayByRestaurantId(RES7_ID, LocalDate.of(2019, 7, 1));
         assertFalse(dayMenus.contains(DAYMENU10));
     }
 
@@ -77,14 +77,20 @@ public class DayMenuServiceTest extends AbstractServiceTest {
     @Test
     void deleteAll() throws Exception {
         dayMenuService.deleteAllForDay(RES2_ID, LocalDate.of(2019, 7, 1));
-        List<DayMenu> allForDay = dayMenuService.getAllForDay(RES2_ID, LocalDate.of(2019, 7, 1));
+        List<DayMenu> allForDay = dayMenuService.getAllForDayByRestaurantId(RES2_ID, LocalDate.of(2019, 7, 1));
         assertTrue(allForDay.isEmpty());
     }
 
     @Test
-    void getAllForDay() throws Exception {
-        List<DayMenu> allForDay = dayMenuService.getAllForDay(RES4_ID, LocalDate.of(2019, 7, 3));
+    void getAllForDayByRestaurantId() throws Exception {
+        List<DayMenu> allForDay = dayMenuService.getAllForDayByRestaurantId(RES4_ID, LocalDate.of(2019, 7, 3));
         assertMatch(allForDay, List.of(DAYMENU33));
+    }
+
+    @Test
+    void getAllForDay() throws Exception {
+        List<DayMenu> allForDay = dayMenuService.getAllForDay(LocalDate.of(2019, 7, 3));
+        assertMatch(allForDay, DAYMENUS_FOR_20190703);
     }
 
     @Test

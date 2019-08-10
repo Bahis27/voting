@@ -13,27 +13,27 @@
     <li>
         get all Users <br>
         curl -s http://localhost:8080/voting/admin/users --user admin@gmail.com:password
-    </li> <br>
+    </li>
     <li>
         get User by id <br>
         curl -s http://localhost:8080/voting/admin/users/100006 --user admin@gmail.com:password
-    </li> <br>
+    </li>
     <li>
         delete User by id <br>
         curl -s -X DELETE http://localhost:8080/voting/admin/users/13 --user admin@gmail.com:password
-    </li> <br>
+    </li>
     <li>
         create User <br>
         curl -s -X POST -d '{"name":"New", "email":"new@gmail.com", "password":"newPass"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/users --user admin@gmail.com:password
-    </li> <br>
+    </li>
     <li>
         update User <br>
         curl -s -X PUT -d '{"name":"UpdatedName", "email":"updatedmail@gmail.com", "password":"updatedPass"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/users/100005 --user admin@gmail.com:password
-    </li> <br>
+    </li>
     <li>
         get User by email <br>
         curl -s http://localhost:8080/voting/admin/users/by?email=simple@mail.ru --user admin@gmail.com:password
-    </li> <br>
+    </li>
 </ul>
 
 <h3>error examples</h3>
@@ -41,27 +41,27 @@
     <li>
         not found User error <br>
         curl -s http://localhost:8080/voting/admin/users/1 --user admin@gmail.com:password
-    </li> <br>
+    </li>
     <li>
         create User with duplicate email error <br>
         curl -s -X POST -d '{"name":"New", "email":"simple@mail.ru", "password":"newPass"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/users --user admin@gmail.com:password
-    </li> <br>
+    </li>
     <li>
         update User with validation error <br>
         curl -s -X PUT -d '{"name":"UpdatedName", "password":"updatedPass"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/users/100005 --user admin@gmail.com:password
-    </li> <br>
+    </li>
     <li>
         get all Users with authentication error <br>
         curl -s http://localhost:8080/voting/admin/users/
-    </li> <br>
+    </li>
     <li>
         get all Users with forbidden error <br>
         curl -s http://localhost:8080/voting/admin/users/ --user simple@mail.ru:simple
-    </li> <br>
+    </li>
     <li>
         update User with unsafe http error <br>
         curl -s -X PUT -d '{"name":"&lt;script&gt;alert(123)&lt;/script&gt;", "email":"new@gmail.com", "password":"updatedPass"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/users/100005 --user admin@gmail.com:password
-    </li> <br>
+    </li>
 </ul>
 
 <hr>
@@ -71,19 +71,19 @@
     <li>
         get AuthorizedUser <br>
         curl -s http://localhost:8080/voting/profile --user simple@mail.ru:simple
-    </li> <br>
+    </li>
     <li>
         register new User <br>
         curl -s -X POST -d '{"name":"New", "email":"new@gmail.com", "password":"newPass"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/profile/register
-    </li> <br>
+    </li>
     <li>
         update AuthorizedUser <br>
         curl -s -X PUT -d '{"name":"UpdatedName", "email":"updatedmail@gmail.com", "password":"updatedPass"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/profile --user simple@mail.ru:simple
-    </li> <br>
+    </li>
     <li>
         delete AuthorizedUser <br>
         curl -s -X DELETE http://localhost:8080/voting/profile --user volk27@mail.ru:NuZayatsPogodi
-    </li> <br>
+    </li>
 </ul>
 
 <hr>
@@ -93,31 +93,31 @@
     <li>
         get all Restaurants (Only name list) <br>
         curl -s http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
-    </li> <br>
+    </li>
     <li>
         get Restaurant by id with all DayMenus <br>
         curl -s http://localhost:8080/voting/admin/restaurants/103 --user admin@gmail.com:password
-    </li> <br>
+    </li>
     <li>
         delete Restaurant by id <br>
         curl -s -X DELETE http://localhost:8080/voting/admin/restaurants/106 --user admin@gmail.com:password
-    </li> <br>
+    </li>
     <li>
         create Restaurant <br>
         curl -s -X POST -d '{"name": "One More Bar"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
-    </li> <br>
+    </li>
     <li>
         update Restaurant <br>
         curl -s -X PUT -d '{"id": "109", "name": "He is Always Here Bar"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
-    </li> <br>
+    </li>
     <li>
         get all Restaurants by day with DayMenus <br>
         curl -s http://localhost:8080/voting/admin/restaurants/for?day=2019-07-01 --user admin@gmail.com:password
-    </li> <br>
+    </li>
     <li>
         get Restaurant by id and day with DayMenu <br>
         curl -s http://localhost:8080/voting/admin/restaurants/102/for?day=2019-07-01 --user admin@gmail.com:password
-    </li> <br>
+    </li>
 </ul>
 
 <h3>statistics</h3>
@@ -125,19 +125,19 @@
     <li>
         get all Restaurants with statistics <br>
         curl -s http://localhost:8080/voting/admin/restaurants/stat --user admin@gmail.com:password
-    </li> <br>
+    </li>
     <li>
         get all Restaurants for current day with statistics <br>
         curl -s http://localhost:8080/voting/admin/restaurants/stat/for?day=2019-07-03 --user admin@gmail.com:password
-    </li> <br>
+    </li>
     <li>
         get quantity of votes for Restaurant <br>
         curl -s http://localhost:8080/voting/admin/restaurants/103/stat --user admin@gmail.com:password
-    </li> <br>
+    </li>
     <li>
         get quantity of votes for Restaurant for current day <br>
         curl -s http://localhost:8080/voting/admin/restaurants/103/stat/for?day=2019-07-03 --user admin@gmail.com:password
-    </li> <br>
+    </li>
 </ul>
 
 <h3>dishes</h3>
@@ -145,24 +145,60 @@
     <li>
         get all Dishes for Restaurant <br>
         curl -s http://localhost:8080/voting/admin/restaurants/102/dishes --user admin@gmail.com:password
-    </li> <br>
+    </li>
     <li>
         get Dish for Restaurant by id <br>
         curl -s http://localhost:8080/voting/admin/restaurants/102/dishes/1006 --user admin@gmail.com:password
-    </li> <br>
+    </li>
     <li>
         delete Dish for Restaurant by id <br>
         curl -s -X DELETE http://localhost:8080/voting/admin/restaurants/109/dishes/1025 --user admin@gmail.com:password
 
-    </li> <br>
+    </li>
     <li>
         create Dish for Restaurant <br>
         curl -s -X POST -d '{"name": "Yummy", "price": "100500"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/dishes --user admin@gmail.com:password
-    </li> <br>
+    </li>
     <li>
         update Dish for Restaurant <br>
         curl -s -X PUT -d '{"id": "1027", "name": "Neapolitan Pizza", "price": "500"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/dishes --user admin@gmail.com:password
-    </li> <br>
+    </li>
+</ul>
+
+<h3>menus</h3>
+<ul>
+    <li>
+        create DayMenu for Restaurant <br>
+        curl -s -X POST -d '{"menuDate": "2019-08-10"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/108/menus/1023 --user admin@gmail.com:password
+    </li>
+    <li>
+        update DayMenu for Restaurant <br>
+        curl -s -X PUT -d '{"id": "10039", "menuDate": "2019-08-10"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/menus/1026 --user admin@gmail.com:password
+    </li>
+    <li>
+        get all DayMenus for Restaurant <br>
+        curl -s http://localhost:8080/voting/admin/restaurants/104/menus --user admin@gmail.com:password
+    </li>
+    <li>
+        get all DayMenus for Restaurant for day <br>
+        curl -s http://localhost:8080/voting/admin/restaurants/104/menus/for?day=2019-07-02 --user admin@gmail.com:password
+    </li>
+    <li>
+        get all DayMenus for day <br>
+        curl -s http://localhost:8080/voting/admin/restaurants/menus/for?day=2019-07-02 --user admin@gmail.com:password
+    </li>
+    <li>
+        get DayMenu for Restaurant by id <br>
+        curl -s http://localhost:8080/voting/admin/restaurants/102/menus/10017 --user admin@gmail.com:password
+    </li>
+    <li>
+        delete DayMenu for Restaurant by id <br>
+        curl -s -X DELETE http://localhost:8080/voting/admin/restaurants/107/menus/10037 --user admin@gmail.com:password
+    </li>
+    <li>
+        delete all DayMenus for Restaurant for day <br>
+        curl -s -X DELETE http://localhost:8080/voting/admin/restaurants/101/menus/for?day=2019-07-01 --user admin@gmail.com:password
+    </li>
 </ul>
 
 <h3>error examples</h3>
@@ -170,39 +206,51 @@
     <li>
         not found Restaurant error <br>
         curl -s http://localhost:8080/voting/admin/restaurants/99 --user admin@gmail.com:password
-    </li> <br>
+    </li>
     <li>
         create Restaurant with duplicate name error <br>
         curl -s -X POST -d '{"name": "Why Not Bar"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
-    </li> <br>
+    </li>
     <li>
         update Restaurant with duplicate name error <br>
         curl -s -X PUT -d '{"id": "109", "name": "Why Not Bar"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
-    </li> <br>
+    </li>
     <li>
         create Restaurant with validation error <br>
         curl -s -X POST -d '{"name": "1"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
-    </li> <br>
+    </li>
     <li>
         get all Restaurants with authentication error <br>
         curl -s http://localhost:8080/voting/admin/restaurants
-    </li> <br>
+    </li>
     <li>
         get all Restaurant with forbidden error <br>
         curl -s http://localhost:8080/voting/admin/restaurants --user simple@mail.ru:simple
-    </li> <br>
+    </li>
     <li>
         create Restaurant with unsafe http error <br>
         curl -s -X POST -d '{"name":"&lt;script&gt;alert(123)&lt;/script&gt;"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants --user admin@gmail.com:password
-    </li> <br>
+    </li>
     <li>
         get Dish for not this Restaurant by id <br>
         curl -s http://localhost:8080/voting/admin/restaurants/107/dishes/1006 --user admin@gmail.com:password
-    </li> <br>
+    </li>
     <li>
         create not new Dish <br>
         curl -s -X POST -d '{"id": "1000012", "name": "Yummy", "price": "100500"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/dishes --user admin@gmail.com:password
-    </li> <br>
+    </li>
+    <li>
+        create duplicate DayMenu for Restaurant <br>
+        curl -s -X POST -d '{"menuDate": "2019-07-01"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/101/menus/1001 --user admin@gmail.com:password
+    </li>
+    <li>
+        update duplicate DayMenu for Restaurant <br>
+        curl -s -X PUT -d '{"id": "10001", "menuDate": "2019-07-01"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/101/menus/1002 --user admin@gmail.com:password
+    </li>
+    <li>
+        delete not found DayMenu for Restaurant by id <br>
+        curl -s -X DELETE http://localhost:8080/voting/admin/restaurants/107/menus/10001 --user admin@gmail.com:password
+    </li>
 </ul>
 
 <hr>
@@ -212,32 +260,40 @@
     <li>
         vote for Restaurant <br>
         curl -s -X POST http://localhost:8080/voting/restaurants/vote/108 --user simple@mail.ru:simple
-    </li> <br>
+    </li>
     <li>
         vote for Restaurant second time (Till 11 a.m. o'clock - changed the decision, after 11 a.m. it will not work) <br>
         curl -s -X POST http://localhost:8080/voting/restaurants/vote/105 --user simple@mail.ru:simple <br>
         curl -s -X POST http://localhost:8080/voting/restaurants/vote/106 --user simple@mail.ru:simple
-    </li> <br>
+    </li>
     <li>
         get all Restaurants for current day with DayMenus <br>
         curl -s http://localhost:8080/voting/restaurants/ --user simple@mail.ru:simple
-    </li> <br>
+    </li>
     <li>
         get Restaurant by id for current day with DayMenu <br>
         curl -s http://localhost:8080/voting/restaurants/105 --user simple@mail.ru:simple
-    </li> <br>
+    </li>
     <li>
         get all Restaurant for current day with statistics <br>
         curl -s http://localhost:8080/voting/restaurants/stat --user simple@mail.ru:simple
-    </li> <br>
+    </li>
     <li>
         get quantity of votes for Restaurant for current day <br>
         curl -s http://localhost:8080/voting/restaurants/105/stat --user simple@mail.ru:simple
-    </li> <br>
+    </li>
     <li>
         get all Dishes by Restaurant id; <br>
         curl -s http://localhost:8080/voting/restaurants/108/dishes --user simple@mail.ru:simple
-    </li> <br>
+    </li>
+    <li>
+        get all DayMenus for Restaurant for current day <br>
+        curl -s http://localhost:8080/voting/restaurants/104/menus --user simple@mail.ru:simple
+    </li>
+    <li>
+        get all DayMenus for current day <br>
+        curl -s http://localhost:8080/voting/restaurants/menus --user simple@mail.ru:simple
+    </li>
 </ul>
 
 </body>

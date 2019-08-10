@@ -14,7 +14,9 @@ public interface DayMenuService {
 
     List<DayMenu> getAll(int restaurantId);
 
-    List<DayMenu> getAllForDay(int restaurantId, LocalDate date);
+    List<DayMenu> getAllForDayByRestaurantId(int restaurantId, LocalDate date);
+
+    List<DayMenu> getAllForDay(LocalDate date);
 
     DayMenu get(int id, int restaurantId) throws NotFoundException;
 

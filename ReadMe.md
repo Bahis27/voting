@@ -113,6 +113,32 @@ curl -s -X POST -d '{"name": "Yummy", "price": "100500"}' -H 'Content-Type:appli
 ###### update Dish for Restaurant
 curl -s -X PUT -d '{"id": "1027", "name": "Neapolitan Pizza", "price": "500"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/dishes --user admin@gmail.com:password
 
+### menus
+
+###### create DayMenu for Restaurant
+curl -s -X POST -d '{"menuDate": "2019-08-10"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/108/menus/1023 --user admin@gmail.com:password
+
+###### update DayMenu for Restaurant
+curl -s -X PUT -d '{"id": "10039", "menuDate": "2019-08-10"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/menus/1026 --user admin@gmail.com:password
+
+###### get all DayMenus for Restaurant
+curl -s http://localhost:8080/voting/admin/restaurants/104/menus --user admin@gmail.com:password
+
+###### get all DayMenus for Restaurant for day
+curl -s http://localhost:8080/voting/admin/restaurants/104/menus/for?day=2019-07-02 --user admin@gmail.com:password
+
+###### get all DayMenus for day
+curl -s http://localhost:8080/voting/admin/restaurants/menus/for?day=2019-07-02 --user admin@gmail.com:password
+
+###### get DayMenu for Restaurant by id
+curl -s http://localhost:8080/voting/admin/restaurants/102/menus/10017 --user admin@gmail.com:password
+
+###### delete DayMenu for Restaurant by id
+curl -s -X DELETE http://localhost:8080/voting/admin/restaurants/107/menus/10037 --user admin@gmail.com:password
+
+###### delete all DayMenus for Restaurant for day
+curl -s -X DELETE http://localhost:8080/voting/admin/restaurants/101/menus/for?day=2019-07-01 --user admin@gmail.com:password
+
 ### error examples
 
 ###### not found Restaurant error
@@ -142,6 +168,15 @@ curl -s http://localhost:8080/voting/admin/restaurants/107/dishes/1006 --user ad
 ###### create not new Dish
 curl -s -X POST -d '{"id": "1000012", "name": "Yummy", "price": "100500"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/dishes --user admin@gmail.com:password
 
+###### create duplicate DayMenu for Restaurant
+curl -s -X POST -d '{"menuDate": "2019-07-01"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/101/menus/1001 --user admin@gmail.com:password
+
+###### update duplicate DayMenu for Restaurant
+curl -s -X PUT -d '{"id": "10001", "menuDate": "2019-07-01"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/101/menus/1002 --user admin@gmail.com:password
+
+###### delete not found DayMenu for Restaurant by id
+curl -s -X DELETE http://localhost:8080/voting/admin/restaurants/107/menus/10001 --user admin@gmail.com:password
+
 <hr>
 
 ## /restaurants
@@ -167,3 +202,9 @@ curl -s http://localhost:8080/voting/restaurants/105/stat --user simple@mail.ru:
 
 ###### get all Dishes by Restaurant id;
 curl -s http://localhost:8080/voting/restaurants/108/dishes --user simple@mail.ru:simple
+
+###### get all DayMenus for Restaurant for current day
+curl -s http://localhost:8080/voting/restaurants/104/menus --user simple@mail.ru:simple
+
+###### get all DayMenus for current day
+curl -s http://localhost:8080/voting/restaurants/menus --user simple@mail.ru:simple

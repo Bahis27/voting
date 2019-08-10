@@ -462,12 +462,22 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void testGetAllDayMenusForDay() throws Exception {
+    void testGetAllDayMenusForDayByRestaurantId() throws Exception {
         mockMvc.perform(get(REST_URL + RES8_ID + "/menus/for?day=2019-07-02")
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(contentJson(DayMenu.class, DAYMENU24, DAYMENU26))
+                .andDo(print());
+    }
+
+    @Test
+    void testGetAllDayMenusForDay() throws Exception {
+        mockMvc.perform(get(REST_URL + "/menus/for?day=2019-07-02")
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(contentJson(DayMenu.class, DAYMENUS_FOR_20190702))
                 .andDo(print());
     }
 
@@ -499,6 +509,6 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .andExpect(status().isNoContent())
                 .andDo(print());
 
-        assertTrue(dayMenuService.getAllForDay(RES1_ID, LocalDate.of(2019, 7, 1)).isEmpty());
+        assertTrue(dayMenuService.getAllForDayByRestaurantId(RES1_ID, LocalDate.of(2019, 7, 1)).isEmpty());
     }
 }

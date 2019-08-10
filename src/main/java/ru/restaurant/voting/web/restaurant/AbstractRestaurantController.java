@@ -133,9 +133,14 @@ public abstract class AbstractRestaurantController {
         return dayMenuService.getAll(restaurantId);
     }
 
-    public List<DayMenu> getAllDayMenusForDay(int restaurantId, LocalDate date) {
+    public List<DayMenu> getAllDayMenusForDayByRestaurantId(int restaurantId, LocalDate date) {
         log.info("get all dayMenus for restaurant with id={}", restaurantId);
-        return dayMenuService.getAllForDay(restaurantId, date);
+        return dayMenuService.getAllForDayByRestaurantId(restaurantId, date);
+    }
+
+    public List<DayMenu> getAllDayMenusForDay(LocalDate date) {
+        log.info("get all dayMenus");
+        return dayMenuService.getAllForDay(date);
     }
 
     public DayMenu getDayMenu(int id, int restaurantId) {

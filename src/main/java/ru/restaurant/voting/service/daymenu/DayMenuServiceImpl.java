@@ -58,8 +58,19 @@ public class DayMenuServiceImpl implements DayMenuService {
     }
 
     @Override
-    public List<DayMenu> getAllForDay(int restaurantId, LocalDate date) throws NotFoundException {
+    public List<DayMenu> getAllForDayByRestaurantId(int restaurantId, LocalDate date) {
+        if (date == null) {
+            date = LocalDate.now();
+        }
         return dayMenuRepository.getAllForDateAndRestaurantId(restaurantId, date);
+    }
+
+    @Override
+    public List<DayMenu> getAllForDay(LocalDate date) {
+        if (date == null) {
+            date = LocalDate.now();
+        }
+        return dayMenuRepository.getAllForDate(date);
     }
 
     @Override
@@ -73,7 +84,7 @@ public class DayMenuServiceImpl implements DayMenuService {
     }
 
     @Override
-    public void deleteAllForDay(int restaurantId, LocalDate date) throws NotFoundException {
+    public void deleteAllForDay(int restaurantId, LocalDate date) {
         checkNotFoundWithId(dayMenuRepository.deleteAll(restaurantId, date), restaurantId);
     }
 }

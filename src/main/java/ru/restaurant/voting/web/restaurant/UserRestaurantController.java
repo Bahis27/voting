@@ -6,12 +6,14 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.restaurant.voting.AuthorizedUser;
+import ru.restaurant.voting.model.DayMenu;
 import ru.restaurant.voting.model.Dish;
 import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.model.Vote;
 import ru.restaurant.voting.to.RestaurantToWithStats;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -54,5 +56,15 @@ public class UserRestaurantController extends AbstractRestaurantController {
     @GetMapping("/{id}/dishes")
     public List<Dish> getAllDishes(@PathVariable int id) {
         return super.getAllDishes(id);
+    }
+
+    @GetMapping("/{id}/menus")
+    public List<DayMenu> getAllDayMenusForDay(@PathVariable int id) {
+        return super.getAllDayMenusForDayByRestaurantId(id, null);
+    }
+
+    @GetMapping("/menus")
+    public List<DayMenu> getAllDayMenusForDay() {
+        return super.getAllDayMenusForDay(null);
     }
 }

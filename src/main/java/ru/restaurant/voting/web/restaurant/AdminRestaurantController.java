@@ -156,8 +156,14 @@ public class AdminRestaurantController extends AbstractRestaurantController {
 
     @Override
     @GetMapping("/{restaurantId}/menus/for")
-    public List<DayMenu> getAllDayMenusForDay(@PathVariable int restaurantId, @RequestParam LocalDate day) {
-        return super.getAllDayMenusForDay(restaurantId, day);
+    public List<DayMenu> getAllDayMenusForDayByRestaurantId(@PathVariable int restaurantId, @RequestParam LocalDate day) {
+        return super.getAllDayMenusForDayByRestaurantId(restaurantId, day);
+    }
+
+    @Override
+    @GetMapping("/menus/for")
+    public List<DayMenu> getAllDayMenusForDay(@RequestParam LocalDate day) {
+        return super.getAllDayMenusForDay(day);
     }
 
     @Override
