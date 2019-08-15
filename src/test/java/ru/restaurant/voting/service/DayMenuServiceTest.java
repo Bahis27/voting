@@ -97,7 +97,7 @@ public class DayMenuServiceTest extends AbstractServiceTest {
 
     @Test
     void getAllForRestaurant() throws Exception {
-        List<DayMenu> allDayMenus = dayMenuService.getAll(RES5_ID);
+        List<DayMenu> allDayMenus = dayMenuService.getAllForRestaurantId(RES5_ID);
         assertMatch(allDayMenus, List.of(DAYMENU8, DAYMENU21, DAYMENU22, DAYMENU31));
     }
 

@@ -15,7 +15,7 @@ public interface DayMenuService {
 
     List<DayMenuTO> getAll();
 
-    List<DayMenu> getAll(int restaurantId);
+    List<DayMenu> getAllForRestaurantId(int restaurantId);
 
     List<DayMenu> getAllForDayByRestaurantId(int restaurantId, LocalDate date);
 

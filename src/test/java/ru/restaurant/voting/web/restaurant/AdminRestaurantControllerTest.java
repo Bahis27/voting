@@ -462,7 +462,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .andExpect(status().isNoContent())
                 .andDo(print());
 
-        assertMatch(dayMenuService.getAll(RES7_ID), DAYMENU9, DAYMENU10, DAYMENU11, DAYMENU23);
+        assertMatch(dayMenuService.getAllForRestaurantId(RES7_ID), DAYMENU9, DAYMENU10, DAYMENU11, DAYMENU23);
         assertThrows(NotFoundException.class, () -> dishService.get(DAYMENU37_ID, RES7_ID));
     }
 
