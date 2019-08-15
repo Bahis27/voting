@@ -11,9 +11,7 @@
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
        http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-    <!-- Change DB by comment/uncomment property-placeholder -->
-    <context:property-placeholder location="classpath:db/postgres.properties" system-properties-mode="OVERRIDE"/>
-    <!--    <context:property-placeholder location="classpath:db/hsqldb.properties" system-properties-mode="OVERRIDE"/>-->
+    <context:property-placeholder location="classpath:db/hsqldb.properties" system-properties-mode="OVERRIDE"/>
 
     <context:component-scan base-package="ru.restaurant.**.repository"/>
     <jpa:repositories base-package="ru.restaurant.**.repository"/>
@@ -23,19 +21,10 @@
         <jdbc:script encoding="utf-8" location="classpath:db/populateDB.sql"/>
     </jdbc:initialize-database>
 
-<!--    &lt;!&ndash;no pooling&ndash;&gt;-->
-<!--    <bean id="dataSource"-->
-<!--          class="org.springframework.jdbc.datasource.DriverManagerDataSource"-->
-<!--          p:driverClassName="org.hsqldb.jdbcDriver"-->
-<!--          p:url="${database.url}"-->
-<!--          p:username="${database.username}"-->
-<!--          p:password="${database.password}"/>-->
-
-    <!--    For Postgres SQL-->
-    <!-- with pooling -->
+    <!--no pooling-->
     <bean id="dataSource"
-          class="org.apache.tomcat.jdbc.pool.DataSource"
-          p:driverClassName="${database.driverClassName}"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+          p:driverClassName="org.hsqldb.jdbcDriver"
           p:url="${database.url}"
           p:username="${database.username}"
           p:password="${database.password}"/>

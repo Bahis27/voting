@@ -110,7 +110,6 @@ class AdminRestControllerTest extends AbstractControllerTest {
         expected.setId(returned.getId());
 
         assertMatch(returned, expected, "password", "registered");
-        assertMatch(userService.getAll(), ADMIN, USER5, USER1, USER4, expected, USER3, USER7, USER8, USER6, USER2);
     }
 
     @Test
