@@ -299,13 +299,6 @@ public class TestData {
             VOTE10, VOTE11, VOTE12, VOTE13, VOTE14, VOTE15, VOTE16, VOTE17, VOTE18, VOTE19, VOTE20, VOTE21, VOTE22,
             VOTE23, VOTE24);
 
-    public static final List<Vote> VOTES_FOR_20190703 = List.of(VOTE17, VOTE18, VOTE19, VOTE20, VOTE21, VOTE22,
-            VOTE23, VOTE24);
-
-    public static final List<Vote> VOTES_FOR_USER4 = List.of(VOTE5, VOTE13, VOTE21);
-
-    public static final List<Vote> VOTES_FOR_20190703_AND_USER4 = List.of(VOTE21);
-
     public static <T> void assertMatch(T actual, T expected) {
         assertThat(actual).isEqualToComparingFieldByFieldRecursively(expected);
     }
