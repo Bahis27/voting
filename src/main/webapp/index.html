@@ -179,11 +179,11 @@
     </li>
     <li>
         create Dish for Restaurant <br>
-        curl -s -X POST -d '{"name": "Yummy", "price": "100500"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/dishes --user admin@gmail.com:password
+        curl -s -X POST -d '{"name": "Yummy"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/dishes --user admin@gmail.com:password
     </li>
     <li>
         update Dish for Restaurant <br>
-        curl -s -X PUT -d '{"id": "1027", "name": "Neapolitan Pizza", "price": "500"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/dishes --user admin@gmail.com:password
+        curl -s -X PUT -d '{"id": "1027", "name": "Neapolitan Pizza"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/dishes --user admin@gmail.com:password
     </li>
 </ul>
 
@@ -219,11 +219,11 @@
     </li>
     <li>
         create DayMenu for Restaurant <br>
-        curl -s -X POST -d '{}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/108/menus/1023 --user admin@gmail.com:password
+        curl -s -X POST -d '{"price": "555"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/108/menus/1023 --user admin@gmail.com:password
     </li>
     <li>
         update DayMenu for Restaurant <br>
-        curl -s -X PUT -d '{"id": "10039", "menuDate": "2019-08-10"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/menus/1026 --user admin@gmail.com:password
+        curl -s -X PUT -d '{"id": "10039", "menuDate": "2019-08-10", "price": "333"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/menus/1026 --user admin@gmail.com:password
     </li>
 </ul>
 
@@ -263,15 +263,15 @@
     </li>
     <li>
         create not new Dish <br>
-        curl -s -X POST -d '{"id": "1000012", "name": "Yummy", "price": "100500"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/dishes --user admin@gmail.com:password
+        curl -s -X POST -d '{"id": "1000012", "name": "Yummy"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/dishes --user admin@gmail.com:password
     </li>
     <li>
         create duplicate DayMenu for Restaurant <br>
-        curl -s -X POST -d '{"menuDate": "2019-07-01"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/101/menus/1001 --user admin@gmail.com:password
+        curl -s -X POST -d '{"menuDate": "2019-07-01", "price": "777"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/101/menus/1001 --user admin@gmail.com:password
     </li>
     <li>
         update duplicate DayMenu for Restaurant <br>
-        curl -s -X PUT -d '{"id": "10001", "menuDate": "2019-07-01"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/101/menus/1002 --user admin@gmail.com:password
+        curl -s -X PUT -d '{"id": "10001", "menuDate": "2019-07-01", "price": "777"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/101/menus/1002 --user admin@gmail.com:password
     </li>
     <li>
         delete not found DayMenu for Restaurant by id <br>
@@ -353,7 +353,7 @@
     </li>
     <li>
         create new dish <br>
-        curl -s -X POST -d '{"name": "The Most Delicious Rib Eye Steak", "price": "100500"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/100000/dishes --user admin@gmail.com:password
+        curl -s -X POST -d '{"name": "The Most Delicious Rib Eye Steak"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/100000/dishes --user admin@gmail.com:password
     </li>
     <li>
         check <br>
@@ -361,7 +361,7 @@
     </li>
     <li>
         create new DayMenu <br>
-        curl -s -X POST -d '{}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/100000/menus/100001 --user admin@gmail.com:password
+        curl -s -X POST -d '{"price": "100500"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/100000/menus/100001 --user admin@gmail.com:password
     </li>
     <li>
         check <br>

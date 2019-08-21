@@ -22,7 +22,7 @@ public class DayMenuServiceTest extends AbstractServiceTest {
 
     @Test
     void create() throws Exception {
-        DayMenu newDayMenu = new DayMenu(null, LocalDate.now());
+        DayMenu newDayMenu = new DayMenu(null, LocalDate.now(), 555);
         DayMenu created = dayMenuService.create(newDayMenu, RES4_ID, DISH10_ID);
         newDayMenu.setId(created.getId());
         assertMatch(newDayMenu, created);

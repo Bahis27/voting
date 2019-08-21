@@ -5,10 +5,8 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -20,11 +18,6 @@ import java.util.List;
         }
 )
 public class Dish extends AbstractNamedEntity {
-
-    @Column(name = "price", nullable = false)
-    @Range(min = 1)
-    @NotNull
-    private Integer price;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
@@ -40,26 +33,16 @@ public class Dish extends AbstractNamedEntity {
     }
 
     public Dish(Dish dish) {
-        this(dish.getId(), dish.getName(), dish.getPrice(), dish.getRestaurant());
+        this(dish.getId(), dish.getName(), dish.getRestaurant());
     }
 
-    public Dish(Integer id, String name, @Range(min = 1) @NotNull Integer price) {
+    public Dish(Integer id, String name) {
         super(id, name);
-        this.price = price;
     }
 
-    public Dish(Integer id, String name, @Range(min = 1) @NotNull Integer price, Restaurant restaurant) {
+    public Dish(Integer id, String name, Restaurant restaurant) {
         super(id, name);
-        this.price = price;
         this.restaurant = restaurant;
-    }
-
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
     }
 
     public Restaurant getRestaurant() {

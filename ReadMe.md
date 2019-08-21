@@ -124,10 +124,10 @@ curl -s http://localhost:8080/voting/admin/restaurants/102/dishes/1006 --user ad
 curl -s -X DELETE http://localhost:8080/voting/admin/restaurants/109/dishes/1025 --user admin@gmail.com:password
 
 ###### create Dish for Restaurant
-curl -s -X POST -d '{"name": "Yummy", "price": "100500"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/dishes --user admin@gmail.com:password
+curl -s -X POST -d '{"name": "Yummy"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/dishes --user admin@gmail.com:password
 
 ###### update Dish for Restaurant
-curl -s -X PUT -d '{"id": "1027", "name": "Neapolitan Pizza", "price": "500"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/dishes --user admin@gmail.com:password
+curl -s -X PUT -d '{"id": "1027", "name": "Neapolitan Pizza"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/dishes --user admin@gmail.com:password
 
 ### menus
 
@@ -153,10 +153,10 @@ curl -s -X DELETE http://localhost:8080/voting/admin/restaurants/107/menus/10037
 curl -s -X DELETE http://localhost:8080/voting/admin/restaurants/101/menus/for?day=2019-07-01 --user admin@gmail.com:password
 
 ###### create DayMenu for Restaurant
-curl -s -X POST -d '{}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/108/menus/1023 --user admin@gmail.com:password
+curl -s -X POST -d '{"price": "555"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/108/menus/1023 --user admin@gmail.com:password
 
 ###### update DayMenu for Restaurant
-curl -s -X PUT -d '{"id": "10039", "menuDate": "2019-08-10"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/menus/1026 --user admin@gmail.com:password
+curl -s -X PUT -d '{"id": "10039", "menuDate": "2019-08-10", "price": "333"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/menus/1026 --user admin@gmail.com:password
 
 ### error examples
 
@@ -185,13 +185,13 @@ curl -s -X POST -d '{"name":"<script>alert(123)</script>"}' -H 'Content-Type:app
 curl -s http://localhost:8080/voting/admin/restaurants/107/dishes/1006 --user admin@gmail.com:password
 
 ###### create not new Dish
-curl -s -X POST -d '{"id": "1000012", "name": "Yummy", "price": "100500"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/dishes --user admin@gmail.com:password
+curl -s -X POST -d '{"id": "1000012", "name": "Yummy"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/dishes --user admin@gmail.com:password
 
 ###### create duplicate DayMenu for Restaurant
-curl -s -X POST -d '{"menuDate": "2019-07-01"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/101/menus/1001 --user admin@gmail.com:password
+curl -s -X POST -d '{"menuDate": "2019-07-01", "price": "777"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/101/menus/1001 --user admin@gmail.com:password
 
 ###### update duplicate DayMenu for Restaurant
-curl -s -X PUT -d '{"id": "10001", "menuDate": "2019-07-01"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/101/menus/1002 --user admin@gmail.com:password
+curl -s -X PUT -d '{"id": "10001", "menuDate": "2019-07-01", "price": "777"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/101/menus/1002 --user admin@gmail.com:password
 
 ###### delete not found DayMenu for Restaurant by id
 curl -s -X DELETE http://localhost:8080/voting/admin/restaurants/107/menus/10001 --user admin@gmail.com:password
@@ -252,13 +252,13 @@ curl -s -X POST -d '{"name": "The Most Amazing Restaurant"}' -H 'Content-Type:ap
 curl -s http://localhost:8080/voting/admin/restaurants/100000 --user admin@gmail.com:password
 
 ###### create new dish
-curl -s -X POST -d '{"name": "The Most Delicious Rib Eye Steak", "price": "100500"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/100000/dishes --user admin@gmail.com:password
+curl -s -X POST -d '{"name": "The Most Delicious Rib Eye Steak"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/100000/dishes --user admin@gmail.com:password
 
 ###### check
 curl -s http://localhost:8080/voting/admin/restaurants/100000/dishes --user admin@gmail.com:password
 
 ###### create new DayMenu
-curl -s -X POST -d '{}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/100000/menus/100001 --user admin@gmail.com:password
+curl -s -X POST -d '{"price": "100500"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/100000/menus/100001 --user admin@gmail.com:password
 
 ###### check
 curl -s http://localhost:8080/voting/admin/restaurants/100000 --user admin@gmail.com:password

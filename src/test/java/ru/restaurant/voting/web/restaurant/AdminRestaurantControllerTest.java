@@ -364,7 +364,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
 
     @Test
     void testCreateDish() throws Exception {
-        Dish created = new Dish(null, "Yummy", 100500);
+        Dish created = new Dish(null, "Yummy");
         ResultActions action = mockMvc.perform(post(REST_URL + RES9_ID + "/dishes")
                 .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
@@ -394,7 +394,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
 
     @Test
     void testUpdateDish() throws Exception {
-        Dish updated = new Dish(DISH11_ID, "Updated dish", 700);
+        Dish updated = new Dish(DISH11_ID, "Updated dish");
         mockMvc.perform(put(REST_URL + RES4_ID + "/dishes")
                 .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
@@ -478,7 +478,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
 
     @Test
     void testCreateDayMenu() throws Exception {
-        DayMenu created = new DayMenu(null, null);
+        DayMenu created = new DayMenu(null, null, 333);
         ResultActions action = mockMvc.perform(post(REST_URL + RES4_ID + "/menus/" + DISH11_ID)
                 .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
@@ -558,7 +558,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
         ResultActions dishAction = mockMvc.perform(post(REST_URL + newRestaurant.getId() + "/dishes")
                 .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(new Dish(null, "The Most Delicious Rib Eye Steak", 100500))))
+                .content(JsonUtil.writeValue(new Dish(null, "The Most Delicious Rib Eye Steak"))))
                 .andExpect(status().isOk())
                 .andDo(print());
         Dish newDish = readFromJson(dishAction, Dish.class);
@@ -575,7 +575,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
         ResultActions dayMenuAction = mockMvc.perform(post(REST_URL + newRestaurant.getId() + "/menus/" + newDish.getId())
                 .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(new DayMenu(null, null))))
+                .content(JsonUtil.writeValue(new DayMenu(null, null, 100500))))
                 .andExpect(status().isOk())
                 .andDo(print());
         DayMenu newDayMenu = readFromJson(dayMenuAction, DayMenu.class);

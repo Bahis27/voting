@@ -5,8 +5,10 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -34,23 +36,30 @@ public class DayMenu extends AbstractBaseEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Dish dish;
 
+    @Column(name = "price", nullable = false)
+    @Range(min = 1)
+    @NotNull
+    private Integer price;
+
     public DayMenu() {
     }
 
     public DayMenu(DayMenu menu) {
-        this(menu.getId(), menu.getMenuDate(), menu.getRestaurant(), menu.getDish());
+        this(menu.getId(), menu.getMenuDate(), menu.getRestaurant(), menu.getDish(), menu.getPrice());
     }
 
-    public DayMenu(Integer id, LocalDate menuDate, Restaurant restaurant, Dish dish) {
+    public DayMenu(Integer id, LocalDate menuDate, Restaurant restaurant, Dish dish, @Range(min = 1) @NotNull Integer price) {
         super(id);
         setMenuDate(menuDate);
         this.restaurant = restaurant;
         this.dish = dish;
+        this.price = price;
     }
 
-    public DayMenu(Integer id, LocalDate menuDate) {
+    public DayMenu(Integer id, LocalDate menuDate, @Range(min = 1) @NotNull Integer price) {
         super(id);
         setMenuDate(menuDate);
+        this.price = price;
     }
 
     public LocalDate getMenuDate() {
@@ -78,5 +87,13 @@ public class DayMenu extends AbstractBaseEntity {
 
     public void setDish(Dish dish) {
         this.dish = dish;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 }
