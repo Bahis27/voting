@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.restaurant.voting.model.Vote;
 import ru.restaurant.voting.repository.VoteRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -18,8 +19,11 @@ public class VoteServiceImpl implements VoteService {
     }
 
     @Override
-    public List<Vote> getAll() {
-        return voteRepository.getAll();
+    public List<Vote> getAllForDate(LocalDate date) {
+        if (date == null) {
+            date = LocalDate.now();
+        }
+        return voteRepository.getAllForDate(date);
     }
 
     @Override

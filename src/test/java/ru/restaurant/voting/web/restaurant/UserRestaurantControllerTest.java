@@ -62,7 +62,7 @@ class UserRestaurantControllerTest extends AbstractControllerTest {
 
     @Test
     void testVote() throws Exception {
-        mockMvc.perform(post(REST_URL + "/vote/" + RES8_ID)
+        mockMvc.perform(post(REST_URL + "/" + RES8_ID + "/vote")
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isConflict())
                 .andExpect(errorType(WRONG_REQUEST))

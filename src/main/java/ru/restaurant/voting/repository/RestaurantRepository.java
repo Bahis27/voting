@@ -42,6 +42,6 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
     @Query("SELECT DISTINCT r FROM Restaurant r JOIN FETCH r.dayMenus m JOIN FETCH m.dish WHERE m.menuDate=:day ORDER BY r.name")
     List<Restaurant> getAllForDay(@Param("day") LocalDate day);
 
-    @Query("SELECT DISTINCT r FROM Restaurant r JOIN FETCH r.dayMenus m JOIN FETCH m.dish WHERE r.id=:restaurantId AND m.menuDate=:day ORDER BY r.name")
+    @Query("SELECT DISTINCT r FROM Restaurant r JOIN FETCH r.dayMenus m JOIN FETCH m.dish WHERE r.id=:restaurantId AND m.menuDate=:day")
     Restaurant getByIdForDay(@Param("restaurantId") Integer restaurantId, @Param("day") LocalDate day);
 }

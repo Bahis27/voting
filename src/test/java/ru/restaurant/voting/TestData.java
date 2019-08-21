@@ -295,9 +295,7 @@ public class TestData {
     public static final Vote VOTE23 = new Vote(VOTE23_ID, LocalDate.of(2019, 7, 3), 16, 101);
     public static final Vote VOTE24 = new Vote(VOTE24_ID, LocalDate.of(2019, 7, 3), 17, 104);
 
-    public static final List<Vote> VOTES = List.of(VOTE1, VOTE2, VOTE3, VOTE4, VOTE5, VOTE6, VOTE7, VOTE8, VOTE9,
-            VOTE10, VOTE11, VOTE12, VOTE13, VOTE14, VOTE15, VOTE16, VOTE17, VOTE18, VOTE19, VOTE20, VOTE21, VOTE22,
-            VOTE23, VOTE24);
+    public static final List<Vote> VOTES_FOR_20190713 = List.of(VOTE17, VOTE18, VOTE19, VOTE20, VOTE21, VOTE22, VOTE23, VOTE24);
 
     public static <T> void assertMatch(T actual, T expected) {
         assertThat(actual).isEqualToComparingFieldByFieldRecursively(expected);

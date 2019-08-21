@@ -589,7 +589,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .andExpect(result -> assertMatch(readFromJsonMvcResult(result, Restaurant.class), newRestaurant));
 
         //voting for new Restaurant with DayMenu
-        ResultActions voteActions = mockMvc.perform(post(UserRestaurantController.REST_URL + "/vote/" + newRestaurant.getId())
+        ResultActions voteActions = mockMvc.perform(post(UserRestaurantController.REST_URL + "/" + newRestaurant.getId() + "/vote")
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isCreated())
                 .andDo(print());

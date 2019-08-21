@@ -5,6 +5,8 @@ import org.springframework.http.MediaType;
 import ru.restaurant.voting.model.Vote;
 import ru.restaurant.voting.web.AbstractControllerTest;
 
+import java.util.List;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -18,12 +20,21 @@ public class VoteControllerTest extends AbstractControllerTest {
     private static final String REST_URL = VoteController.REST_URL + "/";
 
     @Test
-    void testGetAll() throws Exception {
+    void testGetAllForDate() throws Exception {
+        mockMvc.perform(get(REST_URL + "/for/?day=2019-07-03")
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(contentJson(Vote.class, VOTES_FOR_20190713));
+    }
+
+    @Test
+    void testGetAllForToday() throws Exception {
         mockMvc.perform(get(REST_URL)
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(Vote.class, VOTES));
+                .andExpect(contentJson(Vote.class, List.of()));
     }
 
     @Test

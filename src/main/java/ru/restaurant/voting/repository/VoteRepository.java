@@ -1,5 +1,6 @@
 package ru.restaurant.voting.repository;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -24,14 +25,14 @@ public interface VoteRepository extends JpaRepository<Vote, Integer> {
     @Transactional
     void deleteByUserIdAndVotingDate(int userId, LocalDate votingDay);
 
-    @Query("SELECT v FROM Vote v WHERE v.votingDate=:date AND v.restaurantId=:restaurantId")
+    @Query("SELECT v FROM Vote v WHERE v.votingDate=:date AND v.restaurantId=:restaurantId ORDER BY v.id")
     List<Vote> getAllForDateForRestaurant(@Param("date") LocalDate date, @Param("restaurantId") int restaurantId);
 
-    @Query("SELECT v FROM Vote v WHERE v.restaurantId=:restaurantId")
+    @Query("SELECT v FROM Vote v WHERE v.restaurantId=:restaurantId ORDER BY v.id")
     List<Vote> getAllForRestaurant(@Param("restaurantId") int restaurantId);
 
-    @Query("SELECT v FROM Vote v")
-    List<Vote> getAll();
+    @Query("SELECT v FROM Vote v WHERE v.votingDate=:date ORDER BY v.id")
+    List<Vote> getAllForDate(@Param("date") LocalDate date);
 
     @Query("SELECT v FROM Vote v WHERE v.id=:id")
     Vote get(@Param("id") int id);

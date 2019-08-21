@@ -30,12 +30,12 @@ public class UserRestaurantController extends AbstractRestaurantController {
         return super.getAllForDay(null);
     }
 
-    @PostMapping("/vote/{id}")
+    @PostMapping("/{id}/vote")
     public ResponseEntity<Vote> vote(@PathVariable int id, @AuthenticationPrincipal AuthorizedUser user) {
         Vote vote = super.vote(null, user.getId(), id, null);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL + "/vote/{id}")
+                .path(REST_URL + "/{id}/vote")
                 .buildAndExpand(vote.getRestaurantId()).toUri();
 
         return ResponseEntity.created(uriOfNewResource).body(vote);

@@ -1,5 +1,18 @@
+# Restaurant Voting REST API using Hibernate/Spring/SpringMVC (or Spring-Boot) without frontend.
+  
+  This voting system is designed to decide where to have lunch.
+  
+  > 2 types of users: admin and regular users <br>
+  > Admin can input a restaurant and it's lunch menu of the day (2-5 items usually, just a dish name and price) <br>
+  > Menu changes each day (admins do the updates) <br>
+  > Users can vote on which restaurant they want to have lunch at <br>
+  > Only one vote counted per user <br>
+  > Each restaurant provides new menu each day <br>
+  > If user votes again the same day:
+  > - If it is before 11:00 we asume that he changed his mind <br>
+  > - If it is after 11:00 then it is too late, vote can't be changed <br>
+
 # curl samples
-<hr>
 
 ## /admin/users
 
@@ -199,13 +212,13 @@ curl -s http://localhost:8080/voting/admin/votes/50009 --user admin@gmail.com:pa
 
 ###### vote for Restaurant (create DayMenu for today before voting)
 curl -s -X POST -d '{}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/108/menus/1023 --user admin@gmail.com:password <br>
-curl -s -X POST http://localhost:8080/voting/restaurants/vote/108 --user simple@mail.ru:simple
+curl -s -X POST http://localhost:8080/voting/restaurants/108/vote --user simple@mail.ru:simple
 
 ###### vote for Restaurant second time (Till 11 a.m. o'clock - changed the decision, after 11 a.m. it will not work)(create DayMenu for today before voting)
 curl -s -X POST -d '{}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/108/menus/1023 --user admin@gmail.com:password <br>
-curl -s -X POST http://localhost:8080/voting/restaurants/vote/108 --user simple@mail.ru:simple <br>
+curl -s -X POST http://localhost:8080/voting/restaurants/108/vote --user simple@mail.ru:simple <br>
 curl -s -X POST -d '{}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/106/menus/1017 --user admin@gmail.com:password <br>
-curl -s -X POST http://localhost:8080/voting/restaurants/vote/106 --user simple@mail.ru:simple <br>
+curl -s -X POST http://localhost:8080/voting/restaurants/106/vote --user simple@mail.ru:simple <br>
 
 ###### get all Restaurants for current day with DayMenus
 curl -s http://localhost:8080/voting/restaurants/ --user simple@mail.ru:simple
@@ -251,7 +264,7 @@ curl -s -X POST -d '{}' -H 'Content-Type:application/json;charset=UTF-8' http://
 curl -s http://localhost:8080/voting/admin/restaurants/100000 --user admin@gmail.com:password
 
 ###### voting for new DayMenu
-curl -s -X POST http://localhost:8080/voting/restaurants/vote/100000 --user admin@gmail.com:password
+curl -s -X POST http://localhost:8080/voting/restaurants/100000/vote --user admin@gmail.com:password
 
 ###### check
 curl -s http://localhost:8080/voting/admin/votes/100003 --user admin@gmail.com:password
