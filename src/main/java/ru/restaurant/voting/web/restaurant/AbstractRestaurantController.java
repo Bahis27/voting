@@ -62,8 +62,13 @@ public abstract class AbstractRestaurantController {
     }
 
     public List<Restaurant> getAllForDay(LocalDate localDate) {
-        log.info("get all restaurants");
+        log.info("get all restaurants for day");
         return restaurantService.getAllForDay(localDate);
+    }
+
+    public List<Restaurant> getAllForToday() {
+        log.info("get all restaurants for today");
+        return restaurantService.getAllForToday();
     }
 
     //vote

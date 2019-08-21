@@ -1,7 +1,9 @@
 package ru.restaurant.voting.service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.dao.DataAccessException;
 import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.model.Vote;
@@ -9,6 +11,7 @@ import ru.restaurant.voting.repository.VoteRepository;
 import ru.restaurant.voting.service.restaurant.RestaurantService;
 import ru.restaurant.voting.to.RestaurantTo;
 import ru.restaurant.voting.to.RestaurantToWithStats;
+import ru.restaurant.voting.util.JpaUtil;
 import ru.restaurant.voting.util.ToUtil;
 import ru.restaurant.voting.util.exception.NotFoundException;
 import ru.restaurant.voting.util.exception.RestaurantHasNotMenuForThisDay;
@@ -28,6 +31,18 @@ class RestaurantServiceTest extends AbstractServiceTest {
 
     @Autowired
     private VoteRepository voteRepository;
+    
+    @Autowired
+    private CacheManager cacheManager;
+    
+    @Autowired
+    private JpaUtil jpaUtil;
+    
+    @BeforeEach
+    void setUp() throws Exception {
+        cacheManager.getCache("restaurants").clear();
+        jpaUtil.clear2ndLevelHibernateCache();
+    }
 
     @Test
     void create() throws Exception {

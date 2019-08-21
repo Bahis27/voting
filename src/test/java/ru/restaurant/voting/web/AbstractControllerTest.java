@@ -59,7 +59,7 @@ abstract public class AbstractControllerTest {
 
     @BeforeEach
     void setUp() {
-        cacheManager.getCache("users").clear();
+        cacheManager.getCache("restaurants").clear();
         jpaUtil.clear2ndLevelHibernateCache();
     }
 

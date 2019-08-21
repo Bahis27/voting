@@ -1,6 +1,7 @@
 package ru.restaurant.voting.service.dish;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -28,6 +29,7 @@ public class DishServiceImpl implements DishService {
         this.restaurantRepository = restaurantRepository;
     }
 
+    @CacheEvict(value = "restaurants", allEntries = true)
     @Transactional
     @Override
     public Dish create(Dish dish, int restaurantId) {
@@ -37,6 +39,7 @@ public class DishServiceImpl implements DishService {
         return dishRepository.save(dish);
     }
 
+    @CacheEvict(value = "restaurants", allEntries = true)
     @Transactional
     @Override
     public void update(Dish dish, int restaurantId) {
@@ -61,6 +64,7 @@ public class DishServiceImpl implements DishService {
         return checkNotFoundWithId(dishRepository.get(id, restaurantId), id);
     }
 
+    @CacheEvict(value = "restaurants", allEntries = true)
     @Override
     public void delete(int id, int restaurantId) throws NotFoundException {
         checkNotFoundWithId(dishRepository.delete(id, restaurantId), id);

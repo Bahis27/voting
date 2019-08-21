@@ -44,7 +44,7 @@ class UserRestaurantControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void testGetAllForEmptyDay() throws Exception {
+    void testGetAllForToday() throws Exception {
         mockMvc.perform(get(REST_URL)
                 .with(userHttpBasic(USER5)))
                 .andExpect(status().isOk())

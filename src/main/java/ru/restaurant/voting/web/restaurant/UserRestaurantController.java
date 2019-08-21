@@ -25,9 +25,10 @@ public class UserRestaurantController extends AbstractRestaurantController {
         return super.getForDay(id, null);
     }
 
+    @Override
     @GetMapping
-    public List<Restaurant> getAllForDay() {
-        return super.getAllForDay(null);
+    public List<Restaurant> getAllForToday() {
+        return super.getAllForToday();
     }
 
     @PostMapping("/{id}/vote")

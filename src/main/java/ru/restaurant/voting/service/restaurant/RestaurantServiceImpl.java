@@ -1,6 +1,8 @@
 package ru.restaurant.voting.service.restaurant;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -43,6 +45,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         this.dayMenuRepository = dayMenuRepository;
     }
 
+    @CacheEvict(value = "restaurants", allEntries = true)
     @Override
     public Restaurant create(Restaurant restaurant) {
         Assert.notNull(restaurant, "restaurant must not be null");
@@ -50,6 +53,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         return restaurantRepository.save(restaurant);
     }
 
+    @CacheEvict(value = "restaurants", allEntries = true)
     @Override
     public void update(Restaurant restaurant) {
         Assert.notNull(restaurant, "restaurant must not be null");
@@ -71,6 +75,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         return checkNotFoundWithId(restaurant, id);
     }
 
+    @CacheEvict(value = "restaurants", allEntries = true)
     @Override
     public void delete(int id) throws NotFoundException {
         checkNotFoundWithId(restaurantRepository.delete(id), id);
@@ -84,6 +89,12 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public List<Restaurant> getAllForDay(LocalDate localDate) {
         return restaurantRepository.getAllForDay(Objects.requireNonNullElseGet(localDate, LocalDate::now));
+    }
+
+    @Override
+    @Cacheable("restaurants")
+    public List<Restaurant> getAllForToday() {
+        return restaurantRepository.getAllForDay(LocalDate.now());
     }
 
     @Transactional

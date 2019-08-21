@@ -1,8 +1,12 @@
 package ru.restaurant.voting.model;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.*;
 import java.util.List;
 
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
 @Table(name = "restaurants"
         , uniqueConstraints = {@UniqueConstraint(
@@ -11,6 +15,7 @@ import java.util.List;
 })
 public class Restaurant extends AbstractNamedEntity {
 
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     private List<DayMenu> dayMenus;
 

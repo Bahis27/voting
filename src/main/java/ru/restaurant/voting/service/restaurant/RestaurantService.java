@@ -26,6 +26,8 @@ public interface RestaurantService {
 
     List<Restaurant> getAllForDay(LocalDate localDate);
 
+    List<Restaurant> getAllForToday();
+
     Vote vote(LocalDate date, int userId, int restaurantId, LocalTime time);
 
     int getStatForDay(LocalDate date, int restaurantId);

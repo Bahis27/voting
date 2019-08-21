@@ -1,6 +1,7 @@
 package ru.restaurant.voting.service.daymenu;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -34,6 +35,7 @@ public class DayMenuServiceImpl implements DayMenuService {
         this.dishRepository = dishRepository;
     }
 
+    @CacheEvict(value = "restaurants", allEntries = true)
     @Transactional
     @Override
     public DayMenu create(DayMenu dayMenu, int restaurantId, int dishId) {
@@ -47,6 +49,7 @@ public class DayMenuServiceImpl implements DayMenuService {
         return dayMenuRepository.save(dayMenu);
     }
 
+    @CacheEvict(value = "restaurants", allEntries = true)
     @Transactional
     @Override
     public void update(DayMenu dayMenu, int restaurantId, int dishId) {
@@ -91,11 +94,13 @@ public class DayMenuServiceImpl implements DayMenuService {
         return checkNotFoundWithId(dayMenuRepository.get(id, restaurantId), id);
     }
 
+    @CacheEvict(value = "restaurants", allEntries = true)
     @Override
     public void delete(int id, int restaurantId) throws NotFoundException {
         checkNotFoundWithId(dayMenuRepository.delete(id, restaurantId), id);
     }
 
+    @CacheEvict(value = "restaurants", allEntries = true)
     @Override
     public void deleteAllForDay(int restaurantId, LocalDate date) {
         checkNotFoundWithId(dayMenuRepository.deleteAll(restaurantId, date), restaurantId);

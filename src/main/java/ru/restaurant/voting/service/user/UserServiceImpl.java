@@ -1,8 +1,6 @@
 package ru.restaurant.voting.service.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,7 +34,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         this.voteRepository = voteRepository;
     }
 
-    @CacheEvict(value = "users", allEntries = true)
     @Override
     public User create(User user) {
         Assert.notNull(user, "user must not be null");
@@ -44,7 +41,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepository.save(prepareToSave(user, passwordEncoder));
     }
 
-    @CacheEvict(value = "users", allEntries = true)
     @Override
     public void delete(int id) throws NotFoundException {
         checkNotFoundWithId(userRepository.delete(id), id);
@@ -61,20 +57,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return checkNotFound(userRepository.getByEmail(email), "email=" + email);
     }
 
-    @Cacheable("users")
     @Override
     public List<User> getAll() {
         return userRepository.getAll();
     }
 
-    @CacheEvict(value = "users", allEntries = true)
     @Override
     public void update(User user) {
         Assert.notNull(user, "user must not be null");
         checkNotFoundWithId(userRepository.save(prepareToSave(user, passwordEncoder)), user.getId());
     }
 
-    @CacheEvict(value = "users", allEntries = true)
     @Transactional
     @Override
     public void update(UserTo userTo) {

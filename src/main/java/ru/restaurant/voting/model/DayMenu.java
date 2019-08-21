@@ -1,12 +1,15 @@
 package ru.restaurant.voting.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
 @Table(name = "day_menus"
         , uniqueConstraints = {@UniqueConstraint(
@@ -25,6 +28,7 @@ public class DayMenu extends AbstractBaseEntity {
     @JsonIgnore
     private Restaurant restaurant;
 
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dish_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
