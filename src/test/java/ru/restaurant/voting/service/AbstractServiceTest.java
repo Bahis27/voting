@@ -18,11 +18,6 @@ import static ru.restaurant.voting.util.ValidationUtil.getRootCause;
 
 abstract class AbstractServiceTest {
 
-    static {
-        // needed only for java.util.logging (postgres driver)
-        SLF4JBridgeHandler.install();
-    }
-
     //  Check root cause in JUnit: https://github.com/junit-team/junit4/pull/778
     <T extends Throwable> void validateRootCause(Runnable runnable, Class<T> exceptionClass) {
         assertThrows(exceptionClass, () -> {

@@ -70,15 +70,15 @@ public class Vote extends AbstractBaseEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Vote)) return false;
-        if (!super.equals(o)) return false;
         Vote vote = (Vote) o;
-        return getVotingDate().equals(vote.getVotingDate()) &&
+        return getId().equals(vote.getId()) &&
+                getVotingDate().equals(vote.getVotingDate()) &&
                 getUserId().equals(vote.getUserId()) &&
                 getRestaurantId().equals(vote.getRestaurantId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getVotingDate(), getUserId(), getRestaurantId());
+        return Objects.hash(getId(), getVotingDate(), getUserId(), getRestaurantId());
     }
 }

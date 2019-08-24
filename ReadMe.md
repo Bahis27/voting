@@ -212,9 +212,6 @@ curl -s http://localhost:8080/voting/restaurants/ --user simple@mail.ru:simple
 ###### get Restaurant by id for current day with DayMenu
 curl -s http://localhost:8080/voting/restaurants/105 --user simple@mail.ru:simple
 
-###### get all Dishes by Restaurant id;
-curl -s http://localhost:8080/voting/restaurants/108/dishes --user simple@mail.ru:simple
-
 ###### get all DayMenus for Restaurant for current day
 curl -s http://localhost:8080/voting/restaurants/104/menus --user simple@mail.ru:simple
 

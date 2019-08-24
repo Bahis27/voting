@@ -60,7 +60,7 @@ public abstract class AbstractRestaurantController {
     }
 
     public Restaurant getForDay(int id, LocalDate localDate) {
-        log.info("get restaurant with id={}", id);
+        log.info("get restaurant with id={} for day", id);
         return restaurantService.getForDay(id, localDate);
     }
 
@@ -133,12 +133,12 @@ public abstract class AbstractRestaurantController {
     }
 
     public List<DayMenu> getAllDayMenusForDayByRestaurantId(int restaurantId, LocalDate date) {
-        log.info("get all dayMenus for restaurant with id={}", restaurantId);
+        log.info("get all dayMenus for restaurant with id={} for day", restaurantId);
         return dayMenuService.getAllForDayByRestaurantId(restaurantId, date);
     }
 
     public List<DayMenu> getAllDayMenusForDay(LocalDate date) {
-        log.info("get all dayMenus");
+        log.info("get all dayMenus for day");
         return dayMenuService.getAllForDay(date);
     }
 
