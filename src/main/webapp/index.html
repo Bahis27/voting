@@ -138,26 +138,6 @@
     </li>
 </ul>
 
-<h3>statistics</h3>
-<ul>
-    <li>
-        get all Restaurants with statistics <br>
-        curl -s http://localhost:8080/voting/admin/restaurants/stat --user admin@gmail.com:password
-    </li>
-    <li>
-        get all Restaurants for current day with statistics <br>
-        curl -s http://localhost:8080/voting/admin/restaurants/stat/for?day=2019-07-03 --user admin@gmail.com:password
-    </li>
-    <li>
-        get quantity of votes for Restaurant <br>
-        curl -s http://localhost:8080/voting/admin/restaurants/103/stat --user admin@gmail.com:password
-    </li>
-    <li>
-        get quantity of votes for Restaurant for current day <br>
-        curl -s http://localhost:8080/voting/admin/restaurants/103/stat/for?day=2019-07-03 --user admin@gmail.com:password
-    </li>
-</ul>
-
 <h3>dishes</h3>
 <ul>
     <li>
@@ -316,14 +296,6 @@
     <li>
         get Restaurant by id for current day with DayMenu <br>
         curl -s http://localhost:8080/voting/restaurants/105 --user simple@mail.ru:simple
-    </li>
-    <li>
-        get all Restaurant for current day with statistics <br>
-        curl -s http://localhost:8080/voting/restaurants/stat --user simple@mail.ru:simple
-    </li>
-    <li>
-        get quantity of votes for Restaurant for current day <br>
-        curl -s http://localhost:8080/voting/restaurants/105/stat --user simple@mail.ru:simple
     </li>
     <li>
         get all Dishes by Restaurant id; <br>

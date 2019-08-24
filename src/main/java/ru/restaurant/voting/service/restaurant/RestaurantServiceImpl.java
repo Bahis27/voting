@@ -12,7 +12,6 @@ import ru.restaurant.voting.repository.DayMenuRepository;
 import ru.restaurant.voting.repository.RestaurantRepository;
 import ru.restaurant.voting.repository.VoteRepository;
 import ru.restaurant.voting.to.RestaurantTo;
-import ru.restaurant.voting.to.RestaurantToWithStats;
 import ru.restaurant.voting.util.ToUtil;
 import ru.restaurant.voting.util.exception.NotFoundException;
 import ru.restaurant.voting.util.exception.RestaurantHasNotMenuForThisDay;
@@ -20,11 +19,9 @@ import ru.restaurant.voting.util.exception.UserAlreadyHasVotedException;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static ru.restaurant.voting.util.ValidationUtil.checkNew;
 import static ru.restaurant.voting.util.ValidationUtil.checkNotFoundWithId;
@@ -122,51 +119,5 @@ public class RestaurantServiceImpl implements RestaurantService {
             }
             return vote;
         }
-    }
-
-    @Override
-    public int getStatForDay(LocalDate date, int restaurantId) {
-        if (date == null) {
-            date = LocalDate.now();
-        }
-        return voteRepository.getAllForDateForRestaurant(date, restaurantId).size();
-    }
-
-    @Override
-    public int getStat(int restaurantId) {
-        return voteRepository.getAllForRestaurant(restaurantId).size();
-    }
-
-    @Transactional
-    @Override
-    public List<RestaurantToWithStats> getAllWithStatsForDay(LocalDate date) {
-        if (date == null) {
-            date = LocalDate.now();
-        }
-        List<RestaurantToWithStats> all = getAllForDay(date).stream()
-                .map(RestaurantToWithStats::new)
-                .collect(Collectors.toList());
-        LocalDate finalDate = date;
-        all.forEach(r -> r.setStat(getStatForDay(finalDate, r.getId())));
-        sortByStatAndName(all);
-        return all;
-    }
-
-    @Transactional
-    @Override
-    public List<RestaurantToWithStats> getAllWithStats() {
-        List<RestaurantToWithStats> all = getAll().stream()
-                .map(RestaurantToWithStats::new)
-                .collect(Collectors.toList());
-        all.forEach(r -> r.setStat(getStat(r.getId())));
-        sortByStatAndName(all);
-        return all;
-    }
-
-    private void sortByStatAndName(List<RestaurantToWithStats> all) {
-        all.sort(Comparator
-                .comparing(RestaurantToWithStats::getStat)
-                .reversed()
-                .thenComparing(RestaurantToWithStats::getName));
     }
 }

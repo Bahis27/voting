@@ -3,7 +3,6 @@ package ru.restaurant.voting.service.restaurant;
 import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.model.Vote;
 import ru.restaurant.voting.to.RestaurantTo;
-import ru.restaurant.voting.to.RestaurantToWithStats;
 import ru.restaurant.voting.util.exception.NotFoundException;
 
 import java.time.LocalDate;
@@ -29,12 +28,4 @@ public interface RestaurantService {
     List<Restaurant> getAllForToday();
 
     Vote vote(LocalDate date, int userId, int restaurantId, LocalTime time);
-
-    int getStatForDay(LocalDate date, int restaurantId);
-
-    int getStat(int restaurantId);
-
-    List<RestaurantToWithStats> getAllWithStatsForDay(LocalDate date);
-
-    List<RestaurantToWithStats> getAllWithStats();
 }

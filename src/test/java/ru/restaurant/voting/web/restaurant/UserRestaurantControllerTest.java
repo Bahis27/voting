@@ -6,7 +6,6 @@ import ru.restaurant.voting.TestUtil;
 import ru.restaurant.voting.model.DayMenu;
 import ru.restaurant.voting.model.Dish;
 import ru.restaurant.voting.model.Restaurant;
-import ru.restaurant.voting.to.RestaurantToWithStats;
 import ru.restaurant.voting.web.AbstractControllerTest;
 
 import java.util.ArrayList;
@@ -67,26 +66,6 @@ class UserRestaurantControllerTest extends AbstractControllerTest {
                 .andExpect(status().isConflict())
                 .andExpect(errorType(WRONG_REQUEST))
                 .andExpect(detailMessage("Restaurant with restaurantId = 108 has not DayMenu for this day"))
-                .andDo(print());
-    }
-
-    @Test
-    void testGetStatForDay() throws Exception {
-        mockMvc.perform(get(REST_URL + RES5_ID + "/stat")
-                .with(userHttpBasic(USER3)))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(result -> assertThat(TestUtil.readFromJsonMvcResult(result, Integer.class)).isEqualTo(0))
-                .andDo(print());
-    }
-
-    @Test
-    void testGetAllWithStatForDay() throws Exception {
-        mockMvc.perform(get(REST_URL + "stat")
-                .with(userHttpBasic(USER4)))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(result -> assertThat(TestUtil.readListFromJsonMvcResult(result, RestaurantToWithStats.class).isEmpty()))
                 .andDo(print());
     }
 

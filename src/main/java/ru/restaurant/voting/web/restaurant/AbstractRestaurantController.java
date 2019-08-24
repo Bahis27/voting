@@ -7,13 +7,12 @@ import ru.restaurant.voting.model.DayMenu;
 import ru.restaurant.voting.model.Dish;
 import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.model.Vote;
-import ru.restaurant.voting.service.dish.DishService;
 import ru.restaurant.voting.service.daymenu.DayMenuService;
+import ru.restaurant.voting.service.dish.DishService;
 import ru.restaurant.voting.service.restaurant.RestaurantService;
 import ru.restaurant.voting.to.DayMenuTO;
 import ru.restaurant.voting.to.DishTo;
 import ru.restaurant.voting.to.RestaurantTo;
-import ru.restaurant.voting.to.RestaurantToWithStats;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -75,27 +74,6 @@ public abstract class AbstractRestaurantController {
     public Vote vote(LocalDate date, int userId, int restaurantId, LocalTime time) {
         log.info("user with id={} voted for restaurant with id={}", userId, restaurantId);
         return restaurantService.vote(date, userId, restaurantId, time);
-    }
-
-    //stat
-    public int getStatForDay(LocalDate date, int restaurantId) {
-        log.info("get stat for restaurant with id={}", restaurantId);
-        return restaurantService.getStatForDay(date, restaurantId);
-    }
-
-    public int getStat(int restaurantId) {
-        log.info("get stat for restaurant with id={}", restaurantId);
-        return restaurantService.getStat(restaurantId);
-    }
-
-    public List<RestaurantToWithStats> getAllWithStat() {
-        log.info("get all restaurants with stat");
-        return restaurantService.getAllWithStats();
-    }
-
-    public List<RestaurantToWithStats> getAllWithStatForDay(LocalDate date) {
-        log.info("get all restaurant with stat");
-        return restaurantService.getAllWithStatsForDay(date);
     }
 
     //dishes

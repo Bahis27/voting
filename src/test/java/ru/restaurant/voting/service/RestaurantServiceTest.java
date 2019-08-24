@@ -10,7 +10,6 @@ import ru.restaurant.voting.model.Vote;
 import ru.restaurant.voting.repository.VoteRepository;
 import ru.restaurant.voting.service.restaurant.RestaurantService;
 import ru.restaurant.voting.to.RestaurantTo;
-import ru.restaurant.voting.to.RestaurantToWithStats;
 import ru.restaurant.voting.util.JpaUtil;
 import ru.restaurant.voting.util.ToUtil;
 import ru.restaurant.voting.util.exception.NotFoundException;
@@ -168,27 +167,5 @@ class RestaurantServiceTest extends AbstractServiceTest {
                 restaurantService.vote(date, ADMIN_ID, RES4_ID, time2));
 
         assertEquals(expected, voteRepository.findByUserIdAndVotingDate(ADMIN_ID, date).orElse(null));
-    }
-
-    @Test
-    void getStat() throws Exception {
-        assertEquals(restaurantService.getStat(RES8_ID), RES4_STAT);
-    }
-
-    @Test
-    void getStatForDay() throws Exception {
-        assertEquals(restaurantService.getStatForDay(LocalDate.of(2019, 7, 3), RES8_ID), RES4_STAT_20190703);
-    }
-
-    @Test
-    void getAllWithStats() throws Exception {
-        List<RestaurantToWithStats> allWithStats = restaurantService.getAllWithStats();
-        assertMatch(allWithStats, RESTAURANTS_WITH_STAT);
-    }
-
-    @Test
-    void getAllWithStatsForDay() throws Exception {
-        List<RestaurantToWithStats> allWithStatsForDay = restaurantService.getAllWithStatsForDay(LocalDate.of(2019, 7, 3));
-        assertMatch(allWithStatsForDay, RESTAURANTS_WITH_STAT_FORDAY);
     }
 }

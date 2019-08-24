@@ -10,7 +10,6 @@ import ru.restaurant.voting.model.DayMenu;
 import ru.restaurant.voting.model.Dish;
 import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.model.Vote;
-import ru.restaurant.voting.to.RestaurantToWithStats;
 
 import java.net.URI;
 import java.util.List;
@@ -40,16 +39,6 @@ public class UserRestaurantController extends AbstractRestaurantController {
                 .buildAndExpand(vote.getRestaurantId()).toUri();
 
         return ResponseEntity.created(uriOfNewResource).body(vote);
-    }
-
-    @GetMapping("/{id}/stat")
-    public int getStatForDay(@PathVariable int id) {
-        return super.getStatForDay(null, id);
-    }
-
-    @GetMapping("/stat")
-    public List<RestaurantToWithStats> getAllWithStatForDay() {
-        return super.getAllWithStatForDay(null);
     }
 
     @Override

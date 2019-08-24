@@ -6,7 +6,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import ru.restaurant.voting.TestUtil;
 import ru.restaurant.voting.model.DayMenu;
 import ru.restaurant.voting.model.Dish;
 import ru.restaurant.voting.model.Restaurant;
@@ -17,7 +16,6 @@ import ru.restaurant.voting.service.restaurant.RestaurantService;
 import ru.restaurant.voting.to.DayMenuTO;
 import ru.restaurant.voting.to.DishTo;
 import ru.restaurant.voting.to.RestaurantTo;
-import ru.restaurant.voting.to.RestaurantToWithStats;
 import ru.restaurant.voting.util.ToUtil;
 import ru.restaurant.voting.util.exception.NotFoundException;
 import ru.restaurant.voting.web.AbstractControllerTest;
@@ -28,7 +26,6 @@ import ru.restaurant.voting.web.vote.VoteController;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -269,47 +266,6 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .andExpect(errorType(VALIDATION_ERROR))
                 .andDo(print())
                 .andExpect(detailMessage(ExceptionInfoHandler.EXCEPTION_DUPLICATE_RESTAURANT_NAME));
-    }
-
-    //stat
-    @Test
-    void testGetStatForDay() throws Exception {
-        mockMvc.perform(get(REST_URL + RES8_ID + "/stat/for?day=2019-07-03")
-                .with(userHttpBasic(ADMIN)))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(result -> assertThat(TestUtil.readFromJsonMvcResult(result, Integer.class)).isEqualTo(3))
-                .andDo(print());
-    }
-
-    @Test
-    void testGetStat() throws Exception {
-        mockMvc.perform(get(REST_URL + RES8_ID + "/stat")
-                .with(userHttpBasic(ADMIN)))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(result -> assertThat(TestUtil.readFromJsonMvcResult(result, Integer.class)).isEqualTo(4))
-                .andDo(print());
-    }
-
-    @Test
-    void testGetAllWithStat() throws Exception {
-        mockMvc.perform(get(REST_URL + "/stat")
-                .with(userHttpBasic(ADMIN)))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(RestaurantToWithStats.class, RESTAURANTS_WITH_STAT))
-                .andDo(print());
-    }
-
-    @Test
-    void testGetAllWithStatForDay() throws Exception {
-        mockMvc.perform(get(REST_URL + "stat/for?day=2019-07-03")
-                .with(userHttpBasic(ADMIN)))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(RestaurantToWithStats.class, RESTAURANTS_WITH_STAT_FORDAY))
-                .andDo(print());
     }
 
     //dishes
