@@ -97,12 +97,12 @@ public class DayMenuServiceImpl implements DayMenuService {
     @CacheEvict(value = "restaurants", allEntries = true)
     @Override
     public void delete(int id, int restaurantId) throws NotFoundException {
-        checkNotFoundWithId(dayMenuRepository.delete(id, restaurantId), id);
+        checkNotFoundWithId(dayMenuRepository.delete(id, restaurantId) != 0, id);
     }
 
     @CacheEvict(value = "restaurants", allEntries = true)
     @Override
     public void deleteAllForDay(int restaurantId, LocalDate date) {
-        checkNotFoundWithId(dayMenuRepository.deleteAll(restaurantId, date), restaurantId);
+        checkNotFoundWithId(dayMenuRepository.deleteAll(restaurantId, date) != 0, restaurantId);
     }
 }

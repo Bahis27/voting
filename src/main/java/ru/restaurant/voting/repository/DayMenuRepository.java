@@ -18,22 +18,12 @@ public interface DayMenuRepository extends JpaRepository<DayMenu, Integer> {
     @Transactional
     @Modifying
     @Query("DELETE FROM DayMenu m WHERE m.id=:id AND m.restaurant.id=:restaurantId")
-    int deleteWithId(@Param("id") int id, @Param("restaurantId") int restaurantId);
-
-    @Transactional
-    default boolean delete(int id, int restaurantId) {
-        return deleteWithId(id, restaurantId) != 0;
-    }
+    int delete(@Param("id") int id, @Param("restaurantId") int restaurantId);
 
     @Transactional
     @Modifying
     @Query("DELETE FROM DayMenu m WHERE m.restaurant.id=:id AND m.menuDate=:date")
-    int deleteAllWithRestaurantIdAndMenuDate(@Param("id") int restaurantId, @Param("date") LocalDate date);
-
-    @Transactional
-    default boolean deleteAll(int restaurantId, LocalDate date) {
-        return deleteAllWithRestaurantIdAndMenuDate(restaurantId, date) != 0;
-    }
+    int deleteAll(@Param("id") int restaurantId, @Param("date") LocalDate date);
 
     @Transactional
     @Override

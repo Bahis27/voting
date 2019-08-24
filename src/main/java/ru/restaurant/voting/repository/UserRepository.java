@@ -19,12 +19,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Transactional
     @Modifying
     @Query("DELETE FROM User u WHERE u.id=:id")
-    int deleteWithId(@Param("id") int id);
-
-    @Transactional
-    default boolean delete(int id) {
-        return deleteWithId(id) != 0;
-    }
+    int delete(@Param("id") int id);
 
     @Override
     @Transactional

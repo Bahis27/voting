@@ -21,9 +21,6 @@ public interface VoteRepository extends JpaRepository<Vote, Integer> {
 
     Optional<Vote> findByUserIdAndVotingDate(int userId, LocalDate votingDay);
 
-    @Transactional
-    void deleteByUserIdAndVotingDate(int userId, LocalDate votingDay);
-
     @Query("SELECT v FROM Vote v WHERE v.votingDate=:date ORDER BY v.id")
     List<Vote> getAllForDate(@Param("date") LocalDate date);
 

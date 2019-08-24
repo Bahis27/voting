@@ -6,12 +6,13 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name = "votes"
         , uniqueConstraints = {@UniqueConstraint(
-        columnNames = {"vote_day", "user_id", "restaurant_id"},
-        name = "votes_unique_voteday_userid_restaurantid_idx")
+        columnNames = {"vote_day", "user_id"},
+        name = "votes_unique_voteday_userid_idx")
 })
 public class Vote extends AbstractBaseEntity {
 
@@ -63,5 +64,21 @@ public class Vote extends AbstractBaseEntity {
 
     public void setRestaurantId(Integer restaurantId) {
         this.restaurantId = restaurantId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Vote)) return false;
+        if (!super.equals(o)) return false;
+        Vote vote = (Vote) o;
+        return getVotingDate().equals(vote.getVotingDate()) &&
+                getUserId().equals(vote.getUserId()) &&
+                getRestaurantId().equals(vote.getRestaurantId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getVotingDate(), getUserId(), getRestaurantId());
     }
 }

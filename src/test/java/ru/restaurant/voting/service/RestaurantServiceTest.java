@@ -144,6 +144,10 @@ class RestaurantServiceTest extends AbstractServiceTest {
         Vote vote2 = restaurantService.vote(date, ADMIN_ID, RES2_ID, time2);
 
         Vote expected = voteRepository.findByUserIdAndVotingDate(ADMIN_ID, date).orElse(null);
+
+        System.out.println(vote1);
+        System.out.println(vote2);
+
         assertEquals(vote2, expected);
         assertNotEquals(vote1, expected);
     }

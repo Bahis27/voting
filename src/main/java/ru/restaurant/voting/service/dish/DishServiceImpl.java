@@ -67,6 +67,6 @@ public class DishServiceImpl implements DishService {
     @CacheEvict(value = "restaurants", allEntries = true)
     @Override
     public void delete(int id, int restaurantId) throws NotFoundException {
-        checkNotFoundWithId(dishRepository.delete(id, restaurantId), id);
+        checkNotFoundWithId(dishRepository.delete(id, restaurantId) != 0, id);
     }
 }

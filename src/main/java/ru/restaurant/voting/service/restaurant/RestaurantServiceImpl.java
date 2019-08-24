@@ -67,7 +67,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     public Restaurant get(int id) throws NotFoundException {
         Restaurant restaurant = restaurantRepository.getFullById(id);
         if (restaurant == null) {
-            return checkNotFoundWithId(restaurantRepository.findById(id).orElse(null), id);
+            return restaurantRepository.findById(id).orElseThrow(() -> new NotFoundException("Restaurant not found"));
         }
         return checkNotFoundWithId(restaurant, id);
     }
@@ -75,7 +75,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     @CacheEvict(value = "restaurants", allEntries = true)
     @Override
     public void delete(int id) throws NotFoundException {
-        checkNotFoundWithId(restaurantRepository.delete(id), id);
+        checkNotFoundWithId(restaurantRepository.delete(id) != 0, id);
     }
 
     @Override
@@ -112,8 +112,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         } else {
             Vote vote = null;
             if (time.isBefore(LocalTime.of(11, 0, 0))) {
-                voteRepository.deleteByUserIdAndVotingDate(userId, date);
-                vote = voteRepository.save(new Vote(null, date, userId, restaurantId));
+                vote = voteRepository.save(new Vote(optionalVote.get().getId(), date, userId, restaurantId));
             } else {
                 throw new UserAlreadyHasVotedException(String.format("User with userId = %d already has voted", userId));
             }

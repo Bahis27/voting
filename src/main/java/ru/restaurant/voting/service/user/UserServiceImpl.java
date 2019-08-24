@@ -43,12 +43,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public void delete(int id) throws NotFoundException {
-        checkNotFoundWithId(userRepository.delete(id), id);
+        checkNotFoundWithId(userRepository.delete(id) != 0, id);
     }
 
     @Override
     public User get(int id) throws NotFoundException {
-        return checkNotFoundWithId(userRepository.findById(id).orElse(null), id);
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found"));
     }
 
     @Override
