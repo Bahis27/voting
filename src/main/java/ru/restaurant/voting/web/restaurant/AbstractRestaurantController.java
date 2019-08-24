@@ -10,6 +10,7 @@ import ru.restaurant.voting.model.Vote;
 import ru.restaurant.voting.service.daymenu.DayMenuService;
 import ru.restaurant.voting.service.dish.DishService;
 import ru.restaurant.voting.service.restaurant.RestaurantService;
+import ru.restaurant.voting.service.vote.VoteService;
 import ru.restaurant.voting.to.DayMenuTO;
 import ru.restaurant.voting.to.DishTo;
 import ru.restaurant.voting.to.RestaurantTo;
@@ -29,6 +30,9 @@ public abstract class AbstractRestaurantController {
 
     @Autowired
     private DayMenuService dayMenuService;
+
+    @Autowired
+    private VoteService voteService;
 
     public Restaurant create(Restaurant restaurant) {
         log.info("create restaurant with name={}", restaurant.getName());
@@ -73,7 +77,7 @@ public abstract class AbstractRestaurantController {
     //vote
     public Vote vote(LocalDate date, int userId, int restaurantId, LocalTime time) {
         log.info("user with id={} voted for restaurant with id={}", userId, restaurantId);
-        return restaurantService.vote(date, userId, restaurantId, time);
+        return voteService.vote(date, userId, restaurantId, time);
     }
 
     //dishes

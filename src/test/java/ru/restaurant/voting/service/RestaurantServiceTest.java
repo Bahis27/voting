@@ -6,30 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.dao.DataAccessException;
 import ru.restaurant.voting.model.Restaurant;
-import ru.restaurant.voting.model.Vote;
-import ru.restaurant.voting.repository.VoteRepository;
 import ru.restaurant.voting.service.restaurant.RestaurantService;
 import ru.restaurant.voting.to.RestaurantTo;
 import ru.restaurant.voting.util.JpaUtil;
 import ru.restaurant.voting.util.ToUtil;
 import ru.restaurant.voting.util.exception.NotFoundException;
-import ru.restaurant.voting.util.exception.RestaurantHasNotMenuForThisDay;
-import ru.restaurant.voting.util.exception.UserAlreadyHasVotedException;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.restaurant.voting.TestData.*;
 
 class RestaurantServiceTest extends AbstractServiceTest {
 
     @Autowired
     private RestaurantService restaurantService;
-
-    @Autowired
-    private VoteRepository voteRepository;
     
     @Autowired
     private CacheManager cacheManager;
@@ -118,58 +110,5 @@ class RestaurantServiceTest extends AbstractServiceTest {
     void getAllForEmptyDay() throws Exception {
         List<Restaurant> restaurants = restaurantService.getAllForDay(LocalDate.parse("2019-07-05"));
         assertMatch(restaurants, List.of());
-    }
-
-    @Test
-    void voteForRestaurantWithOutDayMenu() throws Exception {
-        assertThrows(RestaurantHasNotMenuForThisDay.class, () ->
-                restaurantService.vote(LocalDate.of(2019, 7, 7), USER4_ID, RES9_ID, LocalTime.now()));
-    }
-
-    @Test
-    void voteFirstTimeBefore11() throws Exception {
-        LocalDate date = LocalDate.parse("2019-07-01");
-        LocalTime time = LocalTime.of(9, 0, 0);
-        Vote vote = restaurantService.vote(date, ADMIN_ID, RES1_ID, time);
-        assertEquals(vote, voteRepository.findByUserIdAndVotingDate(ADMIN_ID, date).orElse(null));
-    }
-
-    @Test
-    void voteSecondTimeBefore11() throws Exception {
-        LocalDate date = LocalDate.parse("2019-07-01");
-        LocalTime time1 = LocalTime.of(9, 0, 0);;
-        Vote vote1 = restaurantService.vote(date, ADMIN_ID, RES1_ID, time1);
-
-        LocalTime time2 = LocalTime.of(10, 0, 0);
-        Vote vote2 = restaurantService.vote(date, ADMIN_ID, RES2_ID, time2);
-
-        Vote expected = voteRepository.findByUserIdAndVotingDate(ADMIN_ID, date).orElse(null);
-
-        System.out.println(vote1);
-        System.out.println(vote2);
-
-        assertEquals(vote2, expected);
-        assertNotEquals(vote1, expected);
-    }
-
-    @Test
-    void voteFirstTimeAfter11() throws Exception {
-        LocalDate date = LocalDate.parse("2019-07-02");
-        LocalTime time = LocalTime.of(11, 0, 5);
-        Vote vote = restaurantService.vote(date, ADMIN_ID, RES3_ID, time);
-        assertEquals(vote, voteRepository.findByUserIdAndVotingDate(ADMIN_ID, date).orElse(null));
-    }
-
-    @Test
-    void voteSecondTimeAfter11() throws Exception {
-        LocalDate date = LocalDate.parse("2019-07-02");
-        LocalTime time1 = LocalTime.of(11, 0, 5);
-        Vote expected = restaurantService.vote(date, ADMIN_ID, RES3_ID, time1);
-
-        LocalTime time2 = LocalTime.of(12, 0, 0);
-        assertThrows(UserAlreadyHasVotedException.class, () ->
-                restaurantService.vote(date, ADMIN_ID, RES4_ID, time2));
-
-        assertEquals(expected, voteRepository.findByUserIdAndVotingDate(ADMIN_ID, date).orElse(null));
     }
 }

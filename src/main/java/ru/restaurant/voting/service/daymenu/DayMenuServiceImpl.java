@@ -7,8 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.restaurant.voting.model.DayMenu;
 import ru.restaurant.voting.repository.DayMenuRepository;
-import ru.restaurant.voting.repository.DishRepository;
 import ru.restaurant.voting.repository.RestaurantRepository;
+import ru.restaurant.voting.service.dish.DishService;
 import ru.restaurant.voting.to.DayMenuTO;
 import ru.restaurant.voting.util.ToUtil;
 import ru.restaurant.voting.util.exception.NotFoundException;
@@ -24,15 +24,15 @@ public class DayMenuServiceImpl implements DayMenuService {
 
     private final DayMenuRepository dayMenuRepository;
     private final RestaurantRepository restaurantRepository;
-    private final DishRepository dishRepository;
+    private final DishService dishService;
 
     @Autowired
     public DayMenuServiceImpl(DayMenuRepository dayMenuRepository,
                               RestaurantRepository restaurantRepository,
-                              DishRepository dishRepository) {
+                              DishService dishService) {
         this.dayMenuRepository = dayMenuRepository;
         this.restaurantRepository = restaurantRepository;
-        this.dishRepository = dishRepository;
+        this.dishService = dishService;
     }
 
     @CacheEvict(value = "restaurants", allEntries = true)
@@ -45,7 +45,7 @@ public class DayMenuServiceImpl implements DayMenuService {
             dayMenu.setMenuDate(LocalDate.now());
         }
         dayMenu.setRestaurant(restaurantRepository.getOne(restaurantId));
-        dayMenu.setDish(dishRepository.get(dishId, restaurantId));
+        dayMenu.setDish(dishService.get(dishId, restaurantId));
         return dayMenuRepository.save(dayMenu);
     }
 
@@ -59,7 +59,7 @@ public class DayMenuServiceImpl implements DayMenuService {
             dayMenu.setMenuDate(LocalDate.now());
         }
         dayMenu.setRestaurant(restaurantRepository.getOne(restaurantId));
-        dayMenu.setDish(dishRepository.get(dishId, restaurantId));
+        dayMenu.setDish(dishService.get(dishId, restaurantId));
         dayMenuRepository.save(dayMenu);
     }
 

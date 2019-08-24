@@ -47,14 +47,8 @@ public class ExceptionInfoHandler {
     }
 
     @ResponseStatus(value = HttpStatus.CONFLICT)
-    @ExceptionHandler(UserAlreadyHasVotedException.class)
-    public ErrorInfo handleError(HttpServletRequest req, UserAlreadyHasVotedException e) {
-        return logAndGetErrorInfo(req, e, false, WRONG_REQUEST);
-    }
-
-    @ResponseStatus(value = HttpStatus.CONFLICT)
-    @ExceptionHandler(RestaurantHasNotMenuForThisDay.class)
-    public ErrorInfo handleError(HttpServletRequest req, RestaurantHasNotMenuForThisDay e) {
+    @ExceptionHandler(UserAlreadyHasVotedExceptionBefore11am.class)
+    public ErrorInfo handleError(HttpServletRequest req, UserAlreadyHasVotedExceptionBefore11am e) {
         return logAndGetErrorInfo(req, e, false, WRONG_REQUEST);
     }
 

@@ -13,14 +13,12 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.restaurant.voting.TestData.*;
 import static ru.restaurant.voting.TestUtil.userHttpBasic;
 import static ru.restaurant.voting.util.exception.ErrorType.DATA_NOT_FOUND;
-import static ru.restaurant.voting.util.exception.ErrorType.WRONG_REQUEST;
 
 class UserRestaurantControllerTest extends AbstractControllerTest {
 
@@ -56,16 +54,6 @@ class UserRestaurantControllerTest extends AbstractControllerTest {
     void testGetAllForDayUnAuth() throws Exception {
         mockMvc.perform(get(REST_URL))
                 .andExpect(status().isUnauthorized())
-                .andDo(print());
-    }
-
-    @Test
-    void testVote() throws Exception {
-        mockMvc.perform(post(REST_URL + "/" + RES8_ID + "/vote")
-                .with(userHttpBasic(ADMIN)))
-                .andExpect(status().isConflict())
-                .andExpect(errorType(WRONG_REQUEST))
-                .andExpect(detailMessage("Restaurant with restaurantId = 108 has not DayMenu for this day"))
                 .andDo(print());
     }
 

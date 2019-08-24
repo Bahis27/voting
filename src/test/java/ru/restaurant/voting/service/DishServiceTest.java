@@ -23,7 +23,7 @@ public class DishServiceTest extends AbstractServiceTest {
 
     @Test
     void create() throws Exception {
-        Dish newDish = new Dish(null, "yummy");
+        Dish newDish = new Dish(null, "yummy", RES9);
         Dish created = dishService.create(newDish, RES9_ID);
         newDish.setId(created.getId());
         assertMatch(newDish, created);
