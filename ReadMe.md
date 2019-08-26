@@ -186,8 +186,11 @@ curl -s -X DELETE http://localhost:8080/voting/admin/restaurants/107/menus/10001
 
 ## /admin/votes
 
-###### get all Votes
+###### get all Votes for current day
 curl -s http://localhost:8080/voting/admin/votes --user admin@gmail.com:password
+
+###### get all Votes for day
+curl -s http://localhost:8080/voting/admin/votes/for?day=2019-07-02 --user admin@gmail.com:password
 
 ###### get Vote by id
 curl -s http://localhost:8080/voting/admin/votes/50009 --user admin@gmail.com:password
@@ -197,13 +200,13 @@ curl -s http://localhost:8080/voting/admin/votes/50009 --user admin@gmail.com:pa
 ## /restaurants
 
 ###### vote for Restaurant (create DayMenu for today before voting)
-curl -s -X POST -d '{}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/108/menus/1023 --user admin@gmail.com:password <br>
+curl -s -X POST -d '{"price": "500"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/108/menus/1023 --user admin@gmail.com:password <br>
 curl -s -X POST http://localhost:8080/voting/restaurants/108/vote --user simple@mail.ru:simple
 
 ###### vote for Restaurant second time (Till 11 a.m. o'clock - changed the decision, after 11 a.m. it will not work)(create DayMenu for today before voting)
-curl -s -X POST -d '{}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/108/menus/1023 --user admin@gmail.com:password <br>
+curl -s -X POST -d '{"price": "500"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/108/menus/1023 --user admin@gmail.com:password <br>
 curl -s -X POST http://localhost:8080/voting/restaurants/108/vote --user simple@mail.ru:simple <br>
-curl -s -X POST -d '{}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/106/menus/1017 --user admin@gmail.com:password <br>
+curl -s -X POST -d '{"price": "500"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/106/menus/1017 --user admin@gmail.com:password <br>
 curl -s -X POST http://localhost:8080/voting/restaurants/106/vote --user simple@mail.ru:simple <br>
 
 ###### get all Restaurants for current day with DayMenus

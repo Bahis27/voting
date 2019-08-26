@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.restaurant.voting.model.Vote;
 import ru.restaurant.voting.service.vote.VoteService;
+import ru.restaurant.voting.to.VoteTo;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -26,13 +27,13 @@ public class VoteController {
     public static final String REST_URL = "/admin/votes";
 
     @GetMapping()
-    public List<Vote> getAllForToday() {
+    public List<VoteTo> getAllForToday() {
         log.info("get all votes for today");
         return voteService.getAllForDate(null);
     }
 
     @GetMapping("/for")
-    public List<Vote> getAllForDate(@RequestParam LocalDate day) {
+    public List<VoteTo> getAllForDate(@RequestParam LocalDate day) {
         log.info("get all votes for date");
         return voteService.getAllForDate(day);
     }

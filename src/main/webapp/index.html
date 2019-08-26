@@ -264,8 +264,12 @@
 <h2>/admin/votes</h2>
 <ul>
     <li>
-        get all Votes <br>
+        get all Votes for current day <br>
         curl -s http://localhost:8080/voting/admin/votes --user admin@gmail.com:password
+    </li>
+    <li>
+        get all Votes for day <br>
+        curl -s http://localhost:8080/voting/admin/votes/for?day=2019-07-02 --user admin@gmail.com:password
     </li>
     <li>
         get Vote by id <br>
@@ -279,14 +283,14 @@
 <ul>
     <li>
         vote for Restaurant (create DayMenu for today before voting) <br>
-        curl -s -X POST -d '{}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/108/menus/1023 --user admin@gmail.com:password <br>
+        curl -s -X POST -d '{"price": "500"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/108/menus/1023 --user admin@gmail.com:password <br>
         curl -s -X POST http://localhost:8080/voting/restaurants/108/vote --user simple@mail.ru:simple
     </li>
     <li>
         vote for Restaurant second time (Till 11 a.m. o'clock - changed the decision, after 11 a.m. it will not work)(create DayMenu for today before voting) <br>
-        curl -s -X POST -d '{}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/108/menus/1023 --user admin@gmail.com:password <br>
+        curl -s -X POST -d '{"price": "500"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/108/menus/1023 --user admin@gmail.com:password <br>
         curl -s -X POST http://localhost:8080/voting/restaurants/108/vote --user simple@mail.ru:simple <br>
-        curl -s -X POST -d '{}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/106/menus/1017 --user admin@gmail.com:password <br>
+        curl -s -X POST -d '{"price": "500"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/106/menus/1017 --user admin@gmail.com:password <br>
         curl -s -X POST http://localhost:8080/voting/restaurants/106/vote --user simple@mail.ru:simple
     </li>
     <li>

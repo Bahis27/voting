@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.restaurant.voting.AuthorizedUser;
 import ru.restaurant.voting.model.DayMenu;
-import ru.restaurant.voting.model.Dish;
 import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.model.Vote;
 
@@ -36,7 +35,7 @@ public class UserRestaurantController extends AbstractRestaurantController {
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}/vote")
-                .buildAndExpand(vote.getRestaurantId()).toUri();
+                .buildAndExpand(vote.getRestaurant().getId()).toUri();
 
         return ResponseEntity.created(uriOfNewResource).body(vote);
     }

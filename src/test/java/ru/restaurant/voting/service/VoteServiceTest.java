@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.restaurant.voting.model.Vote;
 import ru.restaurant.voting.service.vote.VoteService;
+import ru.restaurant.voting.to.VoteTo;
 import ru.restaurant.voting.util.exception.UserAlreadyHasVotedExceptionBefore11am;
 
 import java.time.LocalDate;
@@ -19,9 +20,9 @@ public class VoteServiceTest extends AbstractServiceTest {
     VoteService voteService;
 
     @Test
-    void getAll() throws Exception {
-        List<Vote> all = voteService.getAllForDate(LocalDate.of(2019, 7, 3));
-        assertMatch(all, VOTES_FOR_20190713);
+    void getAllForDate() throws Exception {
+        List<VoteTo> all = voteService.getAllForDate(LocalDate.of(2019, 7, 3));
+        assertMatch(all, VOTE_TOS_FOR_20190713);
     }
 
     @Test
@@ -53,7 +54,6 @@ public class VoteServiceTest extends AbstractServiceTest {
         System.out.println(vote2);
 
         assertEquals(vote2, expected);
-        assertNotEquals(vote1, expected);
     }
 
     @Test
@@ -75,5 +75,17 @@ public class VoteServiceTest extends AbstractServiceTest {
                 voteService.vote(date, ADMIN_ID, RES4_ID, time2));
 
         assertEquals(expected, voteService.getByUserIdAndVotingDate(ADMIN_ID, date).orElse(null));
+    }
+
+    @Test
+    void getAllForDateForUser() throws Exception {
+        List<VoteTo> all = voteService.getAllForDateForUser(LocalDate.of(2019, 7, 3), USER3_ID);
+        assertMatch(all, VOTE_TOS_FOR_20190713_FOR_USER3);
+    }
+
+    @Test
+    void getAllForDateForRestaurant() throws Exception {
+        List<VoteTo> all = voteService.getAllForDateForRestaurant(LocalDate.of(2019, 7, 3), RES8_ID);
+        assertMatch(all, VOTE_TOS_FOR_20190713_FOR_RES8);
     }
 }

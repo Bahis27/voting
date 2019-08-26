@@ -15,15 +15,21 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public interface VoteRepository extends JpaRepository<Vote, Integer> {
 
+    @Query("SELECT DISTINCT v FROM Vote v JOIN FETCH v.user JOIN FETCH v.restaurant WHERE v.votingDate=:date ORDER BY v.id")
+    List<Vote> getAllForDate(@Param("date") LocalDate date);
+
+    @Query("SELECT DISTINCT v FROM Vote v JOIN FETCH v.user JOIN FETCH v.restaurant r JOIN FETCH r.dayMenus m JOIN FETCH m.dish WHERE m.menuDate=v.votingDate AND v.id=:id")
+    Vote get(@Param("id") int id);
+
+    Optional<Vote> findByUserIdAndVotingDate(int userId, LocalDate votingDay);
+
     @Transactional
     @Override
     Vote save(Vote vote);
 
-    Optional<Vote> findByUserIdAndVotingDate(int userId, LocalDate votingDay);
+    @Query("SELECT DISTINCT v FROM Vote v JOIN FETCH v.user u JOIN FETCH v.restaurant WHERE v.votingDate=:date AND u.id=:userId ORDER BY u.email, v.id")
+    List<Vote> getAllForDateForUser(@Param("date") LocalDate date, @Param("userId") int userId);
 
-    @Query("SELECT v FROM Vote v WHERE v.votingDate=:date ORDER BY v.id")
-    List<Vote> getAllForDate(@Param("date") LocalDate date);
-
-    @Query("SELECT v FROM Vote v WHERE v.id=:id")
-    Vote get(@Param("id") int id);
+    @Query("SELECT DISTINCT v FROM Vote v JOIN FETCH v.user JOIN FETCH v.restaurant r WHERE v.votingDate=:date AND r.id=:restaurantId ORDER BY r.name, v.id")
+    List<Vote> getAllForDateForRestaurant(@Param("date") LocalDate date, @Param("restaurantId") int restaurantId);
 }

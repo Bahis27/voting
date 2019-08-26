@@ -1,12 +1,11 @@
 package ru.restaurant.voting.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.Objects;
 
 @Entity
 @Table(name = "votes"
@@ -20,26 +19,30 @@ public class Vote extends AbstractBaseEntity {
     @NotNull
     private LocalDate votingDate;
 
-    @Column(name = "user_id", nullable = false)
-    @NotNull
-    private Integer userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @JsonIgnore
+    private User user;
 
-    @Column(name = "restaurant_id", nullable = false)
-    @NotNull
-    private Integer restaurantId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurant_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @JsonIgnore
+    private Restaurant restaurant;
 
     public Vote() {
     }
 
-    public Vote(Integer id, @NotNull LocalDate votingDate, @NotNull Integer userId, @NotNull Integer restaurantId) {
+    public Vote(Integer id, @NotNull LocalDate votingDate, User user, Restaurant restaurant) {
         super(id);
         this.votingDate = votingDate;
-        this.userId = userId;
-        this.restaurantId = restaurantId;
+        this.user = user;
+        this.restaurant = restaurant;
     }
 
     public Vote(Vote vote) {
-        this(vote.getId(), vote.getVotingDate(), vote.getUserId(), vote.getRestaurantId());
+        this(vote.getId(), vote.getVotingDate(), vote.getUser(), vote.getRestaurant());
     }
 
     public LocalDate getVotingDate() {
@@ -50,35 +53,19 @@ public class Vote extends AbstractBaseEntity {
         this.votingDate = votingDate;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Integer getRestaurantId() {
-        return restaurantId;
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 
-    public void setRestaurantId(Integer restaurantId) {
-        this.restaurantId = restaurantId;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Vote)) return false;
-        Vote vote = (Vote) o;
-        return getId().equals(vote.getId()) &&
-                getVotingDate().equals(vote.getVotingDate()) &&
-                getUserId().equals(vote.getUserId()) &&
-                getRestaurantId().equals(vote.getRestaurantId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getVotingDate(), getUserId(), getRestaurantId());
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 }

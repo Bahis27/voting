@@ -3,6 +3,7 @@ package ru.restaurant.voting.web.vote;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import ru.restaurant.voting.model.Vote;
+import ru.restaurant.voting.to.VoteTo;
 import ru.restaurant.voting.web.AbstractControllerTest;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class VoteControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(Vote.class, VOTES_FOR_20190713));
+                .andExpect(contentJson(VoteTo.class, VOTE_TOS_FOR_20190713));
     }
 
     @Test
@@ -34,7 +35,7 @@ public class VoteControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(Vote.class, List.of()));
+                .andExpect(contentJson(VoteTo.class, List.of()));
     }
 
     @Test

@@ -91,7 +91,7 @@ class UserRestaurantControllerTest extends AbstractControllerTest {
     @Test
     void testVoteFirstTime() throws Exception {
         LocalDate nowDate = LocalDate.now();
-        Vote newVote = new Vote(null, nowDate, USER3_ID, RES8_ID);
+        Vote newVote = new Vote(null, nowDate, USER3, RES8);
         ResultActions action = mockMvc.perform(post(REST_URL + RES8_ID + "/vote")
                 .with(userHttpBasic(USER3)))
                 .andExpect(status().isCreated())
@@ -100,10 +100,8 @@ class UserRestaurantControllerTest extends AbstractControllerTest {
 
         Vote returned = readFromJson(action, Vote.class);
         newVote.setId(returned.getId());
-        assertMatch(newVote, returned);
 
-        Vote saved = voteService.get(returned.getId());
-        assertMatch(returned, saved);
+        assertMatch(newVote, returned, "restaurant");
     }
 
     @Test

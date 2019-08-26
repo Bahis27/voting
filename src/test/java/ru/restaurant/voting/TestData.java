@@ -2,6 +2,8 @@ package ru.restaurant.voting;
 
 import org.springframework.test.web.servlet.ResultMatcher;
 import ru.restaurant.voting.model.*;
+import ru.restaurant.voting.to.VoteTo;
+import ru.restaurant.voting.util.ToUtil;
 import ru.restaurant.voting.web.json.JsonUtil;
 
 import java.time.LocalDate;
@@ -241,32 +243,34 @@ public class TestData {
     public static final int VOTE23_ID = START_VOTE_SEQ + 23;
     public static final int VOTE24_ID = START_VOTE_SEQ + 24;
 
-    public static final Vote VOTE1 = new Vote(VOTE1_ID, LocalDate.of(2019, 7, 1), 18, 109);
-    public static final Vote VOTE2 = new Vote(VOTE2_ID, LocalDate.of(2019, 7, 1), 11, 101);
-    public static final Vote VOTE3 = new Vote(VOTE3_ID, LocalDate.of(2019, 7, 1), 12, 103);
-    public static final Vote VOTE4 = new Vote(VOTE4_ID, LocalDate.of(2019, 7, 1), 13, 105);
-    public static final Vote VOTE5 = new Vote(VOTE5_ID, LocalDate.of(2019, 7, 1), 14, 103);
-    public static final Vote VOTE6 = new Vote(VOTE6_ID, LocalDate.of(2019, 7, 1), 15, 103);
-    public static final Vote VOTE7 = new Vote(VOTE7_ID, LocalDate.of(2019, 7, 1), 16, 101);
-    public static final Vote VOTE8 = new Vote(VOTE8_ID, LocalDate.of(2019, 7, 1), 17, 108);
-    public static final Vote VOTE9 = new Vote(VOTE9_ID, LocalDate.of(2019, 7, 2), 18, 109);
-    public static final Vote VOTE10 = new Vote(VOTE10_ID, LocalDate.of(2019, 7, 2), 11, 107);
-    public static final Vote VOTE11 = new Vote(VOTE11_ID, LocalDate.of(2019, 7, 2), 12, 103);
-    public static final Vote VOTE12 = new Vote(VOTE12_ID, LocalDate.of(2019, 7, 2), 13, 106);
-    public static final Vote VOTE13 = new Vote(VOTE13_ID, LocalDate.of(2019, 7, 2), 14, 103);
-    public static final Vote VOTE14 = new Vote(VOTE14_ID, LocalDate.of(2019, 7, 2), 15, 105);
-    public static final Vote VOTE15 = new Vote(VOTE15_ID, LocalDate.of(2019, 7, 2), 16, 101);
-    public static final Vote VOTE16 = new Vote(VOTE16_ID, LocalDate.of(2019, 7, 2), 17, 102);
-    public static final Vote VOTE17 = new Vote(VOTE17_ID, LocalDate.of(2019, 7, 3), 18, 103);
-    public static final Vote VOTE18 = new Vote(VOTE18_ID, LocalDate.of(2019, 7, 3), 11, 103);
-    public static final Vote VOTE19 = new Vote(VOTE19_ID, LocalDate.of(2019, 7, 3), 12, 103);
-    public static final Vote VOTE20 = new Vote(VOTE20_ID, LocalDate.of(2019, 7, 3), 13, 108);
-    public static final Vote VOTE21 = new Vote(VOTE21_ID, LocalDate.of(2019, 7, 3), 14, 108);
-    public static final Vote VOTE22 = new Vote(VOTE22_ID, LocalDate.of(2019, 7, 3), 15, 108);
-    public static final Vote VOTE23 = new Vote(VOTE23_ID, LocalDate.of(2019, 7, 3), 16, 101);
-    public static final Vote VOTE24 = new Vote(VOTE24_ID, LocalDate.of(2019, 7, 3), 17, 104);
+    public static final Vote VOTE1 = new Vote(VOTE1_ID, LocalDate.of(2019, 7, 1), USER8, RES9);
+    public static final Vote VOTE2 = new Vote(VOTE2_ID, LocalDate.of(2019, 7, 1), USER1, RES1);
+    public static final Vote VOTE3 = new Vote(VOTE3_ID, LocalDate.of(2019, 7, 1), USER2, RES3);
+    public static final Vote VOTE4 = new Vote(VOTE4_ID, LocalDate.of(2019, 7, 1), USER3, RES5);
+    public static final Vote VOTE5 = new Vote(VOTE5_ID, LocalDate.of(2019, 7, 1), USER4, RES3);
+    public static final Vote VOTE6 = new Vote(VOTE6_ID, LocalDate.of(2019, 7, 1), USER5, RES3);
+    public static final Vote VOTE7 = new Vote(VOTE7_ID, LocalDate.of(2019, 7, 1), USER6, RES1);
+    public static final Vote VOTE8 = new Vote(VOTE8_ID, LocalDate.of(2019, 7, 1), USER7, RES8);
+    public static final Vote VOTE9 = new Vote(VOTE9_ID, LocalDate.of(2019, 7, 2), USER8, RES9);
+    public static final Vote VOTE10 = new Vote(VOTE10_ID, LocalDate.of(2019, 7, 2), USER1, RES7);
+    public static final Vote VOTE11 = new Vote(VOTE11_ID, LocalDate.of(2019, 7, 2), USER2, RES3);
+    public static final Vote VOTE12 = new Vote(VOTE12_ID, LocalDate.of(2019, 7, 2), USER3, RES6);
+    public static final Vote VOTE13 = new Vote(VOTE13_ID, LocalDate.of(2019, 7, 2), USER4, RES3);
+    public static final Vote VOTE14 = new Vote(VOTE14_ID, LocalDate.of(2019, 7, 2), USER5, RES5);
+    public static final Vote VOTE15 = new Vote(VOTE15_ID, LocalDate.of(2019, 7, 2), USER6, RES1);
+    public static final Vote VOTE16 = new Vote(VOTE16_ID, LocalDate.of(2019, 7, 2), USER7, RES2);
+    public static final Vote VOTE17 = new Vote(VOTE17_ID, LocalDate.of(2019, 7, 3), USER8, RES3);
+    public static final Vote VOTE18 = new Vote(VOTE18_ID, LocalDate.of(2019, 7, 3), USER1, RES3);
+    public static final Vote VOTE19 = new Vote(VOTE19_ID, LocalDate.of(2019, 7, 3), USER2, RES3);
+    public static final Vote VOTE20 = new Vote(VOTE20_ID, LocalDate.of(2019, 7, 3), USER3, RES8);
+    public static final Vote VOTE21 = new Vote(VOTE21_ID, LocalDate.of(2019, 7, 3), USER4, RES8);
+    public static final Vote VOTE22 = new Vote(VOTE22_ID, LocalDate.of(2019, 7, 3), USER5, RES8);
+    public static final Vote VOTE23 = new Vote(VOTE23_ID, LocalDate.of(2019, 7, 3), USER6, RES1);
+    public static final Vote VOTE24 = new Vote(VOTE24_ID, LocalDate.of(2019, 7, 3), USER7, RES4);
 
-    public static final List<Vote> VOTES_FOR_20190713 = List.of(VOTE17, VOTE18, VOTE19, VOTE20, VOTE21, VOTE22, VOTE23, VOTE24);
+    public static final List<VoteTo> VOTE_TOS_FOR_20190713 = ToUtil.votesAsToList(List.of(VOTE17, VOTE18, VOTE19, VOTE20, VOTE21, VOTE22, VOTE23, VOTE24));
+    public static final List<VoteTo> VOTE_TOS_FOR_20190713_FOR_USER3 = ToUtil.votesAsToList(List.of(VOTE20));
+    public static final List<VoteTo> VOTE_TOS_FOR_20190713_FOR_RES8 = ToUtil.votesAsToList(List.of(VOTE20, VOTE21, VOTE22));
 
     public static <T> void assertMatch(T actual, T expected) {
         assertThat(actual).isEqualToComparingFieldByFieldRecursively(expected);
