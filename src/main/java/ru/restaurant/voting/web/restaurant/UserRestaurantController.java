@@ -9,6 +9,7 @@ import ru.restaurant.voting.AuthorizedUser;
 import ru.restaurant.voting.model.DayMenu;
 import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.model.Vote;
+import ru.restaurant.voting.to.VoteTo;
 
 import java.net.URI;
 import java.util.List;
@@ -48,5 +49,10 @@ public class UserRestaurantController extends AbstractRestaurantController {
     @GetMapping("/menus")
     public List<DayMenu> getAllDayMenusForDay() {
         return super.getAllDayMenusForDay(null);
+    }
+
+    @GetMapping("/votes")
+    public List<VoteTo> getAllVotesForDay(@AuthenticationPrincipal AuthorizedUser user) {
+        return super.getAllForDateForUser(null, user.getId());
     }
 }

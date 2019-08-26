@@ -16,6 +16,7 @@ import ru.restaurant.voting.service.restaurant.RestaurantService;
 import ru.restaurant.voting.to.DayMenuTO;
 import ru.restaurant.voting.to.DishTo;
 import ru.restaurant.voting.to.RestaurantTo;
+import ru.restaurant.voting.to.VoteTo;
 import ru.restaurant.voting.util.ToUtil;
 import ru.restaurant.voting.util.exception.NotFoundException;
 import ru.restaurant.voting.web.AbstractControllerTest;
@@ -24,6 +25,7 @@ import ru.restaurant.voting.web.json.JsonUtil;
 import ru.restaurant.voting.web.vote.VoteController;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -558,5 +560,26 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(result -> assertMatch(readFromJsonMvcResult(result, Vote.class), newVote));
+    }
+
+    //votes
+    @Test
+    void testGetAllVotesForTodayForRestaurant() throws Exception {
+        mockMvc.perform(get(REST_URL + RES9_ID + "/votes")
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(contentJson(VoteTo.class, new ArrayList<>()))
+                .andDo(print());
+    }
+
+    @Test
+    void testGetAllVotesForDayForRestaurant() throws Exception {
+        mockMvc.perform(get(REST_URL + RES8_ID + "/votes/for?day=2019-07-03")
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(contentJson(VoteTo.class, VOTE_TOS_FOR_20190713_FOR_RES8))
+                .andDo(print());
     }
 }

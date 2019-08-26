@@ -8,6 +8,7 @@ import ru.restaurant.voting.model.DayMenu;
 import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.model.Vote;
 import ru.restaurant.voting.service.vote.VoteService;
+import ru.restaurant.voting.to.VoteTo;
 import ru.restaurant.voting.web.AbstractControllerTest;
 
 import java.time.LocalDate;
@@ -140,5 +141,15 @@ class UserRestaurantControllerTest extends AbstractControllerTest {
 
             assertEquals(returned1, inDBVote);
         }
+    }
+
+    @Test
+    void testGetAllVotesForDay() throws Exception {
+        mockMvc.perform(get(REST_URL + "votes")
+                .with(userHttpBasic(USER5)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(contentJson(VoteTo.class, new ArrayList<VoteTo>()))
+                .andDo(print());
     }
 }

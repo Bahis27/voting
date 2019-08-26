@@ -207,6 +207,20 @@
     </li>
 </ul>
 
+<h3>votes</h3>
+<ul>
+    <li>
+        get all Votes for current day for Restaurant (creating DayMenu for today and voting before seeing votes) <br>
+        curl -s -X POST -d '{"price": "500"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/108/menus/1023 --user admin@gmail.com:password <br>
+        curl -s -X POST http://localhost:8080/voting/restaurants/108/vote --user simple@mail.ru:simple <br>
+        curl -s http://localhost:8080/voting/admin/restaurants/108/votes --user admin@gmail.com:password
+    </li>
+    <li>
+        get all Votes for day for Restaurant <br>
+        curl -s http://localhost:8080/voting/admin/restaurants/108/votes/for?day=2019-07-03 --user admin@gmail.com:password
+    </li>
+</ul>
+
 <h3>error examples</h3>
 <ul>
     <li>
@@ -308,6 +322,16 @@
     <li>
         get all DayMenus for current day <br>
         curl -s http://localhost:8080/voting/restaurants/menus --user simple@mail.ru:simple
+    </li>
+</ul>
+
+<h3>votes</h3>
+<ul>
+    <li>
+        get all Votes for current day for current User (creating DayMenu for today and voting before seeing votes) <br>
+        curl -s -X POST -d '{"price": "500"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/108/menus/1023 --user admin@gmail.com:password <br>
+        curl -s -X POST http://localhost:8080/voting/restaurants/108/vote --user admin@gmail.com:password <br>
+        curl -s http://localhost:8080/voting/restaurants/votes --user admin@gmail.com:password
     </li>
 </ul>
 

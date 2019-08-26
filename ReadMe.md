@@ -144,6 +144,16 @@ curl -s -X POST -d '{"price": "555"}' -H 'Content-Type:application/json;charset=
 ###### update DayMenu for Restaurant
 curl -s -X PUT -d '{"id": "10039", "menuDate": "2019-08-10", "price": "333"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/109/menus/1026 --user admin@gmail.com:password
 
+### votes
+
+###### get all Votes for current day for Restaurant (creating DayMenu for today and voting before seeing votes) 
+curl -s -X POST -d '{"price": "500"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/108/menus/1023 --user admin@gmail.com:password 
+curl -s -X POST http://localhost:8080/voting/restaurants/108/vote --user simple@mail.ru:simple 
+curl -s http://localhost:8080/voting/admin/restaurants/108/votes --user admin@gmail.com:password
+
+###### get all Votes for day for Restaurant
+curl -s http://localhost:8080/voting/admin/restaurants/108/votes/for?day=2019-07-03 --user admin@gmail.com:password
+
 ### error examples
 
 ###### not found Restaurant error
@@ -220,6 +230,13 @@ curl -s http://localhost:8080/voting/restaurants/104/menus --user simple@mail.ru
 
 ###### get all DayMenus for current day
 curl -s http://localhost:8080/voting/restaurants/menus --user simple@mail.ru:simple
+
+### votes
+
+###### get all Votes for current day for current User (creating DayMenu for today and voting before seeing votes) 
+curl -s -X POST -d '{"price": "500"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting/admin/restaurants/108/menus/1023 --user admin@gmail.com:password 
+curl -s -X POST http://localhost:8080/voting/restaurants/108/vote --user admin@gmail.com:password
+curl -s http://localhost:8080/voting/restaurants/votes --user admin@gmail.com:password
 
 <hr>
 

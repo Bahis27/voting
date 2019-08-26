@@ -14,6 +14,7 @@ import ru.restaurant.voting.service.vote.VoteService;
 import ru.restaurant.voting.to.DayMenuTO;
 import ru.restaurant.voting.to.DishTo;
 import ru.restaurant.voting.to.RestaurantTo;
+import ru.restaurant.voting.to.VoteTo;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -78,6 +79,17 @@ public abstract class AbstractRestaurantController {
     public Vote vote(LocalDate date, int userId, int restaurantId, LocalTime time) {
         log.info("user with id={} voted for restaurant with id={}", userId, restaurantId);
         return voteService.vote(date, userId, restaurantId, time);
+    }
+
+    //votes
+    public List<VoteTo> getAllForDateForUser(LocalDate date, int userId) {
+        log.info("user with id={} get all his votes for current date", userId);
+        return voteService.getAllForDateForUser(date, userId);
+    }
+
+    public List<VoteTo> getAllForDateForRestaurant(LocalDate date, int restaurantId) {
+        log.info("get all votes for date for restaurant with id={}", restaurantId);
+        return voteService.getAllForDateForRestaurant(date, restaurantId);
     }
 
     //dishes

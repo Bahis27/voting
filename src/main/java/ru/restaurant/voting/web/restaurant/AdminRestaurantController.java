@@ -13,6 +13,7 @@ import ru.restaurant.voting.model.Restaurant;
 import ru.restaurant.voting.to.DayMenuTO;
 import ru.restaurant.voting.to.DishTo;
 import ru.restaurant.voting.to.RestaurantTo;
+import ru.restaurant.voting.to.VoteTo;
 
 import java.net.URI;
 import java.time.LocalDate;
@@ -172,5 +173,17 @@ public class AdminRestaurantController extends AbstractRestaurantController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAllDayMenusForDay(@PathVariable int restaurantId, @RequestParam LocalDate day) {
         super.deleteAllDayMenusForDay(restaurantId, day);
+    }
+
+    //votes
+    @Override
+    @GetMapping("/{restaurantId}/votes/for")
+    public List<VoteTo> getAllForDateForRestaurant(@RequestParam LocalDate day, @PathVariable int restaurantId) {
+        return super.getAllForDateForRestaurant(day, restaurantId);
+    }
+
+    @GetMapping("/{restaurantId}/votes")
+    public List<VoteTo> getAllForTodayForRestaurant(@PathVariable int restaurantId) {
+        return super.getAllForDateForRestaurant(null, restaurantId);
     }
 }
