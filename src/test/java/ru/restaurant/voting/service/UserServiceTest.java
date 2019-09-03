@@ -26,7 +26,7 @@ public class UserServiceTest extends AbstractServiceTest {
         User newUser = new User(null, "New", "new@gmail.com", "newPass", false, new Date(), Collections.singleton(Role.ROLE_USER));
         User created = userService.create(new User(newUser));
         newUser.setId(created.getId());
-        assertMatch(newUser, created, "password", "registered");
+        assertMatch(newUser, created);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class UserServiceTest extends AbstractServiceTest {
     @Test
     void get() throws Exception {
         User user = userService.get(ADMIN_ID);
-        assertMatch(user, ADMIN, "password", "registered");
+        assertMatch(user, ADMIN);
     }
 
     @Test
@@ -62,7 +62,7 @@ public class UserServiceTest extends AbstractServiceTest {
     @Test
     void getByEmail() throws Exception {
         User user = userService.getByEmail("friendlyspidey@gmail.com");
-        assertMatch(user, USER6, "password", "registered");
+        assertMatch(user, USER6);
     }
 
     @Test
@@ -71,7 +71,7 @@ public class UserServiceTest extends AbstractServiceTest {
         updated.setName("Venom");
         updated.setRoles(Collections.singletonList(Role.ROLE_ADMIN));
         userService.update(new User(updated));
-        assertMatch(userService.get(USER6_ID), updated, "password", "registered");
+        assertMatch(userService.get(USER6_ID), updated);
     }
 
     @Test

@@ -29,7 +29,7 @@ class ProfileRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(USER1)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(result -> assertMatch(readFromJsonMvcResult(result, User.class), USER1, "password", "registered"));
+                .andExpect(result -> assertMatch(readFromJsonMvcResult(result, User.class), USER1));
     }
 
     @Test
@@ -59,8 +59,8 @@ class ProfileRestControllerTest extends AbstractControllerTest {
         User created = UserUtil.createNewFromTo(createdTo);
         created.setId(returned.getId());
 
-        assertMatch(returned, created, "password", "registered");
-        assertMatch(userService.getByEmail("newemail@ya.ru"), created, "password", "registered");
+        assertMatch(returned, created);
+        assertMatch(userService.getByEmail("newemail@ya.ru"), created);
     }
 
     @Test
@@ -72,7 +72,7 @@ class ProfileRestControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isNoContent());
 
-        assertMatch(userService.getByEmail("newemail@ya.ru"), UserUtil.updateFromTo(new User(USER1), updatedTo), "password", "registered");
+        assertMatch(userService.getByEmail("newemail@ya.ru"), UserUtil.updateFromTo(new User(USER1), updatedTo));
     }
 
     @Test

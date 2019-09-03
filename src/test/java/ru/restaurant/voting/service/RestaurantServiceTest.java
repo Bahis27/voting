@@ -54,7 +54,7 @@ class RestaurantServiceTest extends AbstractServiceTest {
         Restaurant updated = new Restaurant(RES4);
         updated.setName("updated");
         restaurantService.update(new Restaurant(updated));
-        assertMatch(updated, restaurantService.get(RES4_ID), "dayMenus");
+        assertMatch(updated, restaurantService.get(RES4_ID));
     }
 
     @Test
@@ -73,7 +73,7 @@ class RestaurantServiceTest extends AbstractServiceTest {
     @Test
     void get() throws Exception {
         Restaurant restaurant = restaurantService.get(RES5_ID);
-        assertMatch(restaurant, RES5, "dayMenus");
+        assertMatch(restaurant, RES5);
     }
 
     @Test
@@ -91,7 +91,7 @@ class RestaurantServiceTest extends AbstractServiceTest {
     @Test
     void getForDay() throws Exception {
         Restaurant restaurant = restaurantService.getForDay(RES8_ID, LocalDate.parse("2019-07-03"));
-        assertMatch(restaurant, RES8, "dayMenus");
+        assertMatch(restaurant, RES8);
     }
 
     @Test

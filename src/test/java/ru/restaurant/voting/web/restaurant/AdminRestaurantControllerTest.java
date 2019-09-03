@@ -126,7 +126,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(result -> assertMatch(readFromJsonMvcResult(result, Restaurant.class), RES7, "dayMenus"));
+                .andExpect(result -> assertMatch(readFromJsonMvcResult(result, Restaurant.class), RES7));
     }
 
     @Test
@@ -296,7 +296,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(result -> assertMatch(readFromJsonMvcResult(result, Dish.class), DISH7, "restaurant"))
+                .andExpect(result -> assertMatch(readFromJsonMvcResult(result, Dish.class), DISH7))
                 .andDo(print());
     }
 
@@ -332,10 +332,10 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
 
         Dish returned = readFromJson(action, Dish.class);
         created.setId(returned.getId());
-        assertMatch(created, returned, "restaurant");
+        assertMatch(created, returned);
 
         Dish saved = dishService.get(returned.getId(), RES9_ID);
-        assertMatch(returned, saved, "restaurant");
+        assertMatch(returned, saved);
     }
 
     @Test
@@ -360,7 +360,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .andExpect(status().isNoContent())
                 .andDo(print());
 
-        assertMatch(dishService.get(DISH11_ID, RES4_ID), updated, "restaurant");
+        assertMatch(dishService.get(DISH11_ID, RES4_ID), updated);
     }
 
     //dayMenus
@@ -409,7 +409,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(result -> assertMatch(readFromJsonMvcResult(result, DayMenu.class), DAYMENU17, "restaurant"))
+                .andExpect(result -> assertMatch(readFromJsonMvcResult(result, DayMenu.class), DAYMENU17))
                 .andDo(print());
     }
 
@@ -445,11 +445,9 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .andDo(print());
 
         DayMenu returned = readFromJson(action, DayMenu.class);
-        created.setId(returned.getId());
-        assertMatch(created, returned, "restaurant", "dish");
 
         DayMenu saved = dayMenuService.get(returned.getId(), RES4_ID);
-        assertMatch(returned, saved, "restaurant");
+        assertMatch(returned, saved);
     }
 
     @Test
@@ -477,7 +475,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .andExpect(status().isNoContent())
                 .andDo(print());
 
-        assertMatch(dayMenuService.get(DAYMENU39_ID, RES9_ID), updated, "restaurant");
+        assertMatch(dayMenuService.get(DAYMENU39_ID, RES9_ID), updated);
     }
 
     @Test
@@ -510,7 +508,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(result -> assertMatch(readFromJsonMvcResult(result, Restaurant.class), newRestaurant, "dayMenus"));
+                .andExpect(result -> assertMatch(readFromJsonMvcResult(result, Restaurant.class), newRestaurant));
 
         //create new dish
         ResultActions dishAction = mockMvc.perform(post(REST_URL + newRestaurant.getId() + "/dishes")

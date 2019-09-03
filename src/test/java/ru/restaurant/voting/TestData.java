@@ -280,8 +280,24 @@ public class TestData {
         assertMatch(actual, List.of(expected));
     }
 
-    public static <T> void assertMatch(T actual, T expected, String... ignore) {
-        assertThat(actual).usingComparatorForFields((x, y) -> 0, ignore).isEqualToComparingFieldByFieldRecursively(expected);
+    public static void assertMatch(User actual, User expected) {
+        assertThat(actual).isEqualToIgnoringGivenFields(expected, "password", "registered");
+    }
+
+    public static void assertMatch(Restaurant actual, Restaurant expected) {
+        assertThat(actual).isEqualToIgnoringGivenFields(expected, "dayMenus");
+    }
+
+    public static void assertMatch(Dish actual, Dish expected) {
+        assertThat(actual).isEqualToIgnoringGivenFields(expected, "dayMenus", "restaurant");
+    }
+
+    public static void assertMatch(Vote actual, Vote expected) {
+        assertThat(actual).isEqualToIgnoringGivenFields(expected, "restaurant");
+    }
+
+    public static void assertMatch(DayMenu actual, DayMenu expected) {
+        assertThat(actual).isEqualToIgnoringGivenFields(expected, "restaurant");
     }
 
     public static <T> ResultMatcher contentJson(Class clazz, T... expected) {

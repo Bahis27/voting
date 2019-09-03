@@ -33,7 +33,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 // https://jira.spring.io/browse/SPR-14472
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(result -> assertMatch(readFromJsonMvcResult(result, User.class), ADMIN, "password", "registered"));
+                .andExpect(result -> assertMatch(readFromJsonMvcResult(result, User.class), ADMIN));
     }
 
     @Test
@@ -63,7 +63,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(result -> assertMatch(readFromJsonMvcResult(result, User.class), USER6, "password", "registered"));
+                .andExpect(result -> assertMatch(readFromJsonMvcResult(result, User.class), USER6));
     }
 
     @Test
@@ -94,7 +94,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
                 .content(jsonWithPassword(updated, USER4.getPassword())))
                 .andExpect(status().isNoContent());
 
-        assertMatch(userService.get(USER4_ID), updated, "password", "registered");
+        assertMatch(userService.get(USER4_ID), updated);
     }
 
     @Test
@@ -109,7 +109,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
         User returned = readFromJson(action, User.class);
         expected.setId(returned.getId());
 
-        assertMatch(returned, expected, "password", "registered");
+        assertMatch(returned, expected);
     }
 
     @Test

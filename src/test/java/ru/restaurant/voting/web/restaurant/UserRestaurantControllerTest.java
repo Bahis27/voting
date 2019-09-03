@@ -102,7 +102,7 @@ class UserRestaurantControllerTest extends AbstractControllerTest {
         Vote returned = readFromJson(action, Vote.class);
         newVote.setId(returned.getId());
 
-        assertMatch(newVote, returned, "restaurant");
+        assertMatch(newVote, returned);
     }
 
     @Test

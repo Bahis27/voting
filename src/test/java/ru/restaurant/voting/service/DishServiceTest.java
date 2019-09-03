@@ -49,7 +49,7 @@ public class DishServiceTest extends AbstractServiceTest {
         Dish updated = new Dish(DISH7);
         updated.setName("duplicate dish");
         dishService.update(new Dish(updated), RES3_ID);
-        assertMatch(updated, dishService.get(DISH7_ID, RES3_ID), "dayMenus");
+        assertMatch(updated, dishService.get(DISH7_ID, RES3_ID));
     }
 
     @Test
@@ -76,7 +76,7 @@ public class DishServiceTest extends AbstractServiceTest {
     @Test
     void get() throws Exception {
         Dish dish = dishService.get(DISH20_ID, RES7_ID);
-        assertMatch(dish, DISH20, "dayMenus");
+        assertMatch(dish, DISH20);
     }
 
     @Test
