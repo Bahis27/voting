@@ -29,7 +29,7 @@ public class VoteController {
     @GetMapping()
     public List<VoteTo> getAllForToday() {
         log.info("get all votes for today");
-        return voteService.getAllForDate(null);
+        return voteService.getAllForDate(LocalDate.now());
     }
 
     @GetMapping("/for")

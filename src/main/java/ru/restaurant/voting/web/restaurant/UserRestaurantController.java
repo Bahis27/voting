@@ -12,6 +12,8 @@ import ru.restaurant.voting.model.Vote;
 import ru.restaurant.voting.to.VoteTo;
 
 import java.net.URI;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -21,7 +23,7 @@ public class UserRestaurantController extends AbstractRestaurantController {
 
     @GetMapping("/{id}")
     public Restaurant getForDay(@PathVariable int id) {
-        return super.getForDay(id, null);
+        return super.getForDay(id, LocalDate.now());
     }
 
     @Override
@@ -32,7 +34,7 @@ public class UserRestaurantController extends AbstractRestaurantController {
 
     @PostMapping("/{id}/vote")
     public ResponseEntity<Vote> vote(@PathVariable int id, @AuthenticationPrincipal AuthorizedUser user) {
-        Vote vote = super.vote(null, user.getId(), id, null);
+        Vote vote = super.vote(LocalDate.now(), user.getId(), id, LocalTime.now());
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}/vote")
@@ -43,16 +45,16 @@ public class UserRestaurantController extends AbstractRestaurantController {
 
     @GetMapping("/{id}/menus")
     public List<DayMenu> getAllDayMenusForDay(@PathVariable int id) {
-        return super.getAllDayMenusForDayByRestaurantId(id, null);
+        return super.getAllDayMenusForDayByRestaurantId(id, LocalDate.now());
     }
 
     @GetMapping("/menus")
     public List<DayMenu> getAllDayMenusForDay() {
-        return super.getAllDayMenusForDay(null);
+        return super.getAllDayMenusForDay(LocalDate.now());
     }
 
     @GetMapping("/votes")
     public List<VoteTo> getAllVotesForDay(@AuthenticationPrincipal AuthorizedUser user) {
-        return super.getAllForDateForUser(null, user.getId());
+        return super.getAllForDateForUser(LocalDate.now(), user.getId());
     }
 }

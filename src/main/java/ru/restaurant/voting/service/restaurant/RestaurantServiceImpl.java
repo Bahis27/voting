@@ -66,12 +66,12 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public Restaurant getForDay(int id, LocalDate localDate) throws NotFoundException {
-        return checkNotFoundWithId(restaurantRepository.getByIdForDay(id, Objects.requireNonNullElseGet(localDate, LocalDate::now)), id);
+        return checkNotFoundWithId(restaurantRepository.getByIdForDay(id, localDate), id);
     }
 
     @Override
     public List<Restaurant> getAllForDay(LocalDate localDate) {
-        return restaurantRepository.getAllForDay(Objects.requireNonNullElseGet(localDate, LocalDate::now));
+        return restaurantRepository.getAllForDay(localDate);
     }
 
     @Override

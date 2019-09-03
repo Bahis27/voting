@@ -34,9 +34,6 @@ public class VoteServiceImpl implements VoteService {
 
     @Override
     public List<VoteTo> getAllForDate(LocalDate date) {
-        if (date == null) {
-            date = LocalDate.now();
-        }
         return ToUtil.votesAsToList(voteRepository.getAllForDate(date));
     }
 
@@ -53,12 +50,6 @@ public class VoteServiceImpl implements VoteService {
     @Transactional
     @Override
     public Vote vote(LocalDate date, int userId, int restaurantId, LocalTime time) {
-        if (time == null) {
-            time = LocalTime.now();
-        }
-        if (date == null) {
-            date = LocalDate.now();
-        }
 
         Optional<Vote> optionalVote = voteRepository.findByUserIdAndVotingDate(userId, date);
         User user = userRepository.getOne(userId);
@@ -79,17 +70,11 @@ public class VoteServiceImpl implements VoteService {
 
     @Override
     public List<VoteTo> getAllForDateForUser(LocalDate date, int userId) {
-        if (date == null) {
-            date = LocalDate.now();
-        }
         return ToUtil.votesAsToList(voteRepository.getAllForDateForUser(date, userId));
     }
 
     @Override
     public List<VoteTo> getAllForDateForRestaurant(LocalDate date, int restaurantId) {
-        if (date == null) {
-            date = LocalDate.now();
-        }
         return ToUtil.votesAsToList(voteRepository.getAllForDateForRestaurant(date, restaurantId));
     }
 }

@@ -55,9 +55,6 @@ public class DayMenuServiceImpl implements DayMenuService {
     public void update(DayMenu dayMenu, int restaurantId, int dishId) {
         Assert.notNull(dayMenu, "dayMenu must not be null");
         checkNotFoundWithId(dayMenuRepository.get(dayMenu.getId(), restaurantId), dayMenu.getId());
-        if (dayMenu.getMenuDate() == null) {
-            dayMenu.setMenuDate(LocalDate.now());
-        }
         dayMenu.setRestaurant(restaurantRepository.getOne(restaurantId));
         dayMenu.setDish(dishService.get(dishId, restaurantId));
         dayMenuRepository.save(dayMenu);
@@ -75,17 +72,11 @@ public class DayMenuServiceImpl implements DayMenuService {
 
     @Override
     public List<DayMenu> getAllForDayByRestaurantId(int restaurantId, LocalDate date) {
-        if (date == null) {
-            date = LocalDate.now();
-        }
         return dayMenuRepository.getAllForDateAndRestaurantId(restaurantId, date);
     }
 
     @Override
     public List<DayMenu> getAllForDay(LocalDate date) {
-        if (date == null) {
-            date = LocalDate.now();
-        }
         return dayMenuRepository.getAllForDate(date);
     }
 

@@ -184,6 +184,6 @@ public class AdminRestaurantController extends AbstractRestaurantController {
 
     @GetMapping("/{restaurantId}/votes")
     public List<VoteTo> getAllForTodayForRestaurant(@PathVariable int restaurantId) {
-        return super.getAllForDateForRestaurant(null, restaurantId);
+        return super.getAllForDateForRestaurant(LocalDate.now(), restaurantId);
     }
 }
